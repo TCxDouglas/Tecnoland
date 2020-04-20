@@ -48,6 +48,17 @@
     transition: .5s;
 
 }
+.box-form .inputBox i {
+    position: absolute;
+    top: 0;
+    left: 90%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s;
+
+}
 
 .box-form .inputBox input:focus~label,
 .box-form .inputBox input:valid~label {

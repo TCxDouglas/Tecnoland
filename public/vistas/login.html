@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/estilosCubo.css">
+    <link rel="stylesheet" type="text/css" href="../css/estilosForm.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Probando</title>
+</head>
+
+<body class="general">
+    <div class="container" id="vista-contenedor">
+        <div class="container ">
+            <div class="row">
+                <div class="col-sm">
+                    <section>
+                        <div class="box">
+                            <div>
+                                <span> <video src="../videos/tron.mp4" autoplay="" muted="" loop=""></video></span>
+                                <span> <video src="../videos/tron.mp4" autoplay="" muted="" loop=""></video></span>
+                                <span> <video src="../videos/tron.mp4" autoplay="" muted="" loop=""></video></span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-sm">
+
+                    <div class="box-form ">
+                        <h2>Login</h2>
+                        <form>
+
+                            <div class="inputBox">
+                                <input type="text" id="txtEmail" required>
+                                <label> Correo</label>
+                            </div>
+
+                            <div class="inputBox">
+                                <input type="password" id="txtPass" required>
+                                <label> Contraseña</label>
+                            </div>
+
+                            <div class="centrarBotones">
+                                <input type="button" id="btnAcceder" class="botones" value="Acceder" onclick="iniciarSesion()">
+                                <input type="button" id="btnNuevaCuenta" class="botones" value="Registrarse">
+
+                            </div>
+                            <div class="centrarBotones">
+                                <a href="public/vistas/crear-salas.html">¿Olvidaste tu contraseña?</a>
+                            </div>
+                            <small class="d-inline-block text-muted mt-5">Todos los derechos reservados | © 2020 Team
+                                Cilantro</small>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <small class="d-inline-block text-muted mt-5">Todos los derechos reservados | © 2020 Team Cilantro</small>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="../../private/Firebase/config.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+    <script src="../JS/auth/auth.js"></script>
+</body>
+
+</html>

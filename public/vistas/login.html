@@ -10,9 +10,8 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Probando</title>
 </head>
-
 <body class="general">
-    <div class="container" id="vista-contenedor">
+    <div class="container" id="vista-registro">
         <div class="container ">
             <div class="row">
                 <div class="col-sm">
@@ -30,22 +29,29 @@
 
                     <div class="box-form ">
                         <h2>Login</h2>
-                        <form>
-
+                        <div>
+                            <div class="centrarBotones">
+                                <button class=" btn btn-outline-dark d-inline-block text-light mr-2 mb-3 width-100" 
+                                v-on:click="signInGoogle"><i class="fab fa-google"></i>
+                                </button>
+                                <button class="btn btn-outline-dark d-inline-block text-light mb-3 width-100"
+                                v-on:click="signFacebook"><i class="fab fa-facebook"></i>
+                                </button>
+                            </div>
                             <div class="inputBox">
                                 <i class="fas fa-user text-light"></i>
-                                <input type="text" id="txtEmail" required>
+                                <input type="text" id="txtEmail" required v-model="email">
                                 <label> Correo</label>
                             </div>
 
                             <div class="inputBox">
                                 <i class="fas fa-lock text-light"></i>
-                                <input type="password" id="txtPass" required>
+                                <input type="password" id="txtPass" required v-model="pass">
                                 <label> Contraseña</label>
                             </div>
 
                             <div class="centrarBotones">
-                                <input type="button" id="btnAcceder" class="botones" value="Acceder" onclick="iniciarSesion()">
+                                <input type="button" id="btnAcceder" class="botones" value="Acceder" v-on:click="iniciarSesion">
                                 <input type="button" id="btnNuevaCuenta" class="botones" value="Registrarse">
 
                             </div>
@@ -54,9 +60,8 @@
                             </div>
                             <small class="d-inline-block text-muted mt-5">Todos los derechos reservados | © 2020 Team
                                 Cilantro</small>
-                        </form>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -64,6 +69,7 @@
     <small class="d-inline-block text-muted mt-5">Todos los derechos reservados | © 2020 Team Cilantro</small>
     </div>
     <script src="https://kit.fontawesome.com/2f2a4cd560.js" crossorigin="anonymous"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
     <script src="../../private/Firebase/config.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>

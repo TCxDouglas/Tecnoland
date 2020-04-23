@@ -2,7 +2,7 @@ var autentificacion= new Vue({
     el:'#vista-registro',
     data: {
         email:'',
-        pass:''
+        pass:'',
     },
     methods: {
         signInGoogle : function() {
@@ -63,7 +63,6 @@ var autentificacion= new Vue({
                 // ...
             });
         },
-
         crearCuenta: function(){
             firebase.auth().createUserWithEmailAndPassword(this.email, this.pass).then(function (resp) {
                 //console.log(resp);
@@ -77,7 +76,6 @@ var autentificacion= new Vue({
                 // ...
             });
         },
-
         iniciarSesion: function(){
             firebase.auth().signInWithEmailAndPassword(this.email, this.pass).then(function (resp) {
                 console.log(resp);
@@ -99,7 +97,7 @@ function dataUser() {
     var name, email, photoUrl, uid, emailVerified;
 
     if (user != null) {
-        name = user.displayName;
+        datosusuario.name = user.displayName;
         email = user.email;
         photoUrl = user.photoURL;
         emailVerified = user.emailVerified;

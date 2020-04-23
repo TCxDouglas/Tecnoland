@@ -12,70 +12,75 @@
 </head>
 
 <body>
-    <section class="contact-box">
-        <div class="row no-gutters bg-dark">
-            <div class="col-xl-5 col-lg-12 register-bg">
-                <div class=" testiomonial p-4">
-                    <h3 class="font-weight-bold text-light pie">Una nueva forma de aprender</h3>
-                    <p class="lead text-light pie">Enseñamos temas tecnologicos con realidad virtual, aquí y ahora.</p>
-                </div>
-            </div>
-            <div class="col-xl-7 col-lg-12 d-flex">
-                <div class="container align-self-center p-6">
-                    <h3 class="font-weight-bold mb-3">Salas educativas con TecnoLand</h3>
-
-                    <p class="text-muted mb-5">Ingresa la siguiente información para crear una sala.</p>
-
-                    <form>
-                        <div class="form-row mb-2">
-                            <div class="form-group col-md-6">
-                                <label class="font-weight-bold">Nombre de la sala <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required placeholder="Nombre">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="font-weight-bold">Breve Descripcion <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required placeholder="Descripcion de la sala">
-                            </div>
-                        </div>
-
-                        <div class="form-group col-mb-6">
-                            <label class="font-weight-bold">Max Participantes <span class="text-danger">*</span></label>
-                            <select name="" id="">
-                                <option value="0">0</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group col-mb-6">
-                            <label class="font-weight-bold">Buscar Temas de Interes </label>
-                            <input type="text" class="form-controlp" required placeholder="Buscar temas">
-                        </div>
-                        <div class="container">
-                            <hr>Temas<hr>
-                            <table class="table table-dark">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Tema</th>
-                                        <th scope="col">Descripcion</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbodyTemas">
-                                    
-                                </tbody>
-                            </table>
-                        </div>
-                        <form>
-                            <button id="btnCrearSala" class="btn btn-primary width-100 botones">Crear</button>
-                            <button id="btnCanncelarCreacionSala"
-                                class="btn btn-primary width-100 botones">Cancelar</button>
-                        </form>
-                    </form>
-                    <small class="d-inline-block text-muted mt-5">Todos los derechos reservados | © 2020 Team
-                        Cilantro</small>
-                </div>
+    <div id="vista-sala">
+<section class="contact-box">
+    <div class="row no-gutters bg-dark">
+        <div class="col-xl-5 col-lg-12 register-bg">
+            <div class=" testiomonial p-4">
+                <h3 class="font-weight-bold text-light pie">Una nueva forma de aprender</h3>
+                <p class="lead text-light pie">Enseñamos temas tecnologicos con realidad virtual, aquí y ahora.</p>
             </div>
         </div>
+        <div class="col-xl-7 col-lg-12 d-flex">
+            <div class="container align-self-center p-6">
+                <h3 class="font-weight-bold mb-3">Salas educativas con TecnoLand</h3>
+
+                <p class="text-muted mb-5">Ingresa la siguiente información para crear una sala.</p>
+
+                <form>
+                    <div class="form-row mb-2">
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-bold">Nombre de la sala <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" required placeholder="Nombre">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-bold">Breve Descripcion <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" required placeholder="Descripcion de la sala">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-mb-6">
+                        <label class="font-weight-bold">Max Participantes <span class="text-danger">*</span></label>
+                        <select name="" id="">
+                            <option value="0">0</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-mb-6">
+                        <label class="font-weight-bold">Buscar Temas de Interes </label>
+                        <input type="text" class="form-controlp" required placeholder="Buscar temas">
+                    </div>
+                    <div class="container">
+                        <hr>Temas
+                        <hr>
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Temas</th>
+                                    <th scope="col">Descripcion</th>
+                                </tr>
+                            </thead>
+                            <tbody v-for='linea in temas'>
+                                <tr>
+                                    <td>{{linea.tema}} </td>
+                                    <td>{{linea.descripcion}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <form>
+                        <button id="btnCrearSala" class="btn btn-primary width-100 botones">Crear</button>
+                        <button id="btnCanncelarCreacionSala"
+                            class="btn btn-primary width-100 botones" >Cancelar</button>
+                    </form>
+                </form>
+                <small class="d-inline-block text-muted mt-5">Todos los derechos reservados | © 2020 Team
+                    Cilantro</small>
+            </div>
+        </div>
+    </div>
+    </div>
+    
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
@@ -86,7 +91,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
         </script>
-
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
         <script src="../JS/vista-sala/crear-sala.js"></script>
 </body>
 

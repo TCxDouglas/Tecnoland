@@ -48,30 +48,38 @@
 
                     <div class="form-group col-mb-6">
                         <label class="font-weight-bold">Buscar Temas de Interes </label>
-                        <input type="text" class="form-controlp" required placeholder="Buscar temas">
+                        <div class="container-fluid">
+                            <input type="text" class="form-controlp" required placeholder="Buscar temas" v-model="valor"
+                                v-on:keyup="obtenerTemas">
+                        </div>
                     </div>
                     <div class="container">
                         <hr>Escoga los temas que quiere añadir (Solo se permiten un maximo de 10 temas)
                         <hr>
-                        <table class="table table-dark">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Temas</th>
-                                    <th scope="col">Descripcion</th>
-                                </tr>
-                            </thead>
-                            <tbody v-for='linea in temas'>
-                                <tr>
-                                    <td>{{linea.tema}}</td>
-                                    <td>{{linea.descripcion}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="container-fluid">
+                            <table class="table table-dark">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Temas</th>
+                                        <th scope="col">Descripcion</th>
+                                    </tr>
+                                </thead>
+                                <tbody v-for='linea in temas'>
+                                    <tr>
+                                        <td>{{linea.tema}}</td>
+                                        <td>{{linea.descripcion}}</td>
+                                        <td><img src="../imagenes/confirmar.ico"
+                                                v-on:click="escogiendoTemas(linea)"><img src="../imagenes/eliminar.ico"
+                                                v-on:click="eliminandoTemas(linea)"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <form>
                         <button id="btnCrearSala" class="btn btn-primary width-100 botones">Crear</button>
                         <button id="btnCanncelarCreacionSala"
-                            class="btn btn-primary width-100 botones" >Cancelar</button>
+                            class="btn btn-primary width-100 botones">Cancelar</button>
                     </form>
                 </form>
                 <small class="d-inline-block text-muted mt-5">Todos los derechos reservados | © 2020 Team

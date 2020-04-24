@@ -51,7 +51,7 @@
                         <input type="text" class="form-controlp" required placeholder="Buscar temas">
                     </div>
                     <div class="container">
-                        <hr>Temas
+                        <hr>Escoga los temas que quiere añadir (Solo se permiten un maximo de 10 temas)
                         <hr>
                         <table class="table table-dark">
                             <thead>
@@ -62,8 +62,8 @@
                             </thead>
                             <tbody v-for='linea in temas'>
                                 <tr>
-                                    <td>{{linea.tema}} </td>
-                                    <td>{{linea.descripcion}} </td>
+                                    <td>{{linea.tema}}</td>
+                                    <td>{{linea.descripcion}}</td>
                                 </tr>
                             </tbody>
                         </table>

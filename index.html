@@ -13,100 +13,108 @@
 </head>
 
 <body>
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">TECNOLAND</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div id="vista-registro">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">TECNOLAND</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                    </ul>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                </ul>
-                
-                <form class="form-inline my-1 my-lg-0">
-                    <a href="public/vistas/login.html">
-                    <button class="btn btn-outline-primary my-2 my-sm-0" type="button" href="public/vistas/login.html">Iniciar Sesion</button>
-                    </a>
-                    
-                </form>
-            </div>
-        </nav>
-    </div>
-    <section class="contact-box">
-        <div class="row no-gutters bg-dark">
-            <div class="col-xl-5 col-lg-12 register-bg">
-                <div class=" testiomonial p-4">
-                    <section>
-                        <div class="box">
-                            <div>
-                                <span> <video src="public/videos/tron.mp4" autoplay="" muted="" loop=""></video></span>
-                                <span> <video src="public/videos/tron.mp4" autoplay="" muted="" loop=""></video></span>
-                                <span> <video src="public/videos/tron.mp4" autoplay="" muted="" loop=""></video></span>
-                            </div>
-                        </div>
-                    </section>
-
-                    <h3 class="font-weight-bold text-light pie">Una nueva forma de aprender</h3>
-                    <p class="lead text-light pie">Enseñamos temas tecnologicos con realidad virtual, aquí y ahora.</p>
-                </div>
-            </div>
-            <div class="col-xl-7 col-lg-12 d-flex">
-                <div class="container align-self-center p-6">
-                    <h3 class="font-weight-bold mb-3">Crea tu cuenta gratis en TecnoLand</h3>
-                    <div class="form-group">
-                        <button class="btn btn-outline-dark d-inline-block text-light mr-2 mb-3 width-100"
-                            onclick="signInGoogle('a')"><i
-                                class="icon ion-logo-google lead align-middle mr-2" id="btnISG"></i> Google </button>
-                        <button class="btn btn-outline-dark d-inline-block text-light mb-3 width-100"
-                            onclick="signFacebook()"><i
-                                class="icon ion-logo-facebook lead align-middle mr-2" id="btnISF"></i> Facebook</button>
-                    </div>
-                    <p class="text-muted mb-5">Ingresa la siguiente información para registrarte.</p>
-
-                    <form>
-                        <div class="form-row mb-2">
-                            <div class="form-group col-md-6">
-                                <label class="font-weight-bold">Nombre <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required placeholder="Tu nombre">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="font-weight-bold">Apellido <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required placeholder="Tu apellido">
-                            </div>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="font-weight-bold">Usuario<span
-                                    class="text-danger">*</span></label>
-                            <input type="email" class="form-control" id="txtEmail" required
-                                placeholder="Ingresa tu correo electrónico">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="font-weight-bold">Contraseña <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control" id="txtPass" required placeholder="Ingresa una contraseña">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="font-weight-bold">Fecha de nacimiento <span
-                                    class="text-danger">*</span></label>
-                            <input type="date" class="form-control" required
-                                placeholder="Ingresa su fecha de nacimineto">
-                        </div>
-                        <div class="form-group mb-5">
-                            <div class="form-check">
-                                <input class="form-check-input" required type="checkbox">
-                                <label class="form-check-label text-muted">Al seleccionar esta casilla aceptas nuestros
-                                    términos y condiciones</label>
-                            </div>
-                        </div>
-                        <button id="btnRegistrarse" class="btn btn-primary width-100">Regístrate</button>
+                    <form class="form-inline my-1 my-lg-0">
+                        <a href="public/vistas/login.html">
+                            <button class="btn btn-outline-primary my-2 my-sm-0" type="button"
+                                href="public/vistas/login.html">Iniciar Sesion</button>
+                        </a>
                     </form>
-                    <small class="d-inline-block text-muted mt-5">Todos los derechos reservados | © 2020 Team
-                        Cilantro</small>
+                </div>
+            </nav>
+        </div>
+        <section class="contact-box">
+            <div class="row no-gutters bg-dark">
+                <div class="col-xl-5 col-lg-12 register-bg">
+                    <div class=" testiomonial p-4">
+                        <section>
+                            <div class="box">
+                                <div>
+                                    <span> <video src="public/videos/tron.mp4" autoplay="" muted=""
+                                            loop=""></video></span>
+                                    <span> <video src="public/videos/tron.mp4" autoplay="" muted=""
+                                            loop=""></video></span>
+                                    <span> <video src="public/videos/tron.mp4" autoplay="" muted=""
+                                            loop=""></video></span>
+                                </div>
+                            </div>
+                        </section>
+
+                        <h3 class="font-weight-bold text-light pie">Una nueva forma de aprender</h3>
+                        <p class="lead text-light pie">Enseñamos temas tecnologicos con realidad virtual, aquí y ahora.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-12 d-flex">
+                    <div class="container align-self-center p-6">
+                        <h3 class="font-weight-bold mb-3">Crea tu cuenta gratis en TecnoLand</h3>
+                        <div id="btnSesionProv" class="form-group">
+                            <button class="btn btn-outline-dark d-inline-block text-light mr-2 mb-3 width-100"
+                                v-on:click="signInGoogle"><i class="icon ion-logo-google lead align-middle mr-2"
+                                    id="btnISG"></i> Google </button>
+                            <button class="btn btn-outline-dark d-inline-block text-light mb-3 width-100"
+                                v-on:click="signFacebook"><i class="icon ion-logo-facebook lead align-middle mr-2"
+                                    id="btnISF"></i> Facebook</button>
+                        </div>
+                        <p class="text-muted mb-5">Ingresa la siguiente información para registrarte.</p>
+                        <form>
+                            <div class="form-row mb-2">
+                                <div class="form-group col-md-6">
+                                    <label class="font-weight-bold">Nombre <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required placeholder="Tu nombre">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="font-weight-bold">Apellido <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required placeholder="Tu apellido">
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="font-weight-bold">Email<span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="txtEmail" required
+                                    placeholder="Ingresa tu correo electrónico" v-model="email">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="font-weight-bold">Contraseña <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="txtPass" required
+                                    placeholder="Ingresa una contraseña" v-model="pass">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="font-weight-bold">Fecha de nacimiento <span
+                                        class="text-danger">*</span></label>
+                                <input type="date" class="form-control" required
+                                    placeholder="Ingresa su fecha de nacimineto">
+                            </div>
+                            <div class="form-group mb-5">
+                                <div class="form-check">
+                                    <input class="form-check-input" required type="checkbox">
+                                    <label class="form-check-label text-muted">Al seleccionar esta casilla aceptas
+                                        nuestros
+                                        términos y condiciones</label>
+                                </div>
+                            </div>
+                            <button v-on:click="crearCuenta" id="btnRegistrarse"
+                                class="btn btn-primary width-100">Regístrate</button>
+                        </form>
+                        <small class="d-inline-block text-muted mt-5">Todos los derechos reservados | © 2020 Team
+                            Cilantro</small>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
+
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -118,7 +126,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
-    
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
     <script src="private/Firebase/config.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>

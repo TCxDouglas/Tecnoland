@@ -10,7 +10,6 @@
     <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
     <title>probando</title>
 </head>
-
 <body>
     <div id="vista-sala">
 <section class="contact-box">
@@ -31,25 +30,29 @@
                     <div class="form-row mb-2">
                         <div class="form-group col-md-6">
                             <label class="font-weight-bold">Nombre de la sala <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" required placeholder="Nombre">
+                            <input type="text" class="form-control" required placeholder="Nombre" v-model="nombreSala">
                         </div>
                         <div class="form-group col-md-6">
                             <label class="font-weight-bold">Breve Descripcion <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" required placeholder="Descripcion de la sala">
+                            <input type="text" class="form-control" required placeholder="Descripcion de la sala" v-model="descripcionSala">
                         </div>
                     </div>
 
                     <div class="form-group col-mb-6">
                         <label class="font-weight-bold">Max Participantes <span class="text-danger">*</span></label>
-                        <select name="" id="">
-                            <option value="0">0</option>
-                        </select>
+                        <div class="align-center">
+                            <select id="">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="form-group col-mb-6">
                         <label class="font-weight-bold">Buscar Temas de Interes </label>
                         <div class="container-fluid">
-                            <input type="text" class="form-controlp" required placeholder="Buscar temas" v-model="valor"
+                            <input type="text" class="form-controlp" placeholder="Buscar temas" v-model="valor"
                                 v-on:keyup="obtenerTemas">
                         </div>
                     </div>
@@ -77,7 +80,8 @@
                         </div>
                     </div>
                     <form>
-                        <button id="btnCrearSala" class="btn btn-primary width-100 botones">Crear</button>
+                        <button id="btnCrearSala" class="btn btn-primary width-100 botones"
+                            v-on:click="guardarDatos">Crear</button>
                         <button id="btnCanncelarCreacionSala"
                             class="btn btn-primary width-100 botones">Cancelar</button>
                     </form>
@@ -88,8 +92,6 @@
         </div>
     </div>
     </div>
-    
-
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
         </script>
@@ -99,6 +101,10 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
         </script>
+        <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+        <script src="../../private/Firebase/config.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
         <script src="../JS/vista-sala/crear-sala.js"></script>
 </body>

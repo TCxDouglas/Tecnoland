@@ -1,9 +1,19 @@
+
 let temasEscogidos=[];
-let sala= new Vue({
+
+var sala= new Vue({
     el: '#vista-sala',
     data:{
         temas:[],
-        valor:''
+        valor:'',
+        nombreSala:'',
+        descripcionSala: '',
+        numeroParticipantes: '',
+        datosUsuario: {
+            uid: '',
+            displayName: '',
+            photoURL: ''
+        }
     },
     methods:{
         obtenerTemas : function(){
@@ -12,9 +22,21 @@ let sala= new Vue({
                 console.log(resp);
                 this.temas=resp;
             });
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    console.log(user);
+                    sala.datosUsuario.uid=user.uid;
+                    sala.datosUsuario.displayName=user.displayName;
+                    sala.datosUsuario.photoURL=user.photoURL;
+                    console.log(sala.datosUsuario);
+                } else {
+                    console.log('Me Cago en Java');
+                }
+            });
+            
+            console.log(this.datosUsuario);
         },
         escogiendoTemas : function(tema){
-
             if(!(temasEscogidos.includes(tema)))
             temasEscogidos.push(tema);
             console.log(temasEscogidos);
@@ -22,6 +44,13 @@ let sala= new Vue({
         eliminandoTemas : function(tema){
             temasEscogidos.splice(tema.id, 1);
             console.log(temasEscogidos);
+        },
+        guardarDatos : function(){
+            firebase.database().ref('Tecnoland').child('usuarios').child(sala.datosUsuario.uid).child('salas').child('1234').set({
+                nombreSala: this.nombreSala,
+                descripcion: this.descripcionSala,
+                temas: temasEscogidos
+            })
         }
     },
     created: function () {

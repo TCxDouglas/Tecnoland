@@ -1,8 +1,11 @@
 var autentificacion= new Vue({
     el:'#vista-registro',
     data: {
+        displayName: '',
+        photoURL: '',
         email:'',
         pass:'',
+        
     },
     methods: {
         signInGoogle : function() {
@@ -14,6 +17,10 @@ var autentificacion= new Vue({
                 var token = result.credential.accessToken;
                 // La información de usuario que ha iniciado sesión.
                 var user = result.user;
+                dataUser(user);
+
+                console.log(user);
+
                 console.log(window.location)
                 if (window.location.pathname == '/Tecnoland/') {
                     window.location = 'public/vistas/crear-salas.html';
@@ -42,6 +49,8 @@ var autentificacion= new Vue({
                 // The signed-in user info.
                 var user = result.user;
 
+                dataUser(user);
+
                 //console.log(window.location)
                 if (window.location.pathname == "/Tecnoland/") {
                     window.location = 'public/vistas/crear-salas.html';
@@ -64,14 +73,16 @@ var autentificacion= new Vue({
             });
         },
         crearCuenta: function(){
-            firebase.auth().createUserWithEmailAndPassword(this.email, this.pass).then(function (resp) {
-                //console.log(resp);
-                window.location = 'public/vistas/crear-salas.html';
+            //console.log(this.displayName);
+            firebase.auth().createUserWithEmailAndPassword(this.email, this.pass).then(function (user) {
+                autentificacion.actualizarUsuario();
 
+                //dataUser(user);
             }).catch(function (error) {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
+                console.log(errorCode);
                 console.log(errorMessage);
                 // ...
             });
@@ -88,21 +99,19 @@ var autentificacion= new Vue({
                 console.log(errorCode);
                 // ...
             });
+        },
+        actualizarUsuario : function(){
+            //console.log(this.displayName);
+            var user = firebase.auth().currentUser;
+            user.updateProfile({
+                displayName: this.displayName,
+                photoURL: 'https://firebasestorage.googleapis.com/v0/b/virtual-city-eb37f.appspot.com/o/defaultUser.svg?alt=media&token=c7c055ed-ce69-4911-9999-efa329bc6ee4'
+            }).then(function () {
+                console.log(user);
+                window.location = 'public/vistas/crear-salas.html';
+
+            })
         }
     }
 });
 
-function dataUser() {
-    var user = firebase.auth().currentUser;
-    var name, email, photoUrl, uid, emailVerified;
-
-    if (user != null) {
-        datosusuario.name = user.displayName;
-        email = user.email;
-        photoUrl = user.photoURL;
-        emailVerified = user.emailVerified;
-        uid = user.uid;
-
-        document.getElementById('userlogin').innerText = email;
-    }
-}

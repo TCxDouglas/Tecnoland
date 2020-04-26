@@ -9,6 +9,7 @@ var sala= new Vue({
         nombreSala:'',
         descripcionSala: '',
         numeroParticipantes: '',
+        codigoSala: '',
         datosUsuario: {
             uid: '',
             displayName: '',
@@ -24,17 +25,17 @@ var sala= new Vue({
             });
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
-                    console.log(user);
+                    //console.log(user);
                     sala.datosUsuario.uid=user.uid;
                     sala.datosUsuario.displayName=user.displayName;
                     sala.datosUsuario.photoURL=user.photoURL;
-                    console.log(sala.datosUsuario);
+                    //console.log(sala.datosUsuario);
                 } else {
                     console.log('Me Cago en Java');
                 }
             });
             
-            console.log(this.datosUsuario);
+            //console.log(this.datosUsuario);
         },
         escogiendoTemas : function(tema){
             if(!(temasEscogidos.includes(tema)))
@@ -46,10 +47,15 @@ var sala= new Vue({
             console.log(temasEscogidos);
         },
         guardarDatos : function(){
-            firebase.database().ref('Tecnoland').child('usuarios').child(sala.datosUsuario.uid).child('salas').child('1234').set({
+            
+            firebase.database().ref('Tecnoland').child('usuarios').child(sala.datosUsuario.uid).child('salas').child(this.codigoSala).set({
                 nombreSala: this.nombreSala,
                 descripcion: this.descripcionSala,
                 temas: temasEscogidos
+            }).then(function(){
+                console.log('SALA CREADA')
+            }).catch(function(error){
+                console.log(error.message);
             })
         }
     },

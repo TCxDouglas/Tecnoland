@@ -17,7 +17,7 @@ var autentificacion= new Vue({
                 var token = result.credential.accessToken;
                 // La información de usuario que ha iniciado sesión.
                 var user = result.user;
-                dataUser(user);
+                
 
                 console.log(user);
 
@@ -49,17 +49,12 @@ var autentificacion= new Vue({
                 // The signed-in user info.
                 var user = result.user;
 
-                dataUser(user);
-
                 //console.log(window.location)
                 if (window.location.pathname == "/Tecnoland/") {
-                    window.location = 'public/vistas/crear-salas.html';
+                    window.location = 'public/vistas/perfil.html';
                 } else {
-                    window.location = 'crear-salas.html';
+                    window.location = 'perfil.html';
                 }
-
-                document.getElementById('userlogin').innerText = user.displayName;
-                document.getElementById('fotoPerfil').src = user.photoURL;
                 // ...
             }).catch(function (error) {
                 // Handle Errors here.
@@ -108,7 +103,7 @@ var autentificacion= new Vue({
                 photoURL: 'https://firebasestorage.googleapis.com/v0/b/virtual-city-eb37f.appspot.com/o/defaultUser.svg?alt=media&token=c7c055ed-ce69-4911-9999-efa329bc6ee4'
             }).then(function () {
                 console.log(user);
-                window.location = 'public/vistas/crear-salas.html';
+                window.location = 'public/vistas/perfil.html';
 
             })
         }

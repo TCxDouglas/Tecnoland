@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -11,7 +11,6 @@
     <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
     <title>probando</title>
 </head>
-
 <body>
     <div id="vista-sala">
         <section class="contact-box">
@@ -34,60 +33,85 @@
                                 <div class="form-group col-md-6">
                                     <label class="font-weight-bold">Nombre de la sala <span
                                             class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" required placeholder="Nombre">
+                                    <input type="text" class="form-control" required placeholder="Nombre"
+                                        v-model="nombreSala">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="font-weight-bold">Breve Descripcion <span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control" required
-                                        placeholder="Descripcion de la sala">
+                                        placeholder="Descripcion de la sala" v-model="descripcionSala">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="font-weight-bold">Ingrese el codigo de la sala<span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required placeholder="xxxxxx"
+                                        v-model="codigoSala">
                                 </div>
                             </div>
 
                             <div class="form-group col-mb-6">
                                 <label class="font-weight-bold">Max Participantes <span
                                         class="text-danger">*</span></label>
-                                <select name="" id="">
-                                    <option value="0">0</option>
-                                </select>
+                                <div class="align-center">
+                                    <select id="">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="form-group col-mb-6">
                                 <label class="font-weight-bold">Buscar Temas de Interes </label>
-                                <input type="text" class="form-controlp" required placeholder="Buscar temas">
+                                <div class="container-fluid">
+                                    <input type="text" class="form-controlp" placeholder="Buscar temas" v-model="valor"
+                                        v-on:keyup="obtenerTemas">
+                                </div>
                             </div>
                             <div class="container">
                                 <hr>Escoga los temas que quiere añadir (Solo se permiten un maximo de 10 temas)
                                 <hr>
-                                <table class="table table-dark">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Temas</th>
-                                            <th scope="col">Descripcion</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody v-for='linea in temas'>
-                                        <tr>
-                                            <td>{{linea.tema}}</td>
-                                            <td>{{linea.descripcion}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="container-fluid">
+                                    <table class="table table-dark">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Temas</th>
+                                                <th scope="col">Descripcion</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody v-for='linea in temas'>
+                                            <tr>
+                                                <td>{{linea.tema}}</td>
+                                                <td>{{linea.descripcion}}</td>
+                                                <td><img src="../imagenes/confirmar.ico"
+                                                        v-on:click="escogiendoTemas(linea)"><img
+                                                        src="../imagenes/eliminar.ico"
+                                                        v-on:click="eliminandoTemas(linea)"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <form>
-                                <button id="btnCrearSala" class="btn btn-primary width-100 botones">Crear</button>
-                                <button id="btnCanncelarCreacionSala"
-                                    class="btn btn-primary width-100 botones">Cancelar</button>
-                            </form>
                         </form>
+                        <div>
+                            <button id="btnCrearSala" class="btn btn-primary width-100 botones"
+                                v-on:click="guardarDatos">Crear</button>
+                            <button id="btnCanncelarCreacionSala" class="btn btn-primary width-100 botones"
+                                v-on:click="vistaPerfil">Cancelar</button>
+                        </div>
+                        <div id="Verificando" style="display: none;">
+                            <div class="d-flex align-items-center">
+                                <strong class="text-light">Creando sala... Espere un momento</strong>
+                                <div class="spinner-border ml-auto text-primary" role="status" aria-hidden="true"></div>
+                            </div>
+                        </div>
                         <small class="d-inline-block text-muted mt-5">Todos los derechos reservados | © 2020 Team
                             Cilantro</small>
                     </div>
                 </div>
             </div>
     </div>
-
-
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
@@ -97,6 +121,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="../../private/Firebase/config.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="../JS/vista-sala/crear-sala.js"></script>
 </body>

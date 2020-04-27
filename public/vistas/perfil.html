@@ -25,9 +25,11 @@
                     </ul>
 
                     <form class="form-inline my-1 my-lg-0">
-                        <a href="public/vistas/login.html">
+                        <button type="button" class="btn btn-outline-primary form-control mr-sm-2 text-light"
+                            v-on:click="crearSala">CREAR SALA</button>
+                        <a href="../../index.html">
                             <button class="btn btn-outline-danger text-light my-2 my-sm-0" type="button"
-                                href="public/vistas/login.html">Cerrar Sesion</button>
+                                href="../../../">Cerrar Sesion</button>
                         </a>
                     </form>
                 </div>
@@ -49,11 +51,11 @@
                 </div>
             </div>
             <div class="col-8">
-                <div>
+                <div id="contenedor">
                     <div>
                         <p class="h1 text-center text-light">INFORMACION DE TU PERFIL</p>
                     </div>
-                    <div >
+                    <div>
                         <p class="h2 text-center text-light">Salas creadas</p>
                         <div class="container">
                             <table class="table table-dark">
@@ -77,8 +79,10 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
+        
     </div>
 </div>
 

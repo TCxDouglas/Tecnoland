@@ -44,6 +44,9 @@ var perfil=new Vue({
             this.salas=listaSalas;
             console.log(this.salas);
 
+        },
+        crearSala: function(){
+            window.location='crear-salas.html'
         }
     },
     created: function () {

@@ -22,10 +22,10 @@ var autentificacion= new Vue({
                 console.log(user);
 
                 console.log(window.location)
-                if (window.location.pathname == '/Tecnoland/') {
-                    window.location = 'public/vistas/crear-salas.html';
+                if (window.location.pathname == '/Tecnoland/' || window.location.pathname=='/Tecnoland/index.html') {
+                    window.location = 'public/vistas/perfil.html';
                 } else {
-                    window.location = 'crear-salas.html';
+                    window.location = 'perfil.html';
                 }
                 // ...
             }).catch(function (error) {
@@ -50,7 +50,7 @@ var autentificacion= new Vue({
                 var user = result.user;
 
                 //console.log(window.location)
-                if (window.location.pathname == "/Tecnoland/") {
+                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/index.html') {
                     window.location = 'public/vistas/perfil.html';
                 } else {
                     window.location = 'perfil.html';
@@ -85,7 +85,7 @@ var autentificacion= new Vue({
         iniciarSesion: function(){
             firebase.auth().signInWithEmailAndPassword(this.email, this.pass).then(function (resp) {
                 console.log(resp);
-                window.location = 'crear-salas.html'
+                window.location = 'perfil.html'
             }).catch(function (error) {
                 // Handle Errors here.
                 var errorCode = error.code;

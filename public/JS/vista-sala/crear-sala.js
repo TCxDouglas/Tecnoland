@@ -57,6 +57,9 @@ var sala= new Vue({
             }).catch(function(error){
                 console.log(error.message);
             })
+        },
+        vistaPerfil: function(){
+            window.location='perfil.html'
         }
     },
     created: function () {

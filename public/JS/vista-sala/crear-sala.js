@@ -24,13 +24,13 @@ var sala = new Vue({
             });
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
-                    //console.log(user);
+                    console.log(user);
                     sala.datosUsuario.uid = user.uid;
                     sala.datosUsuario.displayName = user.displayName;
                     sala.datosUsuario.photoURL = user.photoURL;
                     //console.log(sala.datosUsuario);
                 } else {
-                    console.log('Me Cago en Java');
+                    window.location='../../index.html'
                 }
             });
             //console.log(this.datosUsuario);

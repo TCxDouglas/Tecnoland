@@ -21,7 +21,7 @@ var perfil = new Vue({
                     console.log(perfil.usuario);
                     perfil.obtenerSalas();
                 } else {
-                    console.log('Me Cago en Java');
+                    window.location = '../../index.html'
                 }
             });
 

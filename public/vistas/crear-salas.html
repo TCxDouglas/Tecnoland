@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+        <!-- Default theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+        <!-- Semantic UI theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+        <!-- Bootstrap theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
     <link rel="stylesheet" href="../css/crear-salas.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
@@ -84,10 +91,10 @@
                                             <tr>
                                                 <td>{{linea.tema}}</td>
                                                 <td>{{linea.descripcion}}</td>
-                                                <td><img src="../imagenes/confirmar.ico"
-                                                        v-on:click="escogiendoTemas(linea)"><img
-                                                        src="../imagenes/eliminar.ico"
-                                                        v-on:click="eliminandoTemas(linea)"></td>
+                                                <td>
+                                                <td><input type="checkbox" name="checkLista"
+                                                    ></td>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -96,7 +103,7 @@
                         </form>
                         <div>
                             <button id="btnCrearSala" class="btn btn-primary width-100 botones"
-                                v-on:click="guardarDatos">Crear</button>
+                                v-on:click="escogiendoTemas">Crear</button>
                             <button id="btnCanncelarCreacionSala" class="btn btn-primary width-100 botones"
                                 v-on:click="vistaPerfil">Cancelar</button>
                         </div>
@@ -121,6 +128,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
+    </script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
     <script src="../../private/Firebase/config.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>

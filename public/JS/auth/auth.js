@@ -21,7 +21,7 @@ var autentificacion = new Vue({
                 console.log(user);
 
                 console.log(window.location)
-                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/index.html') {
+                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
                     window.location = 'public/vistas/perfil.html';
                 } else {
                     window.location = 'perfil.html';
@@ -49,7 +49,7 @@ var autentificacion = new Vue({
                 var user = result.user;
 
                 //console.log(window.location)
-                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/index.html') {
+                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
                     window.location = 'public/vistas/perfil.html';
                 } else {
                     window.location = 'perfil.html';

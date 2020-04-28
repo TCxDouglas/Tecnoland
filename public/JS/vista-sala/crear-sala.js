@@ -35,14 +35,26 @@ var sala = new Vue({
             });
             //console.log(this.datosUsuario);
         },
-        escogiendoTemas: function (tema) {
-            if (!(temasEscogidos.includes(tema)))
-                temasEscogidos.push(tema);
-            console.log(temasEscogidos);
-        },
-        eliminandoTemas: function (tema) {
-            temasEscogidos.splice(tema.id, 1);
-            console.log(temasEscogidos);
+        escogiendoTemas: function () {
+
+            alertify.confirm('Alerta', '¿Está seguro de crear la sala con los temas seleccionados?', function () {
+                let listaCheckbox = document.getElementsByName('checkLista');
+                for (let i = 0; i < sala.temas.length; i++) {
+                    if (listaCheckbox[i].checked) {
+                        console.log('es verdadero')
+                        temasEscogidos.push(sala.temas[i]);
+                    } else {
+                        console.log('es falso')
+                    }
+                }
+                sala.guardarDatos();
+                console.log(temasEscogidos)
+            }, function () {
+                alertify.error('Cancelado');
+
+            });
+
+            
         },
         guardarDatos: function () {
             document.getElementById('Verificando').style.display='block';

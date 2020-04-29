@@ -41,7 +41,7 @@ var sala = new Vue({
                 let listaCheckbox = document.getElementsByName('checkLista');
                 for (let i = 0; i < sala.temas.length; i++) {
                     if (listaCheckbox[i].checked) {
-                        console.log('es verdadero')
+                        console.log('es verdadero');
                         temasEscogidos.push(sala.temas[i]);
                     } else {
                         console.log('es falso')

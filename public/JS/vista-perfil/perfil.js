@@ -24,7 +24,6 @@ var perfil = new Vue({
                     window.location = '../../index.html'
                 }
             });
-
         },
         obtenerSalas: function () {
             firebase.database().ref('Tecnoland').child('usuarios').child(perfil.usuario.uid).child('salas').once('value').then(function (snapshot) {

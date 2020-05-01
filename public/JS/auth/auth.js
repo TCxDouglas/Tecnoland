@@ -4,7 +4,8 @@ var autentificacion = new Vue({
         displayName: '',
         photoURL: '',
         email: '',
-        pass: ''
+        pass: '',
+        passRepit: ''
     },
     methods: {
         signInGoogle: function () {
@@ -16,16 +17,18 @@ var autentificacion = new Vue({
                 var token = result.credential.accessToken;
                 // La información de usuario que ha iniciado sesión.
                 var user = result.user;
+                //console.log(user);
 
-
-                console.log(user);
-
-                console.log(window.location)
-                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
-                    window.location = 'public/vistas/perfil.html';
-                } else {
-                    window.location = 'perfil.html';
+                let usuario = {
+                    displayname: user.displayName,
+                    email: user.email,
+                    uid: user.uid,
+                    fechanacimiento: '2000-05-09',
+                    tipocuenta: 'docente'
                 }
+
+                guardarSql(usuario);
+ 
                 // ...
             }).catch(function (error) {
                 // Handle Errors here.
@@ -49,11 +52,15 @@ var autentificacion = new Vue({
                 var user = result.user;
 
                 //console.log(window.location)
-                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
-                    window.location = 'public/vistas/perfil.html';
-                } else {
-                    window.location = 'perfil.html';
+                let usuario = {
+                    displayname: user.displayName,
+                    email: user.email,
+                    uid: user.uid,
+                    fechanacimiento: '2000-05-09',
+                    tipocuenta: 'docente'
                 }
+
+                guardarSql(usuario);
                 // ...
             }).catch(function (error) {
                 // Handle Errors here.
@@ -69,18 +76,34 @@ var autentificacion = new Vue({
         crearCuenta: function () {
             
             //console.log(this.displayName);
-            firebase.auth().createUserWithEmailAndPassword(this.email, this.pass).then(function (user) {
-                autentificacion.actualizarUsuario();
+            let msg = "Parece que su contraseña no es del todo segura! <br/><br/>" +
+            "Pruebe agregando 8 o más caracteres entre mayusculas, minusculas y números";
 
-                //dataUser(user);
-            }).catch(function (error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorCode);
-                console.log(errorMessage);
-                // ...
-            });
+            let estado = validar_clave(this.pass, this.passRepit);
+            console.log(estado);
+            if (estado === 'todo-naiz'){
+                firebase.auth().createUserWithEmailAndPassword(this.email, this.pass).then(function (user) {
+                    autentificacion.actualizarUsuario();
+        
+                        //dataUser(user);
+                    }).catch(function (error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        console.log(errorCode);
+                        console.log(errorMessage);
+                        // ...
+                    });       
+            } else if (estado === 'contra-invalida'){
+                errorAlert(msg);
+            } else{
+                msg = "Parece que las contraseñas no coiciden! <br/><br/>" +
+                "Asegurese de escribir exactamente la misma contraseña en sus respectivos campos"
+                errorAlert(msg);
+
+            }
+
+
         },
         iniciarSesion: function () {
             let cargando = document.getElementById('Verificando');
@@ -107,9 +130,132 @@ var autentificacion = new Vue({
                 photoURL: 'https://firebasestorage.googleapis.com/v0/b/virtual-city-eb37f.appspot.com/o/defaultUser.svg?alt=media&token=c7c055ed-ce69-4911-9999-efa329bc6ee4'
             }).then(function () {
                 console.log(user);
-                window.location = 'public/vistas/perfil.html';
+
+                let usuario = {
+                    displayname: user.displayName,
+                    email: user.email,
+                    uid: user.uid,
+                    fechanacimiento: document.getElementById('inputFechanacimiento').value,
+                    tipocuenta: 'docente'
+                }
+
+                guardarSql(usuario);
 
             })
+        },
+
+        termCondiciones: function(){
+            terminosYcondiciones();
         }
     }
 });
+
+function guardarSql(usuario){
+
+    if (window.location.pathname == '/Tecnoland/crearCuenta.html'){
+        fetch(`private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then( resp=>resp.text() ).then(resp=>{
+            console.log(resp);
+    
+           console.log(window.location)
+            if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
+               window.location = 'public/vistas/perfil.html';
+            } else {
+                window.location = 'perfil.html';
+            }
+         });   
+    }
+
+    else {
+        fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then( resp=>resp.text() ).then(resp=>{
+            console.log(resp);
+    
+           console.log(window.location)
+            if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
+               window.location = 'public/vistas/perfil.html';
+            } else {
+                window.location = 'perfil.html';
+            }
+         });
+    }
+
+}
+    
+function validar_clave(contraseña, contraseña2){
+
+    
+    if(contraseña==contraseña2){
+
+        if(contraseña.length >= 8)
+        {		
+            var mayuscula = false;
+            var minuscula = false;
+            var numero = false;
+            
+            for(var i = 0;i<contraseña.length;i++)
+            {
+                if(contraseña.charCodeAt(i) >= 65 && contraseña.charCodeAt(i) <= 90)
+                {
+                    mayuscula = true;
+                }
+                else if(contraseña.charCodeAt(i) >= 97 && contraseña.charCodeAt(i) <= 122)
+                {
+                    minuscula = true;
+                }
+                else if(contraseña.charCodeAt(i) >= 48 && contraseña.charCodeAt(i) <= 57)
+                {
+                    numero = true;
+                }
+    
+            }
+            if(mayuscula == true && minuscula == true  && numero == true)
+            {
+               
+                return "todo-naiz";
+            }
+        
+        }
+  
+       
+        return "contra-invalida";
+    }
+    return "contras-no-coinciden";
+}
+
+function errorAlert (msg){
+    // Extend existing 'alert' dialog
+if(!alertify.errorAlert){
+    //define a new errorAlert base on alert
+    alertify.dialog('errorAlert',function factory(){
+      return{
+              build:function(){
+                  var errorHeader = '<span class="fa fa-times-circle fa-2x" '
+                  +    'style="vertical-align:middle;color:#e10000;">'
+                  + '</span> UPS!';
+                  this.setHeader(errorHeader);
+              }
+          };
+      },true,'alert');
+  }
+  //launch it.
+  // since this was transient, we can launch another instance at the same time.
+  alertify
+      .errorAlert(''+msg);
+}
+
+function terminosYcondiciones(){
+    var pre = document.createElement('pre');
+//custom style.
+pre.style.maxHeight = "400px";
+pre.style.margin = "0";
+pre.style.padding = "24px";
+pre.style.whiteSpace = "pre-wrap";
+pre.style.textAlign = "center";
+pre.appendChild(document.createTextNode($('#terminos').text()));
+//show as confirm
+alertify.confirm(pre, function(){
+        alertify.success('Accepted');
+
+    },function(){
+        alertify.error('Declined');
+    }).set({labels:{ok:'Accept', cancel: 'Decline'}, padding: false});
+}

@@ -4,6 +4,7 @@
 class BD 
 {
    private $conexion, $result;
+   
    public function BD($server, $user, $pass, $db){
        $this->conexion=mysqli_connect($server, $user, $pass, $db) or die(mysqli_error('No se pudo Conectar al server de BD'));
    }

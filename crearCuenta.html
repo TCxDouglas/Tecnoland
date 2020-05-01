@@ -8,15 +8,23 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
     <link href="public//css/estilosRegistrarse.css" rel="stylesheet">
-    <title>Probando</title>
+    
+    <title>HIPER EFE</title>
 </head>
 
 <body>
     <div id="vista-registro">
         <div>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">TECNOLAND</a>
+                <a class="navbar-brand" href="#">HIPER EFE</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -59,7 +67,7 @@
                 </div>
                 <div class="col-xl-7 col-lg-12 d-flex">
                     <div class="container align-self-center p-6">
-                        <h3 class="font-weight-bold mb-3">Crea tu cuenta gratis en TecnoLand</h3>
+                        <h3 class="font-weight-bold mb-3">Crea tu cuenta gratis en HIPER EFE</h3>
                         <div id="btnSesionProv" class="form-group">
                             <button class="btn btn-outline-dark d-inline-block text-light mr-2 mb-3 width-100"
                                 v-on:click="signInGoogle"><i class="icon ion-logo-google lead align-middle mr-2"
@@ -82,26 +90,35 @@
                                 <input type="email" class="form-control" id="txtEmail" required
                                     placeholder="Ingresa tu correo electrónico" v-model="email">
                             </div>
-                            <div class="form-group mb-3">
+                            <div class="form-row mb-2">
+                            <div class="form-group col-md-6">
                                 <label class="font-weight-bold">Contraseña <span class="text-danger">*</span></label>
                                 <input type="password" class="form-control" id="txtPass" required
                                     placeholder="Ingresa una contraseña" v-model="pass">
                             </div>
-                            <div class="form-group mb-3">
+                            
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-bold"> Repita su contraseña <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="txtPassRepit" required
+                                    placeholder="Ingresa de nuevo tu contraseña" v-model="passRepit">
+                            </div>
+
+                            </div>
+                            <div class="form-group mb-5">
                                 <label class="font-weight-bold">Fecha de nacimiento <span
                                         class="text-danger">*</span></label>
-                                <input type="date" class="form-control" required
+                                <input type="date" class="form-control" required id="inputFechanacimiento"
                                     placeholder="Ingresa su fecha de nacimineto">
                             </div>
                             <div class="form-group mb-5">
                                 <div class="form-check">
-                                    <input class="form-check-input" required type="checkbox">
+                                    <input class="form-check-input" required type="checkbox" v-on:change = "termCondiciones" id="checkTerminos" >
                                     <label class="form-check-label text-muted">Al seleccionar esta casilla aceptas
                                         nuestros
                                         términos y condiciones</label>
                                 </div>
                             </div>
-                            <button v-on:click="crearCuenta" id="btnRegistrarse"
+                            <button type="submit" id="btnRegistrarse"
                                 class="btn btn-primary width-100">Regístrate</button>
                         </form>
                         <small class="d-inline-block text-muted mt-5">Todos los derechos reservados | © 2020 Team
@@ -112,18 +129,36 @@
         </section>
     </div>
 
+    <div id="terminos" style="display: none;">
 
+        Copyright (c) 2020 Team Cilantro, todos los derechos reservados.
+        
+        HIPER EFE tendrá acceso a sus datos personales tales como correos electronicos,
+        cuentas de Google y Facebook y fecha de nacimiento...
+        
+        HIPER EFE podrá enviarle correos electrónicos cada cierto tiempo con contenido
+        tal como sugerencias de temas de estudio, invitaciones y/u ofertas.
+        
+        Este sitio web tiene la finalidad de educar y/o reforzar la educación impartida 
+        por su docente. ESTÁ ESTRICTAMENTE PROHIBIDO USAR NUESTRO SITIO WEB PARA INCITAR 
+        AL ODIO, DIFUNDIR PORNOGRAFÍA O CUALQUIER OTRO ACTO QUE ATENTE CONTRA EL BIENESTAR 
+        PSICOLÓGICO Y MORAL DE LOS USUARIOS. 
+        
+        </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
+
+<script src="https://kit.fontawesome.com/2f2a4cd560.js" crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
     </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
-
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
     <script src="private/Firebase/config.js"></script>

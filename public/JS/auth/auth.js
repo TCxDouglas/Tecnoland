@@ -16,6 +16,7 @@ var autentificacion = new Vue({
                 var token = result.credential.accessToken;
                 // La información de usuario que ha iniciado sesión.
                 var user = result.user;
+                
 
 
                 console.log(user);

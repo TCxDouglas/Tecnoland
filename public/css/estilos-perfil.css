@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
+
+.bodyPerfil {
+    background: #222;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    min-height: 100vh;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.tituloPerfil {
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+}
+.containerPerfil {
+    position: relative;
+    width: 1000px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px;
+}
+
+.acercarPerfil {
+    align-items: center;
+}
+
+.cardPerfil {
+    position: relative;
+    
+    width: 400px;
+    height: 400px;
+    transform-style: preserve-3d;
+    perspective: 600px;
+    transition: 0.5s;
+    border: 5px solid rgb(4, 4, 138);
+}
+
+.cardPerfil .frontPerfil {
+    position: absolute;
+    
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background: #242B3D;
+    backface-visibility: hidden;
+    transform: rotateX(0deg);
+    transition: 0.5s;
+}
+
+.cardPerfil .frontPerfil img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.cardPerfil .frontPerfil h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 25px;
+    color: #fff;
+    text-align: center;
+}
+
+.cardPerfil .frontPerfil h2 span {
+    color: #a7a7a7;
+    font-size: 16px;
+}
+
+.cardPerfil:hover .frontPerfil {
+    transform: rotateX(-180deg);
+}
+
+.cardPerfil .backPerfil {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    backface-visibility: hidden;
+    transform: rotateX(180deg);
+    transition: 0.5s;
+}
+
+.cardPerfil .backPerfil:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.cardPerfil:hover .backPerfil {
+    transform: rotateX(0deg);
+}
+
+.cardPerfil .backPerfil .detailsPerfil {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.cardPerfil .backPerfil .detailsPerfil h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+    color: #fff;
+}
+
+.cardPerfil .backPerfil .detailsPerfil h2 span {
+    color: #a7a7a7;
+    font-size: 16px;
+}
+
+.social-iconsPerfil {
+    padding: 10px 0;
+}
+
+.social-iconsPerfil button {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    background: #262626;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+
+.social-iconsPerfil button .fa {
+    line-height: 50px;
+}
+
+.social-iconsPerfil button:hover {
+    background: #0000FF;
+}
+
+.imgAvatar{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}

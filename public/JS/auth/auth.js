@@ -145,7 +145,12 @@ var autentificacion = new Vue({
         },
 
         termCondiciones: function(){
-            terminosYcondiciones();
+ 
+          
+                terminosYcondiciones();
+            
+           
+           
         }
     }
 });
@@ -243,19 +248,29 @@ if(!alertify.errorAlert){
 }
 
 function terminosYcondiciones(){
-    var pre = document.createElement('pre');
-//custom style.
-pre.style.maxHeight = "400px";
-pre.style.margin = "0";
-pre.style.padding = "24px";
-pre.style.whiteSpace = "pre-wrap";
-pre.style.textAlign = "center";
-pre.appendChild(document.createTextNode($('#terminos').text()));
-//show as confirm
-alertify.confirm(pre, function(){
-        alertify.success('Accepted');
 
-    },function(){
-        alertify.error('Declined');
-    }).set({labels:{ok:'Accept', cancel: 'Decline'}, padding: false});
+
+        var pre = document.createElement('pre');
+        //custom style.
+        pre.style.setHeader = 'HOLA'
+        pre.style.maxHeight = "400px";
+        pre.style.margin = "0";
+        pre.style.padding = "50px";
+        pre.style.whiteSpace = "pre-line";
+        pre.style.textAlign = "justify";
+        pre.appendChild(document.createTextNode($('#terminos').text()));
+        //show as confirm
+        alertify.confirm(pre, function(){
+        
+                alertify.success('Terminos y condiciones aceptados');
+                document.getElementById('checkTerminos').checked = true;
+        
+        
+            },function(){
+        
+                alertify.error('Terminos y condiciones no aceptados');
+                document.getElementById('checkTerminos').checked = false;
+            }).set({labels:{ok:'ACEPTO', cancel: 'NO ACEPTO'}, padding: false});
+    
+
 }

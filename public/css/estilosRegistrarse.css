@@ -1,3 +1,76 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,500;1,600;1,700;1,800&display=swap');
+
+
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    z-index: 1000;
+    box-sizing: border-box;
+    background: rgba(0, 0, 255, 0.29)
+}
+
+header .logo-principal {
+    position: relative;
+    font-size: 2em;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-decoration: none;
+
+}
+
+
+header .logo-principal span {
+    color: #0000FF;
+}
+
+header nav {
+    float: right;
+}
+
+header nav ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+header nav ul li {
+    list-style: none;
+}
+
+header nav ul li a {
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+
+header nav ul li a:hover,
+header nav ul li a.activo {
+    color: #fff;
+    background: #2196f3;
+    border-radius: 1em;
+}
+
+.toggle {
+    color: #fff;
+    float: right;
+    line-height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    display: none;
+}
 :root {
     --color-dark: #15181f;
     --color-dark-x: #2d343f;
@@ -78,6 +151,40 @@ body {
 @media (max-width: 1200px) {
     .register-bg {
         min-height: 50vh;
+    }
+
+}
+
+@media (max-width: 991px){
+    header {
+        padding: 0 20px;
+    }
+
+    .toggle {
+        display: block;
+    }
+
+    header nav {
+        position: absolute;
+        width: 100%;
+        height: calc(100vh - 50px);
+        background: #333;
+        top: 50px;
+        left: -100%;
+        transition: 0.5s;
+    }
+
+    header nav.activarMenu {
+        left: 0;
+    }
+
+    header nav ul {
+        display: block;
+        text-align: center;
+    }
+
+    header nav ul li a {
+        border-bottom: 1px solid rgba(0, 0, 0, .2);
     }
 }
 

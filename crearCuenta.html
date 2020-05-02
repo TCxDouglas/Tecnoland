@@ -21,28 +21,24 @@
 </head>
 
 <body>
-    <div id="vista-registro">
-        <div>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">HIPER EFE</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                    </ul>
 
-                    <form class="form-inline my-1 my-lg-0">
-                        <a href="public/vistas/login.html">
-                            <button class="btn btn-outline-primary my-2 my-sm-0" type="button"
-                                href="public/vistas/login.html">Iniciar Sesion</button>
-                        </a>
-                    </form>
-                </div>
-            </nav>
+    <header>
+        <div>
+            <a href="#" class="logo-principal"><span>HIPER</span>EFE</a>
         </div>
+
+        <nav class="activarMenu">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="public/vistas/login.html">Iniciar Sesion</a></li>
+            </ul>
+        </nav>
+
+        <div class="toggle"> <i class="fa fa-bars" aria-hidden="true"></i></div>
+
+    </header>
+    <div id="vista-registro">
+
         <section class="contact-box">
             <div class="row no-gutters bg-dark">
                 <div class="col-xl-5 col-lg-12 register-bg">
@@ -145,6 +141,15 @@
         PSICOLÓGICO Y MORAL DE LOS USUARIOS. 
         
         </div>
+        <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.toggle').click(function () {
+                    $('nav').toggleClass('activarMenu')
+                })
+    
+            })
+        </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">

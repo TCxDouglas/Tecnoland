@@ -2,10 +2,35 @@ var configPerfil =new Vue({
     el: '#idContenedor',
     data: {
         avatares:[],
-        photoURL: 'https://firebasestorage.googleapis.com/v0/b/virtual-city-eb37f.appspot.com/o/defaultUser.svg?alt=media&token=c7c055ed-ce69-4911-9999-efa329bc6ee4'
+        perfil:{
+            uid:'',
+            displayName:'',
+            email:'',
+            photoURL:''
+        }
      },
     methods:{
         vistaConfig: function(){
+
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    console.log(user);
+                    configPerfil.perfil.uid = user.uid;
+                    configPerfil.perfil.displayName = user.displayName;
+                    configPerfil.perfil.email = user.email;
+                    configPerfil.perfil.photoURL = user.photoURL;
+                    console.log(configPerfil.perfil);
+                    let lblNombre = document.getElementById('lblNombre');
+                    lblNombre.innerText = configPerfil.perfil.displayName;
+
+                    
+
+                    let imgPerfil = document.getElementById('perfilImg');
+                    imgPerfil.setAttribute("src", configPerfil.perfil.photoURL);
+                } else {
+                    window.location = '../../index.html'
+                }
+            });
             let contenedorVista = document.getElementById('idContenedor');
             fetch(`../modulos/configCuenta.html`).then(function (respuesta) {
                 return respuesta.text();
@@ -13,6 +38,7 @@ var configPerfil =new Vue({
                 contenedorVista.innerHTML = respuesta;
                 sessionStorage.setItem('tipoCuenta','docente');
                 configPerfil.actualizarAvatar();
+                
             })
             
         },
@@ -25,7 +51,8 @@ var configPerfil =new Vue({
         },
         actualizarAvatar: function () {
             let imgPerfil = document.getElementById('perfilImg');
-            imgPerfil.setAttribute("src", this.photoURL)
+            imgPerfil.setAttribute("src", this.perfil.photoURL);
+            
         },
         irPerfil:function(){
             window.location.pathname='../../vistas/perfil.html';
@@ -43,10 +70,9 @@ function colocarAvatares(){
         let item = `<div class="col">
                             <img name = "avatar" class = "imgAvatar" src = ${element.urlAvatar} >
                     </div>`;
-        
         contenedor.innerHTML+=item;
     });
-    seleccionarAvatar()
+    seleccionarAvatar();
 }
 
 function seleccionarAvatar(){
@@ -58,7 +84,7 @@ function seleccionarAvatar(){
             quitarBorder();
             element.style.border = "solid #0000FF"
             let src=element.src;
-            configPerfil.photoURL=src;
+            configPerfil.perfil.photoURL=src;
             configPerfil.actualizarAvatar();
             //console.log(src);
         })
@@ -71,5 +97,11 @@ function quitarBorder(){
     });
 }
 function irPerfil(){
-    window.location="perfil.html";
+    var user = firebase.auth().currentUser;
+    user.updateProfile({
+        photoURL: configPerfil.perfil.photoURL
+     }).then(function () {
+        window.location = "perfil.html";
+    })
+    
 }

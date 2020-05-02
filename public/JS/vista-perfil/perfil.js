@@ -46,9 +46,32 @@ var perfil = new Vue({
         },
         crearSala: function () {
             window.location = 'crear-salas.html'
+        },
+        mandarDatos: function (filaSala) {
+            
+            modalPerfil.infoSala.nombreSala=filaSala.nombreSala;
+            modalPerfil.infoSala.codigoSala = filaSala.codigoSala;
+            modalPerfil.infoSala.descripcion = filaSala.descripcion;
+            console.log(modalPerfil.infoSala)
         }
     },
     created: function () {
         this.datosUsuario();
+    }
+})
+
+var modalPerfil=new Vue({
+    el: '#modalLista',
+    data:{
+        infoSala:{
+            nombreSala:'',
+            codigoSala:'',
+            descripcion:''
+        }
+    },
+    methods:{
+        colocarDatos: function(){
+
+        }
     }
 })

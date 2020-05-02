@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
     <link rel="stylesheet" href="public/css/estilos-principal.css">
-    <title>TecnoLanda</title>
+    <title>HIPER EFE</title>
 </head>
 
 <body>
-
     <header>
         <div>
             <a href="#" class="logo-principal"><span>HIPER</span>EFE</a>
@@ -24,26 +29,20 @@
                 <li><a href="#">Contactanos</a></li>
             </ul>
         </nav>
-
         <div class="toggle"> <i class="fa fa-bars" aria-hidden="true"></i></div>
-
     </header>
-
     <div class="banner">
         <video src="public/videos/tron.mp4" autoplay muted loop type="mp4"></video>
         <div class="textBox">
             <h2>Aprender tecnología aquí y ahora</h2>
-            <p>En HiperEFE aprenderás de una manera innovadora e inteligente,
-                sobre diversos e interesantes temas de tecnología.
-                Nuestra ciudad virtual te ofrece diversos sitios para visitar y nuevas temáticas por desbloquear.
-                Toda una experiencia de realidad virtual en tu navegador preferido.
-                Accede ahora mismo, gratis y sencillo.</p>
+            <p>En HIPER EFE aprenderás de una forma innovadora diversos temas del área tecnológica. Conocenos a través
+                del siguiente vídeo.</p>
 
-            <a href="#">Ver Video</a>
+            <a href="#" onclick="verVideo()">Ver Video</a>
+            <a href="crearCuenta.html">Crea tu cuenta gratis</a>
         </div>
-
         <div class="imgBox">
-            <img src="public//imagenes/woman2.png">
+            <img src="public/imagenes/woman2.png">
         </div>
 
         <ul class="sci">
@@ -55,13 +54,18 @@
 
     </div>
 
+    
+
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script src="public/JS/app.js"></script>
+
+
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('.toggle').click(function () {
                 $('nav').toggleClass('activarMenu')
             })
-
         })
     </script>
 </body>

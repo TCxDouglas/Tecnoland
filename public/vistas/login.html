@@ -4,14 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/estilosCubo.css">
-    <link rel="stylesheet" type="text/css" href="../css/estilosForm.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Probando</title>
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/estilosCubo.css">
+    <link rel="stylesheet" type="text/css" href="../css/estilosForm.css">
+
+    <title>HIPER EFE</title>
 </head>
 
 <body class="general">
+    <header>
+        <div>
+            <a href="#" class="logo-principal"><span>HIPER</span>EFE</a>
+        </div>
+
+        <nav class="activarMenu">
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../crearCuenta.html">Registrarse</a></li>
+            </ul>
+        </nav>
+
+        <div class="toggle"> <i class="fa fa-bars" aria-hidden="true"></i></div>
+
+    </header>
     <div class="container" id="vista-registro">
         <div class="container ">
             <div class="row">
@@ -56,8 +75,7 @@
                                 <div class="centrarBotones">
                                     <input type="submit" id="btnAcceder" class="botones" value="Acceder"
                                         v-on:click="iniciarSesion">
-                                    <input type="button" id="btnNuevaCuenta" class="botones" value="Registrarse"
-                                    v-on:click="">
+
                                 </div>
                                 <div id="Verificando" style="display: none;">
                                     <div class="d-flex align-items-center">
@@ -82,6 +100,19 @@
     </div>
     <small class="d-inline-block text-muted mt-5">Todos los derechos reservados | © 2020 Team Cilantro</small>
 
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.toggle').click(function () {
+                $('nav').toggleClass('activarMenu')
+            })
+
+        })
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
     <script src="https://kit.fontawesome.com/2f2a4cd560.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>

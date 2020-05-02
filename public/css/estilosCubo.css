@@ -1,9 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 .general {
 
     background-image: url("../imagenes/fondoCiudad.png");
@@ -22,7 +16,7 @@ section {
 
 section .box {
     position: absolute;
-    top: calc(50% - 200px);
+    top: calc(60% - 200px);
     left: calc(50% - 200px);
     width: 300px;
     height: 300px;

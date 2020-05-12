@@ -89,8 +89,16 @@ var autentificacion = new Vue({
                     // Handle Errors here.
                     var errorCode = error.code;
                     var errorMessage = error.message;
+
+                    if (errorCode == "auth/email-already-in-use"){
+                        msg = "El correo ya esta registrado en nuestra plataforma! <br/><br/>" +
+                            "Prueba iniciando sesion con tus credenciales"
+                        errorAlert(msg);
+                    }
+
                     console.log(errorCode);
                     console.log(errorMessage);
+                    console.log(error)
                     // ...
                 });
             } else if (estado === 'contra-invalida') {
@@ -110,14 +118,14 @@ var autentificacion = new Vue({
                 console.log(resp);
                 window.location = 'perfil.html'
             }).catch(function (error) {
-                // Handle Errors here.
                 let cargando = document.getElementById('Verificando');
                 cargando.style.display = 'none';
                 var errorCode = error.code;
                 var errorMessage = error.message;
+
                 console.log(errorMessage);
                 console.log(errorCode);
-                // ...
+                
             });
         },
         actualizarUsuario: function () {
@@ -135,10 +143,7 @@ var autentificacion = new Vue({
                     fechanacimiento: document.getElementById('inputFechanacimiento').value,
                     tipocuenta: 'docente'
                 }
-
                 guardarSql(usuario);
-
-
             })
         },
         termCondiciones: function () {
@@ -162,7 +167,6 @@ function guardarSql(usuario) {
         });
 
     }
-
     else {
         fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.text()).then(resp => {
             console.log(resp);

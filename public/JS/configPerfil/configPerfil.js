@@ -23,8 +23,6 @@ var configPerfil =new Vue({
                     let lblNombre = document.getElementById('lblNombre');
                     lblNombre.innerText = configPerfil.perfil.displayName;
 
-                    
-
                     let imgPerfil = document.getElementById('perfilImg');
                     imgPerfil.setAttribute("src", configPerfil.perfil.photoURL);
                 } else {
@@ -38,9 +36,7 @@ var configPerfil =new Vue({
                 contenedorVista.innerHTML = respuesta;
                 sessionStorage.setItem('tipoCuenta','docente');
                 configPerfil.actualizarAvatar();
-                
             })
-            
         },
         obtenerAvatares: function(){
             fetch(`../../private/PHP/avatares/avatares.php?proceso=buscarAvatares&valor=0`).then(resp => resp.json()).then(resp=>{

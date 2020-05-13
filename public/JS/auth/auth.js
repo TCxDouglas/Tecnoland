@@ -145,12 +145,13 @@ var autentificacion = new Vue({
         },
 
         termCondiciones: function(){
- 
-          
+         
                 terminosYcondiciones();
-            
            
-           
+        },
+        
+        seguridad: function(){
+            validarSeguridad()
         }
     }
 });
@@ -226,6 +227,61 @@ function validar_clave(contraseña, contraseña2){
     return "contras-no-coinciden";
 }
 
+function validarSeguridad(){  
+ var contra = document.getElementById('txtPass').value;
+ var msg = document.getElementById('msgContra');
+
+        if(contra.length >= 8)
+        		
+            var mayuscula = false;
+            var minuscula = false;
+            var numero = false;
+            var tamaño = false;
+            
+            for(var i = 0;i<contra.length;i++)
+            {
+                if(contra.charCodeAt(i) >= 65 && contra.charCodeAt(i) <= 90  )
+                {
+                    mayuscula = true;
+                }
+                else if(contra.charCodeAt(i) >= 97 && contra.charCodeAt(i) <= 122)
+                {
+                    minuscula = true;
+                }
+                else if(contra.charCodeAt(i) >= 48 && contra.charCodeAt(i) <= 57)
+                {
+                    numero = true;
+                }
+
+                if(contra.length >= 8){
+                    tamaño = true;
+                }
+    
+            }
+            if(mayuscula == true && minuscula == true  && numero == true && tamaño === true)
+            {
+             
+               msg.style.color ="#15E603";
+               msg.innerText = " Segura ";
+                
+            } else if (contra ===""){
+                msg.innerText = "*";
+            }
+            
+            else{
+                
+                msg.style.color ="red";
+                msg.innerText = " Insegura ";
+
+            }
+        
+        
+  
+       
+        return "contra-invalida";
+
+}
+
 function errorAlert (msg){
     // Extend existing 'alert' dialog
 if(!alertify.errorAlert){
@@ -243,13 +299,10 @@ if(!alertify.errorAlert){
   }
   //launch it.
   // since this was transient, we can launch another instance at the same time.
-  alertify
-      .errorAlert(''+msg);
+  alertify.errorAlert(''+msg);
 }
 
 function terminosYcondiciones(){
-
-
         var pre = document.createElement('pre');
         //custom style.
         pre.style.setHeader = 'HOLA'

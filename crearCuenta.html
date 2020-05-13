@@ -90,18 +90,26 @@
                             <div class="form-group col-md-6">
                                 <label class="font-weight-bold" >Contraseña <span class="text-danger">*</span></label>
                                 <input type="password" class="form-control" id="txtPass" required  v-on:keyup="seguridad"
-                                    placeholder="Mayus, minus y números" v-model="pass">
+                                    placeholder="Ingrese una contraseña" v-model="pass">
                             </div>
                             
                             <div class="form-group col-md-6">
                                 <label class="font-weight-bold"> Repita su contraseña <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" id="txtPassRepit" required
+                                <input type="password" class="form-control" id="txtPassRepit" required v-on:keyup="igualdad"
                                     placeholder="Ingresa de nuevo tu contraseña" v-model="passRepit">
                             </div>
 
                             </div>
-                            <div class="form-group mb-3">
-                                <span id="msgContra">*</span>
+                            <div class="form-row mb-2">
+                               
+                                <div class="form-group col-md-6">
+                                    <span id="msgContra">*</span>
+                                </div>
+                                
+                                <div class="form-group col-md-6">
+                                    <span id="msg==">*</span>
+                                </div>
+
                             </div>
                             <div class="form-group mb-5">
                                 <label class="font-weight-bold">Fecha de nacimiento <span

@@ -152,6 +152,10 @@ var autentificacion = new Vue({
         
         seguridad: function(){
             validarSeguridad()
+        },
+
+        igualdad: function(){
+            validarIgualdad();
         }
     }
 });
@@ -230,9 +234,7 @@ function validar_clave(contraseña, contraseña2){
 function validarSeguridad(){  
  var contra = document.getElementById('txtPass').value;
  var msg = document.getElementById('msgContra');
-
-        if(contra.length >= 8)
-        		
+	
             var mayuscula = false;
             var minuscula = false;
             var numero = false;
@@ -262,24 +264,37 @@ function validarSeguridad(){
             {
              
                msg.style.color ="#15E603";
-               msg.innerText = " Segura ";
+               msg.innerText = "  Segura ";
                 
             } else if (contra ===""){
+                msg.style.color ="#fff";
                 msg.innerText = "*";
             }
             
             else{
                 
                 msg.style.color ="red";
-                msg.innerText = " Insegura ";
-
+                msg.innerText = "  Insegura  ";
             }
-        
-        
-  
-       
-        return "contra-invalida";
 
+}
+
+function validarIgualdad(){
+    var contra = document.getElementById('txtPass').value;
+    var contra2 = document.getElementById('txtPassRepit').value;
+    var msg = document.getElementById('msg==');
+
+    if (contra===contra2){
+        msg.style.color ="#15E603";
+        msg.innerHTML= "Coinciden"
+    }
+    else if (contra2 ===""){
+        msg.style.color ="#fff";
+        msg.innerText = "*";
+    } else {
+        msg.style.color ="red";
+        msg.innerHTML= " No coinciden" 
+    }
 }
 
 function errorAlert (msg){

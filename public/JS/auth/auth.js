@@ -23,12 +23,11 @@ var autentificacion = new Vue({
                 let usuario = {
                     displayname: user.displayName,
                     email: user.email,
-                    uid: user.uid,
-                    fechanacimiento: '2000-05-09',
-                    tipocuenta: 'docente'
+                    uid: user.uid
                 }
+                
 
-                guardarSql(usuario);
+                guardarSql();
                 
             }).catch(function (error) {
                 // Handle Errors here.
@@ -136,54 +135,56 @@ var autentificacion = new Vue({
                 photoURL: 'https://firebasestorage.googleapis.com/v0/b/virtual-city-eb37f.appspot.com/o/defaultUser.svg?alt=media&token=c7c055ed-ce69-4911-9999-efa329bc6ee4'
             }).then(function () {
                 console.log(user);
-                let usuario = {
-                    displayname: user.displayName,
-                    email: user.email,
-                    uid: user.uid,
-                    fechanacimiento: document.getElementById('inputFechanacimiento').value,
-                    tipocuenta: 'docente'
-                }
-                guardarSql(usuario);
+                sessionStorage.setItem('displayName',user.displayName);
+                sessionStorage.setItem('email',user.email);
+                sessionStorage.setItem('uid',user.uid);
+                sessionStorage.setItem('nacimiento', document.getElementById('inputFechanacimiento').value);
+                sessionStorage.setItem('photoUrl',user.photoURL);
+                guardarSql();
             })
         },
         termCondiciones: function () {
             terminosYcondiciones();
+        },
+        seguridad: function () {
+            validarSeguridad()
+        },
+        igualdad: function () {
+            validarIgualdad();
         }
     }
 });
 
-function guardarSql(usuario) {
+function guardarSql() {
 
     if (window.location.pathname == '/Tecnoland/crearCuenta.html') {
-        fetch(`private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.text()).then(resp => {
-            console.log(resp);
+        /*fetch(`private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.text()).then(resp => {
+            
+        });*/
 
-            console.log(window.location)
-            if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
-                window.location = 'public/vistas/configCuenta.html';
-            } else {
-                window.location = 'configCuenta.html';
-            }
-        });
+        console.log(window.location)
+        if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
+            window.location = 'public/vistas/configCuenta.html';
+        } else {
+            window.location = 'configCuenta.html';
+        }
 
     }
     else {
-        fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.text()).then(resp => {
-            console.log(resp);
-
-            console.log(window.location)
-            if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
-                window.location = 'public/vistas/perfil.html';
-            } else {
-                window.location = 'perfil.html';
-            }
-        });
+        /*fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.text()).then(resp => {
+            console.log(resp);  
+        });*/
+        console.log(window.location)
+        if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
+            window.location = 'public/vistas/perfil.html';
+        } else {
+            window.location = 'perfil.html';
+        }
     }
 
 }
 
 function validar_clave(contraseña, contraseña2) {
-
 
     if (contraseña == contraseña2) {
 
@@ -231,8 +232,7 @@ function errorAlert(msg) {
     }
     //launch it.
     // since this was transient, we can launch another instance at the same time.
-    alertify
-        .errorAlert('' + msg);
+    alertify.errorAlert('' + msg);
 }
 
 function terminosYcondiciones() {
@@ -262,4 +262,61 @@ function terminosYcondiciones() {
         },
         padding: false
     });
+}
+function validarSeguridad() {
+    var contra = document.getElementById('txtPass').value;
+    var msg = document.getElementById('msgContra');
+
+    if (contra.length >= 8)
+
+        var mayuscula = false;
+    var minuscula = false;
+    var numero = false;
+    var tamaño = false;
+
+    for (var i = 0; i < contra.length; i++) {
+        if (contra.charCodeAt(i) >= 65 && contra.charCodeAt(i) <= 90) {
+            mayuscula = true;
+        } else if (contra.charCodeAt(i) >= 97 && contra.charCodeAt(i) <= 122) {
+            minuscula = true;
+        } else if (contra.charCodeAt(i) >= 48 && contra.charCodeAt(i) <= 57) {
+            numero = true;
+        }
+
+        if (contra.length >= 8) {
+            tamaño = true;
+        }
+
+    }
+    if (mayuscula == true && minuscula == true && numero == true && tamaño === true) {
+
+        msg.style.color = "#15E603";
+        msg.innerText = " Segura ";
+
+    } else if (contra === "") {
+        msg.innerText = "*";
+    } else {
+
+        msg.style.color = "red";
+        msg.innerText = " Insegura ";
+
+    }
+    return "contra-invalida";
+}
+
+function validarIgualdad() {
+    var contra = document.getElementById('txtPass').value;
+    var contra2 = document.getElementById('txtPassRepit').value;
+    var msg = document.getElementById('msg==');
+
+    if (contra === contra2) {
+        msg.style.color = "#15E603";
+        msg.innerHTML = "Coinciden"
+    } else if (contra2 === "") {
+        msg.style.color = "#fff";
+        msg.innerText = "*";
+    } else {
+        msg.style.color = "red";
+        msg.innerHTML = " No coinciden"
+    }
 }

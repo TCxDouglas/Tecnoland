@@ -167,19 +167,19 @@ function guardarSql(usuario) {
 
     if (window.location.pathname == '/Tecnoland/crearCuenta.html') { //La peticion viene de Crear Cuenta
         fetch(`private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.json()).then(resp => {
-            //console.log(resp)
+            console.log(resp)
             if (resp.uid!="") {
-                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
-                    window.location = 'public/vistas/perfil.html';
-                } else {
-                    window.location = 'perfil.html';
-                }
-            } else {
                 console.log(window.location)
                 if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
                     window.location = 'public/vistas/configCuenta.html';
                 } else {
                     window.location = 'configCuenta.html';
+                }
+            } else {
+                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
+                    window.location = 'public/vistas/perfil.html';
+                } else {
+                    window.location = 'perfil.html';
                 }
             }
         });

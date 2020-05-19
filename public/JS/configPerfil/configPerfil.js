@@ -133,7 +133,7 @@ function irPerfil(){
     user.updateProfile({
         photoURL: configPerfil.perfil.photoURL
      }).then(function () {
-        window.location = "perfil.html";
+        vistaConocimiento();
     })
     
 }
@@ -151,4 +151,17 @@ function guardaDatos(){
         //console.log(resp)
         irPerfil();
     });
+}
+
+function vistaConocimiento(){
+    let contenedorVista = document.getElementById('idContenedor');
+    fetch(`../modulos/conPrevioEstudiante.html`).then(function (respuesta) {
+        return respuesta.text();
+    }).then(function (respuesta) {
+        contenedorVista.innerHTML = respuesta;
+    })
+}
+
+function prueba(conocimiento){
+    window.location = 'vista-estudiante.html'
 }

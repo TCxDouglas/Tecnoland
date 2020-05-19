@@ -21,14 +21,17 @@ var autentificacion = new Vue({
                 console.log(user);
 
                 let usuario = {
-                    displayname: user.displayName,
-                    email: user.email,
-                    uid: user.uid
+                    uid: user.uid,
+                    accion: 'verificar'
                 }
-                
 
-                guardarSql();
-                
+                sessionStorage.setItem('displayName', user.displayName);
+                sessionStorage.setItem('email', user.email);
+                sessionStorage.setItem('uid', user.uid);
+                sessionStorage.setItem('nacimiento', '2000-02-10');
+                sessionStorage.setItem('photoUrl', user.photoURL);
+                guardarSql(usuario);
+
             }).catch(function (error) {
                 // Handle Errors here.
                 var errorCode = error.code;
@@ -73,7 +76,7 @@ var autentificacion = new Vue({
             });
         },
         crearCuenta: function () {
-            
+
             let msg = "Parece que su contraseña no es del todo segura! <br/><br/>" +
                 "Pruebe agregando 8 o más caracteres entre mayusculas, minusculas y números";
 
@@ -89,7 +92,7 @@ var autentificacion = new Vue({
                     var errorCode = error.code;
                     var errorMessage = error.message;
 
-                    if (errorCode == "auth/email-already-in-use"){
+                    if (errorCode == "auth/email-already-in-use") {
                         msg = "El correo ya esta registrado en nuestra plataforma! <br/><br/>" +
                             "Prueba iniciando sesion con tus credenciales"
                         errorAlert(msg);
@@ -124,7 +127,7 @@ var autentificacion = new Vue({
 
                 console.log(errorMessage);
                 console.log(errorCode);
-                
+
             });
         },
         actualizarUsuario: function () {
@@ -135,12 +138,17 @@ var autentificacion = new Vue({
                 photoURL: 'https://firebasestorage.googleapis.com/v0/b/virtual-city-eb37f.appspot.com/o/defaultUser.svg?alt=media&token=c7c055ed-ce69-4911-9999-efa329bc6ee4'
             }).then(function () {
                 console.log(user);
-                sessionStorage.setItem('displayName',user.displayName);
-                sessionStorage.setItem('email',user.email);
-                sessionStorage.setItem('uid',user.uid);
+                sessionStorage.setItem('displayName', user.displayName);
+                sessionStorage.setItem('email', user.email);
+                sessionStorage.setItem('uid', user.uid);
                 sessionStorage.setItem('nacimiento', document.getElementById('inputFechanacimiento').value);
-                sessionStorage.setItem('photoUrl',user.photoURL);
-                guardarSql();
+                sessionStorage.setItem('photoUrl', user.photoURL);
+
+                let usuario = {
+                    uid: user.uid,
+                    accion: 'verificar'
+                }
+                guardarSql(usuario);
             })
         },
         termCondiciones: function () {
@@ -155,31 +163,48 @@ var autentificacion = new Vue({
     }
 });
 
-function guardarSql() {
+function guardarSql(usuario) {
 
-    if (window.location.pathname == '/Tecnoland/crearCuenta.html') {
-        /*fetch(`private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.text()).then(resp => {
+    if (window.location.pathname == '/Tecnoland/crearCuenta.html') { //La peticion viene de Crear Cuenta
+        fetch(`private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.json()).then(resp => {
+            //console.log(resp)
+            if (resp.uid!="") {
+                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
+                    window.location = 'public/vistas/perfil.html';
+                } else {
+                    window.location = 'perfil.html';
+                }
+            } else {
+                console.log(window.location)
+                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
+                    window.location = 'public/vistas/configCuenta.html';
+                } else {
+                    window.location = 'configCuenta.html';
+                }
+            }
+        });
+
+    } else { //La peticion viene de Login
+        fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.json()).then(resp => {
             
-        });*/
+            //console.log(resp)
+            if (resp.uid!="") {
+                console.log(window.location)
+                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
+                    window.location = 'public/vistas/perfil.html';
+                } else {
+                    window.location = 'perfil.html';
+                }
+            } else {
+                console.log(window.location)
+                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
+                    window.location = 'public/vistas/configCuenta.html';
+                } else {
+                    window.location = 'configCuenta.html';
+                }
+            }
+        });
 
-        console.log(window.location)
-        if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
-            window.location = 'public/vistas/configCuenta.html';
-        } else {
-            window.location = 'configCuenta.html';
-        }
-
-    }
-    else {
-        /*fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.text()).then(resp => {
-            console.log(resp);  
-        });*/
-        console.log(window.location)
-        if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
-            window.location = 'public/vistas/perfil.html';
-        } else {
-            window.location = 'perfil.html';
-        }
     }
 
 }
@@ -196,11 +221,9 @@ function validar_clave(contraseña, contraseña2) {
             for (var i = 0; i < contraseña.length; i++) {
                 if (contraseña.charCodeAt(i) >= 65 && contraseña.charCodeAt(i) <= 90) {
                     mayuscula = true;
-                }
-                else if (contraseña.charCodeAt(i) >= 97 && contraseña.charCodeAt(i) <= 122) {
+                } else if (contraseña.charCodeAt(i) >= 97 && contraseña.charCodeAt(i) <= 122) {
                     minuscula = true;
-                }
-                else if (contraseña.charCodeAt(i) >= 48 && contraseña.charCodeAt(i) <= 57) {
+                } else if (contraseña.charCodeAt(i) >= 48 && contraseña.charCodeAt(i) <= 57) {
                     numero = true;
                 }
 
@@ -222,9 +245,9 @@ function errorAlert(msg) {
         alertify.dialog('errorAlert', function factory() {
             return {
                 build: function () {
-                    var errorHeader = '<span class="fa fa-times-circle fa-2x" '
-                        + 'style="vertical-align:middle;color:#e10000;">'
-                        + '</span> UPS!';
+                    var errorHeader = '<span class="fa fa-times-circle fa-2x" ' +
+                        'style="vertical-align:middle;color:#e10000;">' +
+                        '</span> UPS!';
                     this.setHeader(errorHeader);
                 }
             };
@@ -263,6 +286,7 @@ function terminosYcondiciones() {
         padding: false
     });
 }
+
 function validarSeguridad() {
     var contra = document.getElementById('txtPass').value;
     var msg = document.getElementById('msgContra');

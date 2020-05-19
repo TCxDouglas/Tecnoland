@@ -11,19 +11,10 @@ var perfil = new Vue({
     },
     methods: {
         datosUsuario: function () {
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    //console.log(user);
-                    perfil.usuario.uid = user.uid;
-                    perfil.usuario.displayName = user.displayName;
-                    perfil.usuario.photoURL = user.photoURL;
-                    //console.log(sala.datosUsuario);
-                    console.log(perfil.usuario);
-                    perfil.obtenerSalas();
-                } else {
-                    window.location = '../../index.html'
-                }
-            });
+            perfil.usuario.uid = sessionStorage.getItem('uid');
+            perfil.usuario.displayName = sessionStorage.getItem('displayName');
+            perfil.usuario.photoURL = sessionStorage.getItem('photoUrl');
+
         },
         obtenerSalas: function () {
             firebase.database().ref('Tecnoland').child('usuarios').child(perfil.usuario.uid).child('salas').once('value').then(function (snapshot) {
@@ -48,29 +39,46 @@ var perfil = new Vue({
             window.location = 'crear-salas.html'
         },
         mandarDatos: function (filaSala) {
-            
-            modalPerfil.infoSala.nombreSala=filaSala.nombreSala;
+
+            modalPerfil.infoSala.nombreSala = filaSala.nombreSala;
             modalPerfil.infoSala.codigoSala = filaSala.codigoSala;
             modalPerfil.infoSala.descripcion = filaSala.descripcion;
             console.log(modalPerfil.infoSala)
+        },
+        cerrarSesion: function () {
+            sessionStorage.removeItem('displayName');
+            sessionStorage.removeItem('photoUrl');
+            sessionStorage.removeItem('uid');
+            sessionStorage.removeItem('email');
+            sessionStorage.removeItem('nacimiento');
+            sessionStorage.removeItem('tipoCuenta');
+            window.location = '../../index.html'
         }
     },
     created: function () {
-        this.datosUsuario();
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                perfil.datosUsuario();
+                perfil.obtenerSalas();
+            } else {
+                window.location = '../../index.html'
+            }
+        });
+        
     }
 })
 
-var modalPerfil=new Vue({
+var modalPerfil = new Vue({
     el: '#modalLista',
-    data:{
-        infoSala:{
-            nombreSala:'',
-            codigoSala:'',
-            descripcion:''
+    data: {
+        infoSala: {
+            nombreSala: '',
+            codigoSala: '',
+            descripcion: ''
         }
     },
-    methods:{
-        colocarDatos: function(){
+    methods: {
+        colocarDatos: function () {
 
         }
     }

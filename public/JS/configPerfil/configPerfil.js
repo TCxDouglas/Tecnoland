@@ -133,7 +133,7 @@ function irPerfil(){
     user.updateProfile({
         photoURL: configPerfil.perfil.photoURL
      }).then(function () {
-        window.location = "perfil.html";
+        vistaConocimiento();
     })
     
 }
@@ -144,10 +144,24 @@ function guardaDatos(){
         email: sessionStorage.getItem('email'),
         uid: sessionStorage.getItem('uid'),
         fechanacimiento: sessionStorage.getItem('nacimiento'),
-        tipocuenta: sessionStorage.getItem('tipoCuenta')
+        tipocuenta: sessionStorage.getItem('tipoCuenta'),
+        accion: 'guardar'
     }
     fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.text()).then(resp => {
         //console.log(resp)
         irPerfil();
     });
+}
+
+function vistaConocimiento(){
+    let contenedorVista = document.getElementById('idContenedor');
+    fetch(`../modulos/conPrevioEstudiante.html`).then(function (respuesta) {
+        return respuesta.text();
+    }).then(function (respuesta) {
+        contenedorVista.innerHTML = respuesta;
+    })
+}
+
+function prueba(conocimiento){
+    window.location = 'vista-estudiante.html'
 }

@@ -30,10 +30,10 @@
                         <form class="form-inline my-1 my-lg-0">
                             <button type="button" class="btn btn-outline-primary form-control mr-sm-2 text-light"
                                 v-on:click="crearSala">CREAR SALA</button>
-                            <a href="../../index.html">
-                                <button class="btn btn-outline-danger text-light my-2 my-sm-0" type="button"
-                                    href="../../../">Cerrar Sesion</button>
-                            </a>
+
+                            <button class="btn btn-outline-danger text-light my-2 my-sm-0" type="button"
+                                v-on:click="cerrarSesion">Cerrar Sesion</button>
+
                         </form>
                     </div>
                 </nav>
@@ -44,8 +44,8 @@
             <div class="container row">
                 <div class="col-sm">
                     <div class="card bg-dark text-light" style="width: 18rem; align-items: center;">
-                        <img v-bind:src="usuario.photoURL" class="card-img-top rounded-circle" 
-                        style="width: 200px; height: 200px;">
+                        <img v-bind:src="usuario.photoURL" class="card-img-top rounded-circle"
+                            style="width: 200px; height: 200px;">
                         <div class="card-body">
                             <h5 class="card-title">{{usuario.displayName}} </h5>
                             <p class="card-text">Proximamente </p>
@@ -115,8 +115,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-sm">
-                                    <input type="text" placeholder="Nombre de la sala"
-                                        v-model="infoSala.nombreSala">
+                                    <input type="text" placeholder="Nombre de la sala" v-model="infoSala.nombreSala">
                                 </div>
                                 <div class="col-sm">
                                     <input type="text" placeholder="Codigo de la sala" v-model="infoSala.codigoSala">
@@ -143,7 +142,7 @@
                                         <td>La tasca de Josue</td>
                                         <td>tasca@gmail.com</td>
                                         <td>Eliminar Estudiante</td>
-                                    </tr> 
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

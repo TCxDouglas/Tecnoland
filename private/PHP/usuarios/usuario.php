@@ -29,9 +29,9 @@
             $GG = $this->db->obtener_datos();
             $cont = count($GG);
             if ($cont>0){
-                return $this->respuesta = ['ya existe'];
+                return $this->respuesta = $GG;
             }
-            else{
+            else if($this->datos['accion']=='guardar'){
                 $this->db->consultas('INSERT INTO usuarios (uid, displayname, email, fechanacimiento, tipocuenta) VALUES("'.$this->datos['uid'].'", "'.$this->datos['displayname'].'", "'.$this->datos['email'].'", "'.$this->datos['fechanacimiento'].'", "'.$this->datos['tipocuenta'].'")');
                 return $this->respuesta = ['guardado'];
             }

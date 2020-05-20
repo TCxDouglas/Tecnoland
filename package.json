@@ -1,7 +1,7 @@
 {
   "name": "tecnoland",
   "version": "1.0.0",
-  "description": "chat manguito",
+  "description": "chat en mongo",
   "main": "server.js",
   "dependencies": {
     "mongodb": "^3.5.7",
@@ -13,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JosueAparicio/Tecnoland.git"
+    "url": "git+https://github.com/TCxDouglas/Tecnoland.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JosueAparicio/Tecnoland/issues"
+    "url": "https://github.com/TCxDouglas/Tecnoland/issues"
   },
-  "homepage": "https://github.com/JosueAparicio/Tecnoland#readme"
+  "homepage": "https://github.com/TCxDouglas/Tecnoland#readme"
 }

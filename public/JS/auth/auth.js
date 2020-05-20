@@ -318,6 +318,7 @@ function validarSeguridad() {
         msg.innerText = " Segura ";
 
     } else if (contra === "") {
+        msg.style.color = "#fff";
         msg.innerText = "*";
     } else {
 

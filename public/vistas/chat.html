@@ -1,8 +1,20 @@
 <div class="container">
     <div class="navbar navbar-dark bg-dark">
-        <span class="navbar-brand"></span>
+        <span class="navbar-brand"> Chat Sala</span>
     </div>
-<main>
-
-</main>  
+    <main id="contenidoChat">
+        <div class="d-flex justify-content-end">
+            <span class="badge badge-pill badge-light" style="margin-top: 5px;">Holi</span>
+        </div>
+        <div class="d-flex justify-content-start">
+            <span class="badge badge-pill badge-secondary" style="margin-top: 5px;">Hola guapo</span>
+        </div>
+    </main>
+    <form class="input-group  container" style="margin-top: 45vh;" id="frmEnviarMsg">
+         <input type="text" class="form-control" placeholder="Envía un mensaje" id="inputMsg">
+         <div class="input-group-append">
+             <button class="btn btn-primary" id="btnEnviarMsg">Enviar</button>
+         </div>   
+    </form>
 </div>
+<script src="../JS/chat/chat.js"></script>

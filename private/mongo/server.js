@@ -1,9 +1,27 @@
-const mongo =require('mongodb').MongoClient;
-const client= require('socket.io').listen(4000).sockets
-
-//Conexion al MangoRolo
-mongo.connect('mongodb://127.0.0.1/Tecnoland', function(error,db){
-    if(error){
-    }
-    console.log('Conexion a MangoRolo')
-})
+//NOTA: Este archivo debe de ir en la carpeta de node -> C:\Program Files\nodejs
+var http = require('http').Server(),
+    io   = require('socket.io')(http),
+    MongoClient = require('mongodb').MongoClient,
+    url  = 'mongodb://localhost:27017',
+    dbName = 'chatTecnoland';
+    
+io.on('connection',socket=>{
+    socket.on('enviarMensaje',(msg)=>{
+        MongoClient.connect(url, (err,client)=>{
+            const db = client.db(dbName);
+            db.collection('chat').insert({ 'user':msg.user, 'msg': msg.msg, 'fecha': msg.fecha});
+            io.emit('recibirMensaje', msg);
+        });
+    });
+    socket.on('chatHistory',()=>{
+        MongoClient.connect(url, (err, client)=>{
+            const db = client.db(dbName);
+            db.collection('chat').find({}).toArray((err, msgs)=>{
+                io.emit('chatHistory',msgs);
+            }); 
+        });
+    });
+});
+http.listen(3001,()=>{
+    console.log('Escuchando peticiones por el puerto 3001, LISTO');
+});

@@ -116,9 +116,8 @@ var autentificacion = new Vue({
         iniciarSesion: function () {
             let cargando = document.getElementById('Verificando');
             cargando.style.display = 'block';
-            firebase.auth().signInWithEmailAndPassword(this.email, this.pass).then(function (resp) {
-                console.log(resp);
-                window.location = 'perfil.html'
+            firebase.auth().signInWithEmailAndPassword(this.email, this.pass).then(function (user) {
+                autentificacion.guardarSession()
             }).catch(function (error) {
                 let cargando = document.getElementById('Verificando');
                 cargando.style.display = 'none';
@@ -129,6 +128,16 @@ var autentificacion = new Vue({
                 console.log(errorCode);
 
             });
+        },
+        guardarSession: function(){
+            var user = firebase.auth().currentUser;
+            console.log(user);
+            sessionStorage.setItem('displayName', user.displayName);
+            sessionStorage.setItem('email', user.email);
+            sessionStorage.setItem('uid', user.uid);
+            sessionStorage.setItem('nacimiento', '2000-02-10');
+            sessionStorage.setItem('photoUrl', user.photoURL);
+            window.location = 'perfil.html'
         },
         actualizarUsuario: function () {
             //console.log(this.displayName);

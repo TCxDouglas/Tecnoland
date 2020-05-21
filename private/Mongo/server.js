@@ -14,14 +14,14 @@ io.on('connection', socket => {
                 'msg': msg.msg,
                 'fecha': msg.fecha
             });
-            io.emit('recibirMensaje', msg);
+            io.emit('recibirMensaje', msg.msg);
         });
     });
     socket.on('chatHistory', () => {
         MongoClient.connect(url, (err, client) => {
             const db = client.db(dbName);
             db.collection('chat').find({}).toArray((err, msgs) => {
-                io.emit('chatHistory', msgs);
+                io.emit('chatHistory', msgs.msg);
             });
         });
     });

@@ -44,6 +44,7 @@ var perfil = new Vue({
             modalPerfil.infoSala.codigoSala = filaSala.codigoSala;
             modalPerfil.infoSala.descripcion = filaSala.descripcion;
             console.log(modalPerfil.infoSala)
+            window.location = 'sala-study.html'
         },
         cerrarSesion: function () {
             sessionStorage.removeItem('displayName');

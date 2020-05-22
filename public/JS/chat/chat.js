@@ -1,72 +1,76 @@
 
-var socket = io.connect("http://localhost:3001",{'forceNew':true});
-const formulario = document.querySelector('#frmEnviarMsg');
-const contenido = document.querySelector('#contenidoChat');
-var mensaje = document.querySelector('#inputMsg');
 
-
-document.adeventlistener (DOMContentLoad, (e) =>{
-    socket.emit('chatHistory');
-
-})
-
-socket.on('recibirMensaje',msg=>{
-    console.log(msg);
-    //appchat.msgs.push(msg);
-});
-socket.on('chatHistory',msgs=>{
-   // appchat.msgs = [];
-    msgs.forEach(item => {
-      // appchat.msgs.push(item.msg);
-    });
-});
-formulario.addEventListener('submit', (e) => {
-    var contMsg = [];
-    contMsg = {
-        user: '9838hhajx87u',
-        msg:  mensaje.value,
-        fecha: Date.now()
-    }
-    e.preventDefault();
-    if(!mensaje.value.trim()){
-        console.log ('Caja de texto vacia');
-        return
-    }
-    console.log(mensaje.value);
-    socket.emit('enviarMensaje', contMsg);
-    mensaje.value= '';
-})
-
-function traerHistorial(){
-
-}
-
-var  appchat = new Vue({
-        el:'#frm-chat',
+var socket = io.connect("http://localhost:3001",{'forceNew':true}),
+mensaje = document.querySelector('#inputMsg'),
+revMesg = [],   
+ appchat = new Vue({
+        el:'#frmChat',
         data:{
+
             msg : '',
-            msgs : []
+
         },
+
+
+
         methods:{
             enviarMensaje(){
-                socket.emit('enviarMensaje', this.msg);
-                this.msg = '';
+              var  envMesg  =
+                {
+                    user: sessionStorage.getItem('displayName'),
+                    msg:  document.querySelector('#inputMsg').value.trim(),
+                    fecha: Date.now(),
+                    uid: sessionStorage.getItem('uid')
+                };
+                socket.emit('enviarMensaje', envMesg);
+                socket.emit('historial');
+                console.log(envMesg);
+                envMesg.user = '';
+                envMesg.msg = '';
+                envMesg.fecha = '';
+                envMesg.uid = '';
+
+                document.querySelector('#inputMsg').value = ''; 
             },
-            limpiarChat(){
-                this.msg = '';
-            }
+
         },
         created(){
-            socket.emit('chatHistory');
+            socket.emit('historial');
         }
     });
-    socket.on('recibirMensaje',msg=>{
+   socket.on('recibirMensaje',msg=>{
+        revMesg = msg;
         console.log(msg);
-        appchat.msgs.push(msg);
     });
-    socket.on('chatHistory',msgs=>{
-        appchat.msgs = [];
-        msgs.forEach(item => {
-            appchat.msgs.push(item.msg);
+
+    
+        socket.on('historial',msgs=>{
+            
+            var contenido = document.querySelector('#contenidoChat');
+            contenido.innerHTML='';
+             revMesg = [];
+             console.log(msgs);
+             console.log('trae')
+             console.log(contenido);
+            msgs.forEach(item => {
+                
+                if (sessionStorage.getItem('uid')===item.uid){
+                   contenido.innerHTML += `
+
+               <div class="d-flex justify-content-end" style="margin-top: 5px;">
+                   <span class="badge badge-pill badge-info">${item.msg}</span>
+               </div>`
+                    
+                } else{
+                    contenido.innerHTML += `
+                    <div class="d-flex justify-content-start">
+                    <small class="text-muted"style="margin-top: 5px;">${item.user}:</small>
+                </div>
+                <div class="d-flex justify-content-start">
+                    <span class="badge badge-pill badge-secondary">${item.msg}</span>
+                </div>`
+                }
+                contenido.scrollTop = contenido.scrollHeight;
+            });
         });
-    });
+    

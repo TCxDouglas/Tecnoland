@@ -6,26 +6,29 @@ var http = require('http').Server(),
     dbName = 'chatTecnoland';
 
 io.on('connection', socket => {
-    socket.on('enviarMensaje', (msg) => {
+    socket.on('enviarMensaje', (datos) => {
         MongoClient.connect(url, (err, client) => {
             const db = client.db(dbName);
-            db.collection('chat').insert({
-                'user': msg.user,
-                'msg': msg.msg,
-                'fecha': msg.fecha
+            db.collection('chat').insertOne({
+                'user': datos.user,
+                'msg': datos.msg,
+                'fecha': datos.fecha,
+                'uid': datos.uid
             });
-            io.emit('recibirMensaje', msg);
+            io.emit('recibirMensaje', datos.msg);
+
         });
     });
-    socket.on('chatHistory', () => {
+    socket.on('historial', () => {
         MongoClient.connect(url, (err, client) => {
             const db = client.db(dbName);
-            db.collection('chat').find({}).toArray((err, msgs) => {
-                io.emit('chatHistory', msgs);
+            db.collection('chat').find({}).toArray((err, datas) => {
+                io.emit('historial', datas);
             });
+            console.log(err);
         });
     });
 });
 http.listen(3001, () => {
-    console.log('Escuchando peticiones por el puerto 3001, LISTO');
+    console.log('Escuchando peticiones por el puerto 3001, okey');
 });

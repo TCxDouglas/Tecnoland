@@ -28,7 +28,7 @@ revMesg = [],
                 console.log(envMesg);
                 envMesg.user = '';
                 envMesg.msg = '';
-                envMesg.fecha = '';
+                envMesg.photo = '';
                 envMesg.fecha = '';
                 envMesg.uid = '';
 

@@ -1,18 +1,42 @@
-    <div class="container" id="frmChat"v-on:submit.prevent="enviarMensaje">
-        <div class="navbar navbar-dark bg-dark">
-            <span class="navbar-brand"> Chat Sala</span>
-        </div>
-        <main id="contenidoChat" class="bg-light" style="height: 55vh; overflow-y: scroll;">
- 
 
-        </main>
-        <form class="input-group  container" style="margin-top: 2.5vh;" id="frmEnviarMsg">
-             <input type="text" class="form-control" v-model="msg" placeholder="Envía un mensaje" id="inputMsg">
-             <div class="input-group-append">
-                 <button type="submit" class="btn btn-primary" id="btnEnviarMsg">Enviar</button>
-             </div>   
-        </form>
-    </div>
+    <div class="container chat-cont" id="frmChat" v-on:submit.prevent="enviarMensaje" >
+
+        <div class="msg-cabezera">
+            <div class="img-perfil-cabezera">
+                <img src="../imagenes/woman2.png" >
+            </div>
+            <div class="activa">
+                <h4>Nombre  sala</h4>
+                <h6>Creador</h6>
+            </div>
+        </div>
+        
+        <div class="cuerpo-chat" >
+            <div class="msg-imbox">
+                <div class="chats">
+                    <main  style="height: 45vh; overflow-y: scroll;" id="contenidoChat" >
+        
+        
+                             
+        
+        
+                        </main>
+                    </div>
+                </div>
+        
+                <form class="msg-botones">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Envia un mensaje..." id="inputMsg">
+        
+                        <div class="input-group-append">
+                            <button type="submit" class="input-group-text" > <i class="fa fa-paper-plane" ></i></button>
+                        </div>
+                    </div>
+                </form>
+        
+            </div>
+        </div>
+        
 
     <script src="../JS/chat/chat.js"></script>
 

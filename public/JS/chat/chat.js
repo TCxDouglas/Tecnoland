@@ -20,6 +20,7 @@ revMesg = [],
                     user: sessionStorage.getItem('displayName'),
                     msg:  document.querySelector('#inputMsg').value.trim(),
                     fecha: Date.now(),
+                    photo: sessionStorage.getItem('photoUrl'),
                     uid: sessionStorage.getItem('uid')
                 };
                 socket.emit('enviarMensaje', envMesg);
@@ -27,6 +28,7 @@ revMesg = [],
                 console.log(envMesg);
                 envMesg.user = '';
                 envMesg.msg = '';
+                envMesg.fecha = '';
                 envMesg.fecha = '';
                 envMesg.uid = '';
 
@@ -56,21 +58,37 @@ revMesg = [],
                 
                 if (sessionStorage.getItem('uid')===item.uid){
                    contenido.innerHTML += `
+                   <div class="env-chat">
+                   <div class="env-msg">
+                       
+                           <p>${item.msg}</p>
+                           <span class="useer">${item.user} <small class="time">${new Date(item.fecha).toDateString()}</small></span>
 
-               <div class="d-flex justify-content-end" style="margin-top: 5px;">
-                   <span class="badge badge-pill badge-info">${item.msg}</span>
+                   </div>
+                   <div class="env-chat-img">
+                       <img src="${item.photo}" >
+                   </div>
                </div>`
                     
                 } else{
                     contenido.innerHTML += `
-                    <div class="d-flex justify-content-start">
-                    <small class="text-muted"style="margin-top: 5px;">${item.user}:</small>
-                </div>
-                <div class="d-flex justify-content-start">
-                    <span class="badge badge-pill badge-secondary">${item.msg}</span>
-                </div>`
+                    <div class="reciv-chat">
+                    <div class="reciv-chat-img">
+                        <img src="${item.photo}" >
+                    </div>
+                    <div class="reciv-msg">
+                        <div class="reciv-msginbox">
+                            <p class="p">${item.msg}</p>
+                            <span class="useer">${item.user} <small class="time">${new Date(item.fecha).toDateString()} </small></span>
+
+                        </div>
+                    </div>
+                    </div>`
                 }
                 contenido.scrollTop = contenido.scrollHeight;
             });
         });
     
+        function haber(){
+            console.log(document.querySelector('#inputMsg').value.trim())
+        }

@@ -13,6 +13,7 @@ io.on('connection', socket => {
                 'user': datos.user,
                 'msg': datos.msg,
                 'fecha': datos.fecha,
+                'photo': datos.photo,
                 'uid': datos.uid
             });
             io.emit('recibirMensaje', datos.msg);

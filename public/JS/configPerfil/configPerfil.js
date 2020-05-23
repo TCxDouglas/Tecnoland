@@ -14,24 +14,8 @@ var configPerfil =new Vue({
      },
     methods:{
         vistaConfigDocente: function(){
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    console.log(user);
-                    configPerfil.perfil.uid = sessionStorage.getItem('uid');
-                    configPerfil.perfil.displayName = sessionStorage.getItem('displayName');
-                    configPerfil.perfil.email = sessionStorage.getItem('email');
-                    configPerfil.perfil.photoURL = sessionStorage.getItem('photoUrl');
+            verificarLogin();
 
-                    console.log(configPerfil.perfil);
-                    let lblNombre = document.getElementById('lblNombre');
-                    lblNombre.innerText = configPerfil.perfil.displayName;
-
-                    let imgPerfil = document.getElementById('perfilImg');
-                    imgPerfil.setAttribute("src", configPerfil.perfil.photoURL);
-                } else {
-                    window.location = '../../index.html'
-                }
-            });
             let contenedorVista = document.getElementById('idContenedor');
             fetch(`../modulos/configCuenta.html`).then(function (respuesta) {
                 return respuesta.text();
@@ -57,24 +41,8 @@ var configPerfil =new Vue({
             window.location.pathname='../../vistas/perfil.html';
         },
         vistaConfigEstudiante: function(){
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    console.log(user);
-                    configPerfil.perfil.uid = sessionStorage.getItem('uid');
-                    configPerfil.perfil.displayName = sessionStorage.getItem('displayName');
-                    configPerfil.perfil.email = sessionStorage.getItem('email');
-                    configPerfil.perfil.photoURL = sessionStorage.getItem('photoUrl');
-
-                    console.log(configPerfil.perfil);
-                    let lblNombre = document.getElementById('lblNombre');
-                    lblNombre.innerText = configPerfil.perfil.displayName;
-
-                    let imgPerfil = document.getElementById('perfilImg');
-                    imgPerfil.setAttribute("src", configPerfil.perfil.photoURL);
-                } else {
-                    window.location = '../../index.html'
-                }
-            });
+            verificarLogin()
+            
              let contenedorVista = document.getElementById('idContenedor');
              fetch(`../modulos/configCuenta.html`).then(function (respuesta) {
                  return respuesta.text();
@@ -183,4 +151,25 @@ function intermedio(){
 function avanzado(){
     sessionStorage.setItem('conocimiento','avanzado');
     guardaDatos()
+}
+
+function verificarLogin(){
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            console.log(user);
+            configPerfil.perfil.uid = sessionStorage.getItem('uid');
+            configPerfil.perfil.displayName = sessionStorage.getItem('displayName');
+            configPerfil.perfil.email = sessionStorage.getItem('email');
+            configPerfil.perfil.photoURL = sessionStorage.getItem('photoUrl');
+
+            console.log(configPerfil.perfil);
+            let lblNombre = document.getElementById('lblNombre');
+            lblNombre.innerText = configPerfil.perfil.displayName;
+
+            let imgPerfil = document.getElementById('perfilImg');
+            imgPerfil.setAttribute("src", configPerfil.perfil.photoURL);
+        } else {
+            window.location = '../../index.html'
+        }
+    });
 }

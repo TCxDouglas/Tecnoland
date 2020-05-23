@@ -369,3 +369,10 @@ header nav ul li a.activo {
   width: 20px;
   float: right;
 }
+
+.input-group-text
+{
+  background-color: #007bff;
+  color: #fff;
+}
+

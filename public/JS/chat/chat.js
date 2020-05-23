@@ -15,24 +15,27 @@ revMesg = [],
 
         methods:{
             enviarMensaje(){
-              var  envMesg  =
-                {
-                    user: sessionStorage.getItem('displayName'),
-                    msg:  document.querySelector('#inputMsg').value.trim(),
-                    fecha: Date.now(),
-                    photo: sessionStorage.getItem('photoUrl'),
-                    uid: sessionStorage.getItem('uid')
-                };
-                socket.emit('enviarMensaje', envMesg);
-                socket.emit('historial');
-                console.log(envMesg);
-                envMesg.user = '';
-                envMesg.msg = '';
-                envMesg.photo = '';
-                envMesg.fecha = '';
-                envMesg.uid = '';
+                if (!document.querySelector('#inputMsg').value.trim() == ''){
+                    var  envMesg  =
+                    {
+                        user: sessionStorage.getItem('displayName'),
+                        msg:  document.querySelector('#inputMsg').value.trim(),
+                        fecha: Date.now(),
+                        photo: sessionStorage.getItem('photoUrl'),
+                        uid: sessionStorage.getItem('uid')
+                    };
+                    socket.emit('enviarMensaje', envMesg);
+                    socket.emit('historial');
+                    console.log(envMesg);
+                    envMesg.user = '';
+                    envMesg.msg = '';
+                    envMesg.photo = '';
+                    envMesg.fecha = '';
+                    envMesg.uid = '';
+    
+                    document.querySelector('#inputMsg').value = ''; 
+                }
 
-                document.querySelector('#inputMsg').value = ''; 
             },
 
         },

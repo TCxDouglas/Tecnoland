@@ -8,7 +8,8 @@ var configPerfil =new Vue({
             uid:'',
             displayName:'',
             email:'',
-            photoURL:''
+            photoURL:'',
+            
         }
      },
     methods:{
@@ -133,7 +134,7 @@ function irPerfil(){
     user.updateProfile({
         photoURL: configPerfil.perfil.photoURL
      }).then(function () {
-        vistaConocimiento();
+        window.location='perfil.html'
     })
     
 }
@@ -145,23 +146,41 @@ function guardaDatos(){
         uid: sessionStorage.getItem('uid'),
         fechanacimiento: sessionStorage.getItem('nacimiento'),
         tipocuenta: sessionStorage.getItem('tipoCuenta'),
+        conoc: sessionStorage.getItem('conocimiento'),
         accion: 'guardar'
     }
-    fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.text()).then(resp => {
-        //console.log(resp)
+    console.log(usuario);
+    fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.json()).then(resp => {
+        console.log(resp)
         irPerfil();
     });
 }
 
 function vistaConocimiento(){
-    let contenedorVista = document.getElementById('idContenedor');
-    fetch(`../modulos/conPrevioEstudiante.html`).then(function (respuesta) {
-        return respuesta.text();
-    }).then(function (respuesta) {
-        contenedorVista.innerHTML = respuesta;
-    })
+    if (sessionStorage.getItem('tipoCuenta') == 'normal'){
+        let contenedorVista = document.getElementById('idContenedor');
+        fetch(`../modulos/conPrevioEstudiante.html`).then(function (respuesta) {
+            return respuesta.text();
+        }).then(function (respuesta) {
+            contenedorVista.innerHTML = respuesta;
+        })
+    }else{
+        window.location='perfil.html'
+    }
+    
 }
 
-function prueba(conocimiento){
-    window.location = 'vista-estudiante.html'
+function basico(){
+    sessionStorage.setItem('conocimiento','basico');
+    guardaDatos()
+}
+
+function intermedio(){
+    sessionStorage.setItem('conocimiento','intermedio');
+    guardaDatos()
+} 
+
+function avanzado(){
+    sessionStorage.setItem('conocimiento','avanzado');
+    guardaDatos()
 }

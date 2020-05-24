@@ -40,10 +40,10 @@ var perfil = new Vue({
         },
         mandarDatos: function (filaSala) {
 
-            modalPerfil.infoSala.nombreSala = filaSala.nombreSala;
-            modalPerfil.infoSala.codigoSala = filaSala.codigoSala;
-            modalPerfil.infoSala.descripcion = filaSala.descripcion;
             console.log(modalPerfil.infoSala)
+            sessionStorage.setItem('codigoSala', filaSala.codigoSala)
+            sessionStorage.getItem('nombreSala', filaSala.nombreSala)
+            sessionStorage.setItem('uidCreador',this.usuario.uid)
             window.location = 'sala-study.html'
         },
         cerrarSesion: function () {

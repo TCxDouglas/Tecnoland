@@ -21,9 +21,18 @@
         }
     
         private function almacenar_sala(){
-            $this->db->consultas('INSERT INTO salas (uid, codigoSala) 
+            $this->db->consultas('INSERT INTO salas (uidCreador, codigoSala) 
                 VALUES("'.$this->datos['uid'].'", "'.$this->datos['codigoSala'].'")');
                 return $this->respuesta = ['guardado'];         
+        }
+
+        public function buscarSala($sala=''){
+            $this->db->consultas('
+            SELECT salas.uidCreador, salas.codigoSala
+            FROM salas
+            WHERE salas.codigoSala= "'.$sala.'"
+        ');
+        return $this->respuesta=$this->db->obtener_datos();
         }
     } 
 ?> 

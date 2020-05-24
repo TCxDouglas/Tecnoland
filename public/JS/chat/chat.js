@@ -10,9 +10,6 @@ revMesg = [],
             msg : '',
 
         },
-
-
-
         methods:{
             enviarMensaje(){
                 if (!document.querySelector('#inputMsg').value.trim() == ''){

@@ -39,6 +39,7 @@ var modalEstudiante = new Vue({
                     console.log(array[0].uidCreador)
                     console.log(modalEstudiante.codigoSala)
                     agregarIntegrante(array[0].uidCreador, modalEstudiante.codigoSala)
+                    
                 });
                 
             }else{
@@ -75,8 +76,22 @@ function agregarIntegrante(uid,codigoSala){
         photoURL: perfilEstudiante.usuario.photoURL
     }).then(function () {
         console.log('Añadido a la sala')
-        //window.location = '../../vistas/sala-study.html'
+        agregarRegistro(uid, codigoSala)
     }).catch(function (error) {
         console.log(error.message);
+    })
+}
+
+function agregarRegistro(uidCreador, codigoSala){
+    firebase.database().ref('Tecnoland').child('usuarios').child(sessionStorage.getItem('uid')).child('unionSala').set({
+        creadorSala: uidCreador,
+        codigoSala: codigoSala
+    }).then(function(){
+        console.log('Registro añadido')
+        sessionStorage.setItem('codigoSala', codigoSala)
+        sessionStorage.setItem('uidCreador', uidCreador)
+        window.location = 'sala-study.html'
+    }).catch(function(error){
+        console.log(error.message)
     })
 }

@@ -89,6 +89,3 @@ revMesg = [],
             });
         });
     
-        function haber(){
-            console.log(document.querySelector('#inputMsg').value.trim())
-        }

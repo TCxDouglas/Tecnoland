@@ -54,10 +54,20 @@ var sala = new Vue({
             
         },
         guardarDatos: function () {
-
             this.codigoSala =this.datosUsuario.displayName.substring(0,2).toLowerCase() + this.datosUsuario.uid.substring(0,2).toLowerCase() + generarNumero(1000, 9999);
-            console.log(this.codigoSala);
+            
+            let uid=this.datosUsuario.uid;
+            let codigoSala= this.codigoSala;
+            let salaPHP={
+                uid,
+                codigoSala
+            }
             document.getElementById('Verificando').style.display='block';
+
+            fetch(`../../private/PHP/salas/salas.php?proceso=recibirDatos&sala=${JSON.stringify(salaPHP)}`).then(resp => resp.text()).then(resp =>{
+                console.log(resp)
+            })
+
             firebase.database().ref('Tecnoland').child('usuarios').child(sala.datosUsuario.uid).child('salas').child(this.codigoSala).set({
                 nombreSala: this.nombreSala,
                 descripcion: this.descripcionSala,

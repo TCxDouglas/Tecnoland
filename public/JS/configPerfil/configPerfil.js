@@ -8,29 +8,14 @@ var configPerfil =new Vue({
             uid:'',
             displayName:'',
             email:'',
-            photoURL:''
+            photoURL:'',
+            
         }
      },
     methods:{
         vistaConfigDocente: function(){
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    console.log(user);
-                    configPerfil.perfil.uid = sessionStorage.getItem('uid');
-                    configPerfil.perfil.displayName = sessionStorage.getItem('displayName');
-                    configPerfil.perfil.email = sessionStorage.getItem('email');
-                    configPerfil.perfil.photoURL = sessionStorage.getItem('photoUrl');
+            verificarLogin();
 
-                    console.log(configPerfil.perfil);
-                    let lblNombre = document.getElementById('lblNombre');
-                    lblNombre.innerText = configPerfil.perfil.displayName;
-
-                    let imgPerfil = document.getElementById('perfilImg');
-                    imgPerfil.setAttribute("src", configPerfil.perfil.photoURL);
-                } else {
-                    window.location = '../../index.html'
-                }
-            });
             let contenedorVista = document.getElementById('idContenedor');
             fetch(`../modulos/configCuenta.html`).then(function (respuesta) {
                 return respuesta.text();
@@ -56,24 +41,8 @@ var configPerfil =new Vue({
             window.location.pathname='../../vistas/perfil.html';
         },
         vistaConfigEstudiante: function(){
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    console.log(user);
-                    configPerfil.perfil.uid = sessionStorage.getItem('uid');
-                    configPerfil.perfil.displayName = sessionStorage.getItem('displayName');
-                    configPerfil.perfil.email = sessionStorage.getItem('email');
-                    configPerfil.perfil.photoURL = sessionStorage.getItem('photoUrl');
-
-                    console.log(configPerfil.perfil);
-                    let lblNombre = document.getElementById('lblNombre');
-                    lblNombre.innerText = configPerfil.perfil.displayName;
-
-                    let imgPerfil = document.getElementById('perfilImg');
-                    imgPerfil.setAttribute("src", configPerfil.perfil.photoURL);
-                } else {
-                    window.location = '../../index.html'
-                }
-            });
+            verificarLogin()
+            
              let contenedorVista = document.getElementById('idContenedor');
              fetch(`../modulos/configCuenta.html`).then(function (respuesta) {
                  return respuesta.text();
@@ -133,7 +102,7 @@ function irPerfil(){
     user.updateProfile({
         photoURL: configPerfil.perfil.photoURL
      }).then(function () {
-        vistaConocimiento();
+        window.location='perfil.html'
     })
     
 }
@@ -145,23 +114,62 @@ function guardaDatos(){
         uid: sessionStorage.getItem('uid'),
         fechanacimiento: sessionStorage.getItem('nacimiento'),
         tipocuenta: sessionStorage.getItem('tipoCuenta'),
+        conoc: sessionStorage.getItem('conocimiento'),
         accion: 'guardar'
     }
-    fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.text()).then(resp => {
-        //console.log(resp)
+    console.log(usuario);
+    fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.json()).then(resp => {
+        console.log(resp)
         irPerfil();
     });
 }
 
 function vistaConocimiento(){
-    let contenedorVista = document.getElementById('idContenedor');
-    fetch(`../modulos/conPrevioEstudiante.html`).then(function (respuesta) {
-        return respuesta.text();
-    }).then(function (respuesta) {
-        contenedorVista.innerHTML = respuesta;
-    })
+    if (sessionStorage.getItem('tipoCuenta') == 'normal'){
+        let contenedorVista = document.getElementById('idContenedor');
+        fetch(`../modulos/conPrevioEstudiante.html`).then(function (respuesta) {
+            return respuesta.text();
+        }).then(function (respuesta) {
+            contenedorVista.innerHTML = respuesta;
+        })
+    }else{
+        window.location='perfil.html'
+    }
+    
 }
 
-function prueba(conocimiento){
-    window.location = 'vista-estudiante.html'
+function basico(){
+    sessionStorage.setItem('conocimiento','basico');
+    guardaDatos()
+}
+
+function intermedio(){
+    sessionStorage.setItem('conocimiento','intermedio');
+    guardaDatos()
+} 
+
+function avanzado(){
+    sessionStorage.setItem('conocimiento','avanzado');
+    guardaDatos()
+}
+
+function verificarLogin(){
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            console.log(user);
+            configPerfil.perfil.uid = sessionStorage.getItem('uid');
+            configPerfil.perfil.displayName = sessionStorage.getItem('displayName');
+            configPerfil.perfil.email = sessionStorage.getItem('email');
+            configPerfil.perfil.photoURL = sessionStorage.getItem('photoUrl');
+
+            console.log(configPerfil.perfil);
+            let lblNombre = document.getElementById('lblNombre');
+            lblNombre.innerText = configPerfil.perfil.displayName;
+
+            let imgPerfil = document.getElementById('perfilImg');
+            imgPerfil.setAttribute("src", configPerfil.perfil.photoURL);
+        } else {
+            window.location = '../../index.html'
+        }
+    });
 }

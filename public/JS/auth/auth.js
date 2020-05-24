@@ -135,9 +135,9 @@ var autentificacion = new Vue({
             sessionStorage.setItem('displayName', user.displayName);
             sessionStorage.setItem('email', user.email);
             sessionStorage.setItem('uid', user.uid);
-            sessionStorage.setItem('nacimiento', '2000-02-10');
             sessionStorage.setItem('photoUrl', user.photoURL);
-            window.location = 'perfil.html'
+            obtenerDatosMYSQL(sessionStorage.getItem('uid'))
+            
         },
         actualizarUsuario: function () {
             //console.log(this.displayName);
@@ -198,11 +198,17 @@ function guardarSql(usuario) {
             
             //console.log(resp)
             if (resp.uid!="") {
-                console.log(window.location)
+                console.log(resp)
+                sessionStorage.setItem('tipoCuenta', resp[0].tipocuenta)
+                sessionStorage.setItem('nacimiento', resp[0].fechanacimiento)
                 if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
                     window.location = 'public/vistas/perfil.html';
                 } else {
-                    window.location = 'perfil.html';
+                    if (resp[0].tipocuenta == 'normal') {
+                        window.location = 'perfilEstudiante.html'
+                    } else {
+                        window.location = 'perfil.html'
+                    }
                 }
             } else {
                 console.log(window.location)
@@ -353,4 +359,33 @@ function validarIgualdad() {
         msg.style.color = "red";
         msg.innerHTML = " No coinciden"
     }
+}
+
+
+function obtenerDatosMYSQL(usuario){
+    let datos={
+        uid: usuario,
+    }
+    fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(datos)}`).then(resp => resp.json()).then(resp => {
+        sessionStorage.setItem('tipoCuenta',resp[0].tipocuenta)
+        sessionStorage.setItem('nacimiento', resp[0].fechanacimiento)
+        
+        if(resp[0].tipocuenta=='normal'){
+            buscandoSala(usuario)
+        }else{
+            window.location = 'perfil.html'
+        }
+    })
+}
+
+function buscandoSala(uid){
+    firebase.database().ref('Tecnoland').child('usuarios').child(uid).child('unionSala').once('value').then(function (snapshot) {
+        if (snapshot.val()) {
+            sessionStorage.setItem('uidCreador', snapshot.val().creadorSala)
+            sessionStorage.setItem('codigoSala', snapshot.val().codigoSala)
+            window.location = 'sala-study.html'
+        }else{
+            window.location = 'perfilEstudiante.html'
+        }
+    });
 }

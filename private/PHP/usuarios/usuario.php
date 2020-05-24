@@ -32,7 +32,8 @@
                 return $this->respuesta = $GG;
             }
             else if($this->datos['accion']=='guardar'){
-                $this->db->consultas('INSERT INTO usuarios (uid, displayname, email, fechanacimiento, tipocuenta) VALUES("'.$this->datos['uid'].'", "'.$this->datos['displayname'].'", "'.$this->datos['email'].'", "'.$this->datos['fechanacimiento'].'", "'.$this->datos['tipocuenta'].'")');
+                $this->db->consultas('INSERT INTO usuarios (uid, displayname, email, fechanacimiento, tipocuenta, conocimiento) 
+                VALUES("'.$this->datos['uid'].'", "'.$this->datos['displayname'].'", "'.$this->datos['email'].'", "'.$this->datos['fechanacimiento'].'", "'.$this->datos['tipocuenta'].'", "'.$this->datos['conoc'].'")');
                 return $this->respuesta = ['guardado'];
             }
            

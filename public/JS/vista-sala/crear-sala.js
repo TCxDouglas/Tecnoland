@@ -17,7 +17,6 @@ var sala = new Vue({
     },
     methods: {
         obtenerTemas: function () {
-
             fetch(`../../private/PHP/Temas/temas.php?proceso=buscarTemas&valor=${this.valor}`).then(resp => resp.json()).then(resp => {
                 console.log(resp);
                 this.temas = resp;
@@ -41,10 +40,8 @@ var sala = new Vue({
                 let listaCheckbox = document.getElementsByName('checkLista');
                 for (let i = 0; i < sala.temas.length; i++) {
                     if (listaCheckbox[i].checked) {
-                        console.log('es verdadero');
+                        //console.log('es verdadero');
                         temasEscogidos.push(sala.temas[i]);
-                    } else {
-                        console.log('es falso')
                     }
                 }
                 sala.guardarDatos();
@@ -57,6 +54,9 @@ var sala = new Vue({
             
         },
         guardarDatos: function () {
+
+            this.codigoSala =this.datosUsuario.displayName.substring(0,2).toLowerCase() + this.datosUsuario.uid.substring(0,2).toLowerCase() + generarNumero(1000, 9999);
+            console.log(this.codigoSala);
             document.getElementById('Verificando').style.display='block';
             firebase.database().ref('Tecnoland').child('usuarios').child(sala.datosUsuario.uid).child('salas').child(this.codigoSala).set({
                 nombreSala: this.nombreSala,
@@ -77,3 +77,8 @@ var sala = new Vue({
         this.obtenerTemas();
     }
 });
+
+
+function generarNumero(minimo,maximo){
+    return Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
+}

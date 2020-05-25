@@ -9,21 +9,22 @@ io.on('connection', socket => {
     socket.on('enviarMensaje', (datos) => {
         MongoClient.connect(url, (err, client) => {
             const db = client.db(dbName);
-            db.collection('chat').insertOne({
+            db.collection(datos.sala).insertOne({
                 'user': datos.user,
                 'msg': datos.msg,
                 'fecha': datos.fecha,
                 'photo': datos.photo,
-                'uid': datos.uid
+                'uid': datos.uid,
+                'sala': datos.sala
             });
             io.emit('recibirMensaje', datos.msg);
 
         });
     });
-    socket.on('historial', () => {
+    socket.on('historial', (sala) => {
         MongoClient.connect(url, (err, client) => {
             const db = client.db(dbName);
-            db.collection('chat').find({}).toArray((err, datas) => {
+            db.collection(sala).find({}).toArray((err, datas) => {
                 io.emit('historial', datas);
             });
             console.log(err);

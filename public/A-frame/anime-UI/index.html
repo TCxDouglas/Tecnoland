@@ -9,13 +9,12 @@
   </head>
   <body>
     <a-scene renderer="colorManagement: true;">
-      <a-entity text__lblprueba="value: LOBBY" id="lblPrueba-3" position="-5 0 0"></a-entity>
-      <a-assets>
+      <a-text font="kelsonsans" value="Bienvenido" width="6" position="0 0 0" rotation="0 14.999999999999998 0" text="align: center"></a-text>      <a-assets>
         <a-asset-item id="engine" src="models/engine.glb"></a-asset-item>
         <a-mixin id="image" geometry="height: 2; width: 2"></a-mixin>
         <a-mixin id="delayVisible" event-set__loaded="visible: true" visible="false"></a-mixin>
-        <audio id="blip1" src="audio/321103__nsstudios__blip1.wav"></audio>
-        <audio id="blip2" src="audio/321104__nsstudios__blip2.wav"></audio>
+        <audio id="blip1" src="audio/lobby.wav"></audio>
+        <audio id="blip2" src="audio/lobby.wav"></audio>
         <img id="glow1" src="img/glow1.png">
         <img id="ring1" src="img/ring1.png">
         <img id="ring2" src="img/ring2.png">

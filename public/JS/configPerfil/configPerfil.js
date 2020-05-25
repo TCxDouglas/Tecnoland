@@ -102,7 +102,12 @@ function irPerfil(){
     user.updateProfile({
         photoURL: configPerfil.perfil.photoURL
      }).then(function () {
-        window.location='perfil.html'
+         if(sessionStorage.getItem('tipoCuenta')=='normal'){
+             window.location='perfilEstudiante.html'
+         }else{
+            window.location = 'perfil.html'
+         }
+        
     })
     
 }
@@ -134,6 +139,7 @@ function vistaConocimiento(){
         })
     }else{
         window.location='perfil.html'
+        guardaDatos()
     }
     
 }

@@ -18,13 +18,11 @@ var autentificacion = new Vue({
                 // La información de usuario que ha iniciado sesión.
                 var user = result.user;
 
-                console.log(user);
-
+                //console.log(user);
                 let usuario = {
                     uid: user.uid,
                     accion: 'verificar'
                 }
-
                 sessionStorage.setItem('displayName', user.displayName);
                 sessionStorage.setItem('email', user.email);
                 sessionStorage.setItem('uid', user.uid);
@@ -173,22 +171,31 @@ var autentificacion = new Vue({
 });
 
 function guardarSql(usuario) {
-
     if (window.location.pathname == '/Tecnoland/crearCuenta.html') { //La peticion viene de Crear Cuenta
         fetch(`private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.json()).then(resp => {
             console.log(resp)
             if (resp.uid!="") {
+                sessionStorage.setItem('tipoCuenta', resp[0].tipocuenta)
+                sessionStorage.setItem('nacimiento', resp[0].fechanacimiento)
+                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
+                    if (resp[0].tipocuenta == 'normal') {
+                        window.location = 'public/vistas/perfilEstudiante.html'
+                    } else {
+                        window.location = 'public/vistas/perfil.html'
+                    }
+                } else {
+                    if (resp[0].tipocuenta == 'normal') {
+                        window.location = 'perfilEstudiante.html'
+                    } else {
+                        window.location = 'perfil.html'
+                    }
+                }
+            } else {
                 console.log(window.location)
                 if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
                     window.location = 'public/vistas/configCuenta.html';
                 } else {
                     window.location = 'configCuenta.html';
-                }
-            } else {
-                if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {
-                    window.location = 'public/vistas/perfil.html';
-                } else {
-                    window.location = 'perfil.html';
                 }
             }
         });

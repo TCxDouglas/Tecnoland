@@ -1,20 +1,48 @@
-let array=[]
+
+
 var perfilEstudiante=new Vue({
     el: '#vista-estudiante',
     data:{
         usuario: {
             uid: '',
             displayName: 'Douglas Hernandez',
-            photoURL: ''
-        }
+            photoURL: '',
+        },
+        sala: []
     },
     methods: {
-        
+        obtenerSalas: function(){
+            let listaSalas = []
+            firebase.database().ref('Tecnoland').child('usuarios').child(this.usuario.uid).child('unionSala').once('value').then(function (snapshot) {
+                if (snapshot.val()) {
+                    snapshot.forEach(salaSnapshot => {
+                        //let key = salaSnapshot.key;
+                        let array = {
+                            codigoSala: salaSnapshot.key,
+                            nombreSala: salaSnapshot.val().nombreSala,
+                            descripcion: salaSnapshot.val().descripcion,
+                        }
+                        listaSalas.push(array);
+                    });
+                }
+            })
+            this.sala = listaSalas;
+        },
+        mandarDatos: function (filasala) {
+            sessionStorage.setItem('codigoSala',filasala.codigoSala)
+            sessionStorage.setItem('nombreSala', filasala.nombreSala)
+            window.location='sala-study.html'
+        },
+        cerrarSesion: function () {
+            sessionStorage.clear()
+            window.location = '../../index.html'
+        }
     },
     created: function() {
         this.usuario.uid = sessionStorage.getItem('uid');
         this.usuario.displayName = sessionStorage.getItem('displayName');
         this.usuario.photoURL = sessionStorage.getItem('photoUrl');
+        this.obtenerSalas()
     }
 })
 
@@ -34,10 +62,6 @@ var modalEstudiante = new Vue({
                     array=resp;
                     console.log(modalEstudiante.datos)
                     //let id = modalEstudiante.datos.uidCreador;
-                    console.log(resp)
-                    console.log(array)
-                    console.log(array[0].uidCreador)
-                    console.log(modalEstudiante.codigoSala)
                     agregarIntegrante(array[0].uidCreador, modalEstudiante.codigoSala)
                     
                 });
@@ -54,7 +78,6 @@ var modalEstudiante = new Vue({
     }
 })
 
-
 function cambioVista(validar){
     let bodyModal = document.querySelector('#cargando');
     if(validar){
@@ -70,28 +93,40 @@ function cambioVista(validar){
     
 }
 
-function agregarIntegrante(uid,codigoSala){
-    firebase.database().ref('Tecnoland').child('usuarios').child(uid).child('salas').child(codigoSala).child('integrantes').child(perfilEstudiante.usuario.uid).set({
+function agregarIntegrante(uidCreador,codigoSala){
+    firebase.database().ref('Tecnoland').child('usuarios').child(uidCreador).child('salas').child(codigoSala).child('integrantes').child(perfilEstudiante.usuario.uid).set({
         displayName: perfilEstudiante.usuario.displayName,
         photoURL: perfilEstudiante.usuario.photoURL
     }).then(function () {
         console.log('Añadido a la sala')
-        agregarRegistro(uid, codigoSala)
+        obtenerDatosSala(uidCreador, codigoSala)
     }).catch(function (error) {
         console.log(error.message);
     })
 }
 
-function agregarRegistro(uidCreador, codigoSala){
-    firebase.database().ref('Tecnoland').child('usuarios').child(sessionStorage.getItem('uid')).child('unionSala').set({
+function agregarRegistro(uidCreador, codigoSala, nombreSala, descripcion){
+    firebase.database().ref('Tecnoland').child('usuarios').child(sessionStorage.getItem('uid')).child('unionSala').child(codigoSala).set({
         creadorSala: uidCreador,
-        codigoSala: codigoSala
+        codigoSala: codigoSala,
+        nombreSala: nombreSala,
+        descripcion: descripcion
     }).then(function(){
         console.log('Registro añadido')
-        sessionStorage.setItem('codigoSala', codigoSala)
-        sessionStorage.setItem('uidCreador', uidCreador)
-        window.location = 'sala-study.html'
+        perfilEstudiante.obtenerSalas()
+        $('#staticBackdrop').modal('hide')
+        //window.location = 'sala-study.html'
     }).catch(function(error){
         console.log(error.message)
     })
+}
+
+function obtenerDatosSala(uidCreador, codigoSala){
+    firebase.database().ref('Tecnoland').child('usuarios').child(uidCreador).child('salas').child(codigoSala).once('value').then(function (snapshot) {
+        if (snapshot.val()) {  
+            let nombreSala= snapshot.val().nombreSala
+            let descripcion= snapshot.val().descripcion
+            agregarRegistro(uidCreador, codigoSala, nombreSala, descripcion)
+        }
+    });
 }

@@ -59,11 +59,16 @@ var modalEstudiante = new Vue({
             if(this.codigoSala!=""){
                 //cambioVista(true)
                 fetch(`../../private/PHP/salas/salas.php?proceso=buscarSala&sala=${this.codigoSala}`).then(resp => resp.json()).then(resp => {
-                    array=resp;
-                    console.log(modalEstudiante.datos)
-                    //let id = modalEstudiante.datos.uidCreador;
-                    agregarIntegrante(array[0].uidCreador, modalEstudiante.codigoSala)
-                    
+                    console.log(resp)
+                    if(resp!=""){
+                        array = resp;
+                        console.log(modalEstudiante.datos)
+                        //let id = modalEstudiante.datos.uidCreador;
+                        agregarIntegrante(array[0].uidCreador, modalEstudiante.codigoSala)
+                    }else{
+                        console.log('La sala no existe')
+                        alertify.error('La sala no existe');
+                    }
                 });
                 
             }else{

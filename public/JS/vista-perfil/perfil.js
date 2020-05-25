@@ -20,7 +20,7 @@ var perfil = new Vue({
             firebase.database().ref('Tecnoland').child('usuarios').child(perfil.usuario.uid).child('salas').once('value').then(function (snapshot) {
                 if (snapshot.val()) {
                     snapshot.forEach(salaSnapshot => {
-                        let key = salaSnapshot.key;
+                        //let key = salaSnapshot.key;
                         let array = {
                             codigoSala: salaSnapshot.key,
                             nombreSala: salaSnapshot.val().nombreSala,
@@ -39,20 +39,13 @@ var perfil = new Vue({
             window.location = 'crear-salas.html'
         },
         mandarDatos: function (filaSala) {
-
-            console.log(modalPerfil.infoSala)
+            //console.log(modalPerfil.infoSala)
             sessionStorage.setItem('codigoSala', filaSala.codigoSala)
-            sessionStorage.getItem('nombreSala', filaSala.nombreSala)
-            sessionStorage.setItem('uidCreador',this.usuario.uid)
+            sessionStorage.setItem('nombreSala', filaSala.nombreSala)
             window.location = 'sala-study.html'
         },
         cerrarSesion: function () {
-            sessionStorage.removeItem('displayName');
-            sessionStorage.removeItem('photoUrl');
-            sessionStorage.removeItem('uid');
-            sessionStorage.removeItem('email');
-            sessionStorage.removeItem('nacimiento');
-            sessionStorage.removeItem('tipoCuenta');
+            sessionStorage.clear()
             window.location = '../../index.html'
         }
     },

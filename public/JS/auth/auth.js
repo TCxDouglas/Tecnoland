@@ -174,7 +174,7 @@ function guardarSql(usuario) {
     if (window.location.pathname == '/Tecnoland/crearCuenta.html') { //La peticion viene de Crear Cuenta
         fetch(`private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.json()).then(resp => {
             console.log(resp)
-            if (resp.uid!="") {
+            if (!resp.uid=="") {
                 sessionStorage.setItem('tipoCuenta', resp[0].tipocuenta)
                 sessionStorage.setItem('nacimiento', resp[0].fechanacimiento)
                 if (window.location.pathname == '/Tecnoland/' || window.location.pathname == '/Tecnoland/crearCuenta.html') {

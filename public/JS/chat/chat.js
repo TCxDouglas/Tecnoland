@@ -2,6 +2,7 @@
 
 var socket = io.connect("http://localhost:3001",{'forceNew':true}),
 mensaje = document.querySelector('#inputMsg'),
+nomSala= document.querySelector('#nombreSala'),
 revMesg = [],   
  appchat = new Vue({
         el:'#frmChat',
@@ -19,16 +20,18 @@ revMesg = [],
                         msg:  document.querySelector('#inputMsg').value.trim(),
                         fecha: Date.now(),
                         photo: sessionStorage.getItem('photoUrl'),
-                        uid: sessionStorage.getItem('uid')
+                        uid: sessionStorage.getItem('uid'),
+                        sala: sessionStorage.getItem('codigoSala')
                     };
                     socket.emit('enviarMensaje', envMesg);
-                    socket.emit('historial');
+                    socket.emit('historial', sessionStorage.getItem('codigoSala') );
                     console.log(envMesg);
                     envMesg.user = '';
                     envMesg.msg = '';
                     envMesg.photo = '';
                     envMesg.fecha = '';
                     envMesg.uid = '';
+                    envMesg.sala= '';
     
                     document.querySelector('#inputMsg').value = ''; 
                 }
@@ -37,7 +40,8 @@ revMesg = [],
 
         },
         created(){
-            socket.emit('historial');
+            socket.emit('historial', sessionStorage.getItem('codigoSala'));
+            nomSala.innerHTML= sessionStorage.getItem('nombreSala');
         }
     });
    socket.on('recibirMensaje',msg=>{

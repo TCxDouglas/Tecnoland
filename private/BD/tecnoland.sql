@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-05-2020 a las 20:34:24
+-- Tiempo de generación: 24-05-2020 a las 23:21:39
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.2
 
@@ -56,7 +56,7 @@ CREATE TABLE `usuarios` (
   `email` char(25) COLLATE utf8_spanish2_ci NOT NULL,
   `fechanacimiento` date NOT NULL,
   `tipocuenta` char(7) COLLATE utf8_spanish2_ci NOT NULL,
-  `conocimiento` char(12) COLLATE utf8_spanish2_ci NOT NULL
+  `conocimiento` char(12) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'basico'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -68,7 +68,8 @@ INSERT INTO `usuarios` (`uid`, `displayname`, `email`, `fechanacimiento`, `tipoc
 ('HJ5x6NbEbpTcDdrGm4vris38Spv1', 'Soy un Estudiante', 'soyunestudiante@gmail.com', '2001-01-20', 'normal', ''),
 ('Ztt0ncse34TkYRTVDLiiVB71r1K2', 'Douglas Hernandez', 'douglasalexander683@gmail', '2000-02-10', 'normal', ''),
 ('4X6sLHbN3jcR22zM5KqjR9vGeQg2', 'Douglas Hernandez', 'douglashappy2001@gmail.co', '2000-02-10', 'normal', ''),
-('WWQ0FKRBCUbM0ocAooM9gKbUcRE2', 'Soy una prueba de testeo', 'testeo@gmail.com', '2004-06-09', 'normal', '');
+('WWQ0FKRBCUbM0ocAooM9gKbUcRE2', 'Soy una prueba de testeo', 'testeo@gmail.com', '2004-06-09', 'normal', ''),
+('fCo3Ww9UkwSkEnyA4ZleF6fzvoA3', 'Kathy', 'kathy@gmail.com', '2001-06-14', 'normal', 'intermedio');
 
 --
 -- Índices para tablas volcadas

@@ -7,6 +7,7 @@ var perfilEstudiante=new Vue({
             uid: '',
             displayName: 'Douglas Hernandez',
             photoURL: '',
+            email: ''
         },
         sala: []
     },
@@ -21,6 +22,7 @@ var perfilEstudiante=new Vue({
                             codigoSala: salaSnapshot.key,
                             nombreSala: salaSnapshot.val().nombreSala,
                             descripcion: salaSnapshot.val().descripcion,
+                            uidCreador: salaSnapshot.val().creadorSala
                         }
                         listaSalas.push(array);
                     });
@@ -31,6 +33,7 @@ var perfilEstudiante=new Vue({
         mandarDatos: function (filasala) {
             sessionStorage.setItem('codigoSala',filasala.codigoSala)
             sessionStorage.setItem('nombreSala', filasala.nombreSala)
+            sessionStorage.setItem('uidCreador', filasala.uidCreador)
             window.location='sala-study.html'
         },
         cerrarSesion: function () {
@@ -42,6 +45,7 @@ var perfilEstudiante=new Vue({
         this.usuario.uid = sessionStorage.getItem('uid');
         this.usuario.displayName = sessionStorage.getItem('displayName');
         this.usuario.photoURL = sessionStorage.getItem('photoUrl');
+        this.usuario.email = sessionStorage.getItem('email');
         this.obtenerSalas()
     }
 })
@@ -101,6 +105,7 @@ function cambioVista(validar){
 function agregarIntegrante(uidCreador,codigoSala){
     firebase.database().ref('Tecnoland').child('usuarios').child(uidCreador).child('salas').child(codigoSala).child('integrantes').child(perfilEstudiante.usuario.uid).set({
         displayName: perfilEstudiante.usuario.displayName,
+        email: perfilEstudiante.usuario.email,
         photoURL: perfilEstudiante.usuario.photoURL
     }).then(function () {
         console.log('Añadido a la sala')

@@ -22,10 +22,7 @@
     
        
         private function almacenar_usuario(){
-          
-          /*  $this->db->consultas('IF EXISTS (SELECT * FROM usuarios WHERE uid ='.$this->datos['uid']. 
-            ') RETURN DELETE  FROM usuarios WHERE uid = '.$this->datos['uid']);
-*/          $this->db->consultas('SELECT * FROM usuarios WHERE uid = "'. $this->datos['uid'].'"');
+            $this->db->consultas('SELECT * FROM usuarios WHERE uid = "'. $this->datos['uid'].'"');
             $GG = $this->db->obtener_datos();
             $cont = count($GG);
             if ($cont>0){
@@ -40,20 +37,6 @@
             else{
                 return $this->respuesta =['sinCambios'];
             }
-           
-          /*  
-            $this->db->consultas('IF EXISTS (SELECT * FROM usuarios WHERE uid = '.$this->datos['uid'].')
-            BEGIN
-               Set @existeUsuario=1
-            END
-            IF  @existeUsuario=1      
-            BEGIN
-            DELETE  FROM usuarios WHERE usuarios.uid = '.$this->datos['uid'].'
-            end
-            else
-            begin
-            INSERT INTO usuarios (uid, displayname, email, fechanacimiento, tipocuenta) VALUES("'.$this->datos['uid'].'", "'.$this->datos['displayname'].'", "'.$this->datos['email'].'", "'.$this->datos['fechanacimiento'].'", "'.$this->datos['tipocuenta'].'")
-            end'); */
             
         }
         

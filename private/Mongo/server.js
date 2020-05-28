@@ -27,7 +27,7 @@ io.on('connection', socket => {
             db.collection(sala).find({}).toArray((err, datas) => {
                 io.emit('historial', datas);
             });
-            console.log(err);
+            //console.log(err);
         });
     });
 });

@@ -42,6 +42,7 @@ var perfil = new Vue({
             //console.log(modalPerfil.infoSala)
             sessionStorage.setItem('codigoSala', filaSala.codigoSala)
             sessionStorage.setItem('nombreSala', filaSala.nombreSala)
+            sessionStorage.setItem('uidCreador', this.usuario.uid)
             window.location = 'sala-study.html'
         },
         cerrarSesion: function () {

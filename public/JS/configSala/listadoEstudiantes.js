@@ -12,14 +12,19 @@ var listadoEs = new Vue({
     },
     methods : {
 
+        escribirData:function(){
+            this.datosSala.nombreSala = sessionStorage.getItem('nombreSala')
+            this.datosSala.codigoSala = sessionStorage.getItem('codigoSala')
+            this.datosSala.uidCreador = sessionStorage.getItem('uidCreador')
+            datosFirebase(this.datosSala.uidCreador, this.datosSala.codigoSala)
+        }
+
     },
     created: function(){
-        this.datosSala.nombreSala = sessionStorage.getItem('nombreSala')
-        this.datosSala.codigoSala = sessionStorage.getItem('codigoSala')
-        this.datosSala.uidCreador = sessionStorage.getItem('uidCreador')
-        datosFirebase(this.datosSala.uidCreador, this.datosSala.codigoSala)
+        this.escribirData();
     }
 })
+
 
 function datosFirebase(uid, codigoSala){
     firebase.database().ref('Tecnoland').child('usuarios').child(uid).child('salas').child(codigoSala).child('integrantes').on('value', function (snapshot) {

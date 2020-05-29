@@ -97,9 +97,7 @@ function cambioVista(validar){
         })
     }else{
         bodyModal.innerHTML="";
-    }
-    
-    
+    } 
 }
 
 function agregarIntegrante(uidCreador,codigoSala){

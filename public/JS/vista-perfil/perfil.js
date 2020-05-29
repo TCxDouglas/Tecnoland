@@ -17,8 +17,9 @@ var perfil = new Vue({
 
         },
         obtenerSalas: function () {
-            firebase.database().ref('Tecnoland').child('usuarios').child(perfil.usuario.uid).child('salas').on('value',function (snapshot) {
+            firebase.database().ref('Tecnoland').child('usuarios').child(perfil.usuario.uid).child('salas').once('value').then(function (snapshot) {
                 if (snapshot.val()) {
+                    
                     snapshot.forEach(salaSnapshot => {
                         //let key = salaSnapshot.key;
                         //console.log(snapshot.child('integrantes').numChildren())

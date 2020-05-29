@@ -43,7 +43,7 @@ function colocarDatos(snapshot){
         let item = `<tr style="overflow-y: scroll;">
                     <td>
                         <img src="${salaSnapshot.val().photoURL} " alt=""
-                            style="width: 30px; height: 30px; border-radius: 50%;">
+                            style="width: 50px; height: 40px; border-radius: 50%;">
                     </td>
                     <td> ${salaSnapshot.val().displayName} </td>
                     <td> ${salaSnapshot.val().email} </td>

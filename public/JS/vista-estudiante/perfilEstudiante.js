@@ -68,7 +68,7 @@ var modalEstudiante = new Vue({
                         array = resp;
                         console.log(modalEstudiante.datos)
                         //let id = modalEstudiante.datos.uidCreador;
-                        agregarIntegrante(array[0].uidCreador, modalEstudiante.codigoSala)
+                        verificarMaxParticipantes(array[0].uidCreador, modalEstudiante.codigoSala)
                     }else{
                         console.log('La sala no existe')
                         alertify.error('La sala no existe');
@@ -111,6 +111,20 @@ function agregarIntegrante(uidCreador,codigoSala){
     }).catch(function (error) {
         console.log(error.message);
     })
+}
+
+function verificarMaxParticipantes(uidCreador, codigoSala) {
+    firebase.database().ref('Tecnoland').child('usuarios').child(uidCreador).child('salas').child(codigoSala).once('value').then(function (snapshot) {
+        if (snapshot.val()) {
+            let maxPart=snapshot.val().maxParticipantes;
+            let partRegis=snapshot.child('integrantes').numChildren();
+            if(partRegis < maxPart){
+                agregarIntegrante(uidCreador, codigoSala)
+            }else{
+                alertify.error('Actualmente la sala no tiene espacio disponible, contacte con su docente', 'Error en unirse a sala')
+            }
+        }
+    });
 }
 
 function agregarRegistro(uidCreador, codigoSala, nombreSala, descripcion){

@@ -24,7 +24,6 @@ revMesg = [],
                         sala: sessionStorage.getItem('codigoSala')
                     };
                     socket.emit('enviarMensaje', envMesg);
-                    socket.emit('historial', sessionStorage.getItem('codigoSala') );
                     console.log(envMesg);
                     envMesg.user = '';
                     envMesg.msg = '';
@@ -32,7 +31,7 @@ revMesg = [],
                     envMesg.fecha = '';
                     envMesg.uid = '';
                     envMesg.sala= '';
-    
+                    socket.emit('historial', sessionStorage.getItem('codigoSala') );
                     document.querySelector('#inputMsg').value = ''; 
                 }
 

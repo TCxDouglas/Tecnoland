@@ -1,43 +1,25 @@
-<div id="listadoEstudiante">
-<<<<<<< HEAD
-    <span class="text-center"> {{datosSala.nombreSala}} </span>
-=======
-    <div class="text-center" style="font-size: 20px;"> {{datosSala.nombreSala}} </div>
->>>>>>> e12dbbd7499d39ed0df08174636b939fdf48dc22
+<div class="text-center" style="font-size: 20px;" id="divCabezera"> {{datosSala.nombreSala}} </div>
 
     <div>
-        <h5 class="text-center">Listado de estudiantes registrados</h5>
+        <span class="text-center">Listado de estudiantes registrados  {{datosSala.participantes}}</span>
     </div>
-<<<<<<< HEAD
-    <main class="container"  style="height: 50vh; overflow-y: scroll !important;">
-        <table class="table table-dark">
-=======
-    <main style="height: 50vh; overflow-y: scroll !important;">
+    <main style="height: 55vh; overflow-y: scroll !important;">
         <table class="table table-dark" style="width: 100%;">
->>>>>>> e12dbbd7499d39ed0df08174636b939fdf48dc22
             <thead>
                 <tr>
                     <th scope="col"></th>
-                    <th scope="col">Usuario</th>
+                    <th scope="col">Participantes</th>
                     <th scope="col">Correo</th>
                 </tr>
+
+
             </thead>
-<<<<<<< HEAD
-            <tbody v-for='filaEstudiante in listadoEstudiante'  >
-                <tr style="overflow-y: scroll;">
-                    <td>
-                        <img v-bind:src="filaEstudiante.photoURL" alt=""
-                            style="width: 30px; height: 30px; border-radius: 50%;">
-                    </td>
-                    <td> {{filaEstudiante.displayName}} </td>
-                    <td> {{filaEstudiante.email}} </td>
-                </tr>
-=======
             <tbody id="tbodyLista" >
                 
->>>>>>> e12dbbd7499d39ed0df08174636b939fdf48dc22
             </tbody>
         </table>
     </main>
 </div>
+
+
 <script src="../JS/configSala/listadoEstudiantes.js"></script>

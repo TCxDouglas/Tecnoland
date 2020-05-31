@@ -58,9 +58,11 @@ var sala = new Vue({
             
             let uid=this.datosUsuario.uid;
             let codigoSala= this.codigoSala;
+            let identificador = 'kk';
             let salaPHP={
                 uid,
-                codigoSala
+                codigoSala,
+                identificador
             }
             document.getElementById('Verificando').style.display='block';
 

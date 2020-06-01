@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Recuperacion de contraseña HIPER EFE</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="recoverPass.css">
+</head>
+
+<body class="todoTodito">
+    <div>
+        <div class="todo">
+            <div id="contenedor">
+                <h3 class="titulo">Validando contraseña</h3>
+                <form class="formPass" id="formPass" action="#">
+                    <div class="contentInput">
+                        <input class="inputPass" type="text" id="pass1" onkeyup="validarSeguridad()"
+                            placeholder="Ingrese la contraseña" v-model="pass">
+                        <span class="msgpass" id="msgPass1"></span>
+                    </div>
+                </form>
+                <form class="formPass" id="formPass2" action="#">
+                    <div class="contentInput">
+                        <input class="inputPass" type="text" id="pass2" onkeyup="validarIgualdad()"
+                            placeholder="Repita la contraseña" v-model="passRepit">
+                        <span class="msgpass" id="msgPass2"></span>
+                    </div>
+                </form>
+                <button v-on:click="recoverPass">Cambiar Contraseña</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="../../private/Firebase/config.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="recoverPass.js"></script>
+</body>
+
+</html>

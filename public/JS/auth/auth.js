@@ -121,10 +121,15 @@ var autentificacion = new Vue({
                 cargando.style.display = 'none';
                 var errorCode = error.code;
                 var errorMessage = error.message;
-
+                
                 console.log(errorMessage);
                 console.log(errorCode);
 
+                if (errorCode == 'auth/wrong-password'){
+                    alertify.error('Correo o contraseña invalida, revise que este bien escrito')
+                } else if (errorCode == 'auth/too-many-requests'){
+                    alertify.error('Ha excedido el limite de intentos, por favor intente mas tarde')
+                }
             });
         },
         guardarSession: function(){
@@ -166,6 +171,10 @@ var autentificacion = new Vue({
         },
         igualdad: function () {
             validarIgualdad();
+        },
+        recoverPass: function(){
+            var auth = firebase.auth();
+            obtenerCorreo();
         }
     }
 });
@@ -348,5 +357,35 @@ function buscandoSala(uid){
             sessionStorage.setItem('codigoSala', snapshot.val().codigoSala)
             window.location = 'perfilEstudiante.html'
         }
+    });
+}
+
+function obtenerCorreo(){
+    alertify.prompt('Ingrese el correo', 'ejemplo@ejemplo.com', function (evt, value) {
+                console.log(value)
+                validarEmail(value) ,
+                function () {
+                    alertify.error('Eliminación cancelada')
+                }
+            }).setHeader('<em> Restableciendo Contraseña </em> ');
+}
+
+function validarEmail(email) {
+    if (/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(email)) {
+        //console.log("La dirección de email " + email + " es correcta!.");
+        sendEmailPass(email)
+    } else {
+        //console.log("La dirección de email es incorrecta!.");
+        alertify.error('La direccion de correo electronico es invalida, deje de jugar tontito')
+    }
+}
+
+function sendEmailPass(email){
+    var auth = firebase.auth();
+
+    auth.sendPasswordResetEmail(email).then(function () {
+        alertify.success('Se le ha enviado un correo para restablecer su contraseña, revise su bandeja de entrada')
+    }).catch(function (error) {
+        // An error happened.
     });
 }

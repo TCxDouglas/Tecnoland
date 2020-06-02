@@ -58,7 +58,7 @@ function validarIgualdad() {
         form.classList.remove("valid")
         form.classList.remove("invalid")
         msg.style.color = "#00ff00";
-        msg.innerText = "*";
+        msg.innerText = "";
     } else {
         form.classList.remove("valid")
         form.classList.add("invalid")
@@ -78,21 +78,29 @@ var vistaPass=new Vue({
             let estado = validar_clave(this.pass, this.passRepit);
             if (estado == 'correcto'){
                 obteniendoParametros()
+            }else{
+                
             }
             
+        },
+        validatePassEquals: function () {
+            validarIgualdad()
+        },
+        validatePassSecurity: function() {
+            validarSeguridad()
         }
     },
     created: function(){
-        alertify.success('Cargado con exito');
+        
     }
 })
 
 function obteniendoParametros(){
-    // Get the action to complete.
+    
     var mode = getParameterByName('mode');
-    // Get the one-time code from the query parameter.
+
     var actionCode = getParameterByName('oobCode');
-    // (Optional) Get the continue URL from the query parameter if available.
+
     console.log(mode)
     console.log(actionCode)
     verificandoTarea(mode,actionCode)
@@ -101,27 +109,22 @@ function obteniendoParametros(){
 function verificandoTarea(mode, actionCode){
     var auth = firebase.auth();
 
-    // Handle the user management action.
     switch (mode) {
         case 'resetPassword':
-            // Display reset password handler and UI.
             cambiandoContraseña(auth, actionCode);
             //console.log(vistaPass.pass)
             break;
         case 'recoverEmail':
-            // Display email recovery handler and UI.
             handleRecoverEmail(auth, actionCode, lang);
             break;
         case 'verifyEmail':
-            // Display email verification handler and UI.
             handleVerifyEmail(auth, actionCode, continueUrl, lang);
             break;
         default:
-            // Error: invalid mode.
     }
 }
 
-function cambiandoContraseña(auth, actionCode, newPassword){
+function cambiandoContraseña(auth, actionCode){
     var accountEmail;
     
     auth.verifyPasswordResetCode(actionCode).then(function (email) {
@@ -129,13 +132,12 @@ function cambiandoContraseña(auth, actionCode, newPassword){
 
         auth.confirmPasswordReset(actionCode, vistaPass.pass).then(function (resp) {
             alertify.success('Cambio de contraseña hecho con exito, vuelva a intentar iniciar sesion');
+            alertify.success('Ya puede cerrar esta ventana');
         }).catch(function (error) {
             alertify.error('Tiempo de peticion caduco, intente mas tarde');
         });
     }).catch(function (error) {
-        alertify.set('notifier', 'position', 'top-right');
-         
-        alertify.error('Tiempo de peticion caduco, intente mas tarde Tontito' + alertify.get('notifier', 'position'));
+        alertify.error('Tiempo de peticion caduco, intente mas tarde Tontito');
     });
 }
 
@@ -144,10 +146,11 @@ function getParameterByName(name) {
     var regexS = "[\\?&]" + name + "=([^&#]*)";
     var regex = new RegExp(regexS);
     var results = regex.exec(window.location.href);
-    if (results == null)
+    if (results == null){
         return "";
-    else
+    }else{
         return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }  
 }
 
 function validar_clave(contraseña, contraseña2) {

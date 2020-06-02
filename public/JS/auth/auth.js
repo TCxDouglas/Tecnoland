@@ -121,18 +121,18 @@ var autentificacion = new Vue({
                 cargando.style.display = 'none';
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                
+
                 console.log(errorMessage);
                 console.log(errorCode);
 
-                if (errorCode == 'auth/wrong-password'){
+                if (errorCode == 'auth/wrong-password') {
                     alertify.error('Correo o contraseña invalida, revise que este bien escrito')
-                } else if (errorCode == 'auth/too-many-requests'){
+                } else if (errorCode == 'auth/too-many-requests') {
                     alertify.error('Ha excedido el limite de intentos, por favor intente mas tarde')
                 }
             });
         },
-        guardarSession: function(){
+        guardarSession: function () {
             var user = firebase.auth().currentUser;
             console.log(user);
             sessionStorage.setItem('displayName', user.displayName);
@@ -140,7 +140,7 @@ var autentificacion = new Vue({
             sessionStorage.setItem('uid', user.uid);
             sessionStorage.setItem('photoUrl', user.photoURL);
             obtenerDatosMYSQL(sessionStorage.getItem('uid'))
-            
+
         },
         actualizarUsuario: function () {
             //console.log(this.displayName);
@@ -172,16 +172,16 @@ var autentificacion = new Vue({
         igualdad: function () {
             validarIgualdad();
         },
-        recoverPass: function(){
+        recoverPass: function () {
             var auth = firebase.auth();
             obtenerCorreo();
         }
     }
 });
 
-function guardarDatosSQL(usuario){
+function guardarDatosSQL(usuario) {
     fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(usuario)}`).then(resp => resp.json()).then(resp => {
-        
+
         if (resp != "sinCambios") {
             sessionStorage.setItem('tipoCuenta', resp[0].tipocuenta)
             sessionStorage.setItem('nacimiento', resp[0].fechanacimiento)
@@ -334,23 +334,23 @@ function validarIgualdad() {
 }
 
 
-function obtenerDatosMYSQL(usuario){
-    let datos={
+function obtenerDatosMYSQL(usuario) {
+    let datos = {
         uid: usuario,
     }
     fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(datos)}`).then(resp => resp.json()).then(resp => {
-        sessionStorage.setItem('tipoCuenta',resp[0].tipocuenta)
+        sessionStorage.setItem('tipoCuenta', resp[0].tipocuenta)
         sessionStorage.setItem('nacimiento', resp[0].fechanacimiento)
-        
-        if(resp[0].tipocuenta=='normal'){
+
+        if (resp[0].tipocuenta == 'normal') {
             buscandoSala(usuario)
-        }else{
+        } else {
             window.location = 'perfil.html'
         }
     })
 }
 
-function buscandoSala(uid){
+function buscandoSala(uid) {
     firebase.database().ref('Tecnoland').child('usuarios').child(uid).child('unionSala').once('value').then(function (snapshot) {
         if (snapshot.val()) {
             sessionStorage.setItem('uidCreador', snapshot.val().creadorSala)
@@ -360,14 +360,14 @@ function buscandoSala(uid){
     });
 }
 
-function obtenerCorreo(){
+function obtenerCorreo() {
     alertify.prompt('Ingrese el correo', 'ejemplo@ejemplo.com', function (evt, value) {
-                console.log(value)
-                validarEmail(value) ,
-                function () {
-                    alertify.error('Eliminación cancelada')
-                }
-            }).setHeader('<em> Restableciendo Contraseña </em> ');
+        //console.log(value)
+        validarEmail(value),
+            function () {
+                alertify.error('Eliminación cancelada')
+            }
+    }).setHeader('<em> Restableciendo Contraseña </em> ');
 }
 
 function validarEmail(email) {
@@ -380,12 +380,14 @@ function validarEmail(email) {
     }
 }
 
-function sendEmailPass(email){
+function sendEmailPass(email) {
     var auth = firebase.auth();
 
     auth.sendPasswordResetEmail(email).then(function () {
         alertify.success('Se le ha enviado un correo para restablecer su contraseña, revise su bandeja de entrada')
     }).catch(function (error) {
-        // An error happened.
+        console.log(error.message)
+        console.log(error.code)
+        alertify.error('Correo no registrado, verifique que el correo este bien escrito')
     });
 }

@@ -12,7 +12,8 @@ var listadoEs = new Vue({
             descripcion: '',
             codigoSala : '',
             uidCreador: '',
-            participantes: ''
+            participantes: '',
+            emailUser : ''
         },
         listadoEstudiante:[]
     },
@@ -22,6 +23,7 @@ var listadoEs = new Vue({
             this.datosSala.nombreSala = sessionStorage.getItem('nombreSala')
             this.datosSala.codigoSala = sessionStorage.getItem('codigoSala')
             this.datosSala.uidCreador = sessionStorage.getItem('uidCreador')
+            this.datosSala.emailUser = sessionStorage.getItem('email')
             datosFirebase(this.datosSala.uidCreador, this.datosSala.codigoSala)
         }
 
@@ -33,6 +35,7 @@ var listadoEs = new Vue({
         this.datosSala.nombreSala = sessionStorage.getItem('nombreSala')
         this.datosSala.codigoSala = sessionStorage.getItem('codigoSala')
         this.datosSala.uidCreador = sessionStorage.getItem('uidCreador')
+        this.datosSala.emailUser = sessionStorage.getItem('email')
         datosFirebase(this.datosSala.uidCreador, this.datosSala.codigoSala)
         
         

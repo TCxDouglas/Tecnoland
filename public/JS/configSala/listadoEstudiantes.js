@@ -5,7 +5,7 @@ creador = '',
 sala = '';
 
 var listadoEs = new Vue({
-    el: '#listadoEstudiante',
+    el: '#divCabezera',
     data: {
         datosSala: {
             nombreSala: '',

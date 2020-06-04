@@ -70,9 +70,12 @@ var sala = new Vue({
                 console.log(resp)
             })
 
+            let maxParticipantes = document.getElementById('selMax').value;
+            console.log(maxParticipantes);
             firebase.database().ref('Tecnoland').child('usuarios').child(sala.datosUsuario.uid).child('salas').child(this.codigoSala).set({
                 nombreSala: this.nombreSala,
                 descripcion: this.descripcionSala,
+                maxParticipantes: maxParticipantes,
                 temas: temasEscogidos
             }).then(function () {
                 console.log('SALA CREADA')

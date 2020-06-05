@@ -175,6 +175,16 @@ header nav ul li a.activo {
     justify-content: center;
 }
 
+.olvideContraseña{
+    margin: 5px;
+    color: #008FFF;
+    cursor: pointer;
+}
+.olvideContraseña span:hover{
+    text-decoration: underline;
+    color: #004E8C;
+}
+
 @media (max-width: 991px) {
     header {
         padding: 0 20px;

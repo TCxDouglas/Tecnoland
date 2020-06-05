@@ -337,11 +337,12 @@ function validarIgualdad() {
 function obtenerDatosMYSQL(usuario) {
     let datos = {
         uid: usuario,
+        accion: ''
     }
     fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(datos)}`).then(resp => resp.json()).then(resp => {
         sessionStorage.setItem('tipoCuenta', resp[0].tipocuenta)
         sessionStorage.setItem('nacimiento', resp[0].fechanacimiento)
-
+      
         if (resp[0].tipocuenta == 'normal') {
             buscandoSala(usuario)
         } else {

@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
+    <link href="../css/estilosRegistrarse.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/estilosCubo.css">
     <link rel="stylesheet" type="text/css" href="../css/estilosForm.css">
 
@@ -74,7 +82,7 @@
 
                                 <div class="centrarBotones">
                                     <input type="submit" id="btnAcceder" class="botones" value="Acceder"
-                                        v-on:click="iniciarSesion">
+                                        >
 
                                 </div>
                                 <div id="Verificando" style="display: none;">
@@ -86,7 +94,9 @@
                                 </div>
                             </form>
                             <div class="centrarBotones">
-                                <a href="public/vistas/crear-salas.html">¿Olvidaste tu contraseña?</a>
+                                <div class="olvideContraseña">
+                                    <span v-on:click="recoverPass">¿Olvidaste tu contraseña?</span>
+                                </div>
                             </div>
                             <small class="d-inline-block text-muted mt-5">Todos los derechos reservados | © 2020
                                 Team
@@ -114,6 +124,7 @@
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
     <script src="https://kit.fontawesome.com/2f2a4cd560.js" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
     <script src="../../private/Firebase/config.js"></script>

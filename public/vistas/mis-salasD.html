@@ -1,0 +1,50 @@
+<div class="content-vistaPerfil ">
+    <h1>Salas creadas por tí</h1>
+    <main class="" style="  height: 35vh;   margin-left: 2%;  overflow-y: scroll !important;">
+        <table class=" table-content ">
+            <thead>
+                <tr>
+                    <th> Codigo </th>
+                    <th> Nombre </th>
+                    <th> Descripcion </th>
+                    <th> Participantes </th>
+                    <th> Ver</th>
+                    <th> Eliminar</th>
+
+                </tr>
+            </thead>
+            <tbody v-for='filaSala in salas'>
+                <tr>
+                    <td>{{filaSala.codigoSala}} </td>
+                    <td>{{filaSala.nombreSala}} </td>
+                    <td>{{filaSala.descripcion}} </td>
+                    <td>{{filaSala.numParticipantes}} </td>
+
+                    <div>
+                        <td class="btns-icons" style="cursor: pointer;"
+                            v-on:click="mandarDatos(filaSala)"><i class="fa fa-eye"
+                                aria-hidden="true"></i>
+                        </td>
+                    </div>
+
+                    <div>
+                        <td class="btns-icons" style="cursor: pointer;" v-on:click=""><i
+                                class="fa fa-trash" aria-hidden="true"></i>
+                        </td>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <div class="inputSearch">
+        <input type="text" placeholder="Buscar sala..." v-on:keyup="" v-model="campo">
+        <i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i>
+    </div>
+
+    <div class="buttons" style="margin-top: 4%;">
+        <button onclick="crearSala()" class="button-hover"><span><i class="fa fa-plus"
+                    aria-hidden="true"></i> add Sala </span></button>
+    </div>
+</div>
+
+<script src="../JS/vista-perfil/perfil.js"></script>

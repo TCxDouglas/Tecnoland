@@ -78,8 +78,8 @@ function colocarDatos(snapshot, uidCreador, codigoSala){
                                 <img src="${salaSnapshot.val().photoURL} " 
                                 style="width: 30px; height: 30px; border-radius: 50%;">
                         </td>
-                        <td style="font-size:12px !important;"> ${salaSnapshot.val().displayName} </td>
-                        <td style="font-size:12px !important;"> ${salaSnapshot.val().email} </td>
+                        <td> ${salaSnapshot.val().displayName} </td>
+                        <td> ${salaSnapshot.val().email} </td>
 
                         <td>
                             <button  class="btn btn-outline-danger text-white" name="eliminaciones" data-modulo="${cont}" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
@@ -92,8 +92,8 @@ function colocarDatos(snapshot, uidCreador, codigoSala){
                                 <img src="${salaSnapshot.val().photoURL} " 
                                 style="width: 30px; height: 30px; border-radius: 50%;">
                             </td>
-                            <td style="font-size:12px !important;"> ${salaSnapshot.val().displayName} </td>
-                            <td style="font-size:12px !important;"> ${salaSnapshot.val().email} </td>
+                            <td> ${salaSnapshot.val().displayName} </td>
+                            <td> ${salaSnapshot.val().email} </td>
                         </tr>`
 
     if (sessionStorage.getItem('tipoCuenta')== 'normal'){

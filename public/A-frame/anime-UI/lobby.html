@@ -1,176 +1,267 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>LOBBI HIPPER EFE</title>
-    <meta name="description" content="Anime UI — A-Frame">
-    <script src="../dist/aframe-master.js"></script>
-    <script src="https://unpkg.com/aframe-event-set-component@4.2.1/dist/aframe-event-set-component.min.js"></script>
-    <script src="JS/eventos.js"></script>
-  </head>
-  <body>
-    <a-scene inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
+
+<head>
+  <meta charset="utf-8">
+  <title>LOBBI HIPPER EFE</title>
+  <meta name="description" content="Anime UI — A-Frame">
+  <script src="../dist/aframe-master.js"></script>
+  <script src="https://unpkg.com/aframe-event-set-component@4.2.1/dist/aframe-event-set-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-proxy-event-component/dist/aframe-proxy-event-component.min.js"> </script>
+  <script script src="https://unpkg.com/aframe-layout-component@5.3.0/dist/aframe-layout-component.min.js"> </script>
+  <script src="JS/shaders.js"></script>
+</head>
+
+<body>
+  <a-scene inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
     renderer="colorManagement: true;">
-        <a-asset-item id="engine" src="models/engine.glb"></a-asset-item>
-        <a-mixin id="image" geometry="height: 2; width: 2"></a-mixin>
-        <a-mixin id="delayVisible" event-set__loaded="visible: true" visible="false"></a-mixin>
-        <audio id="bandaSonora" src="audio/bandaSonora.mp3"></audio>
-        <audio id="blip2" src="audio/lobby.wav"></audio>
-        <img id="city" src="img/city.jpg">
-        <img id="fondoCard" src="img/fondoCard.jpg">
-        <img id="iconoMuseo" src="img/iconoMuseo.svg">
-        <img id="iconoVR" src="img/VR.svg">
-        <img id="iconoSoftware" src="img/software.svg">
-        
-      </a-assets>
+    <a-asset-item id="engine" src="models/engine.glb"></a-asset-item>
+    <a-mixin id="image" geometry="height: 2; width: 2"></a-mixin>
+    <a-mixin id="delayVisible" event-set__loaded="visible: true" visible="false"></a-mixin>
 
-      <a-entity camera look-controls wasd-controls="acceleration:50">
-        <a-entity cursor position="0 0 -0.5" geometry="primitive:ring; radiusInner:0.01; radiusOuter:0.02" material="color:red">
+    
+
+    <audio id="bandaSonora" src="audio/bandaSonora.mp3"></audio>
+    <audio id="blip2" src="audio/lobby.wav"></audio>
+    <img id="city" src="img/city.jpg">
+    <img id="fondoCard" src="img/fondoCard.jpg">
+    <img id="iconoMuseo" src="img/iconoMuseo.svg">
+    <img id="iconoVR" src="img/VR.svg">
+    <img id="iconoSoftware" src="img/software.svg">
+    <img id="texturaDetails" src="img/texturDetails.png">
+    <img id="imgPreview" src="img/imgPreview.jpg">
+    <img id="button" src="img/button.png">
+
+    </a-assets>
+
+    <a-entity camera look-controls wasd-controls="acceleration:50">
+      <a-entity id="mouseCursor" bind__raycaster="[object Object]" cursor="rayOrigin: mouse"
+        raycaster="origin: 0 1.6 2; useWorldCoordinates: true">
+      </a-entity>
+    </a-entity>
+
+    <a-entity position="0 0 -3">
+      <a-gltf-model src="#engine" rotation="90 0 0" scale="18 18 18"></a-gltf-model>
+    </a-entity>
+
+    <a-entity id="wall-lights" position="-7.25 1.5 2.9" rotation="0 90 0" scale="1.25 1.25 1.25">
+      <a-entity position="0 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 350"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+
+      <a-entity position="1 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 400"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+
+      <a-entity position="2 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 450"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+
+      <a-entity position="3 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 500"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+
+      <a-entity position="4 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 550"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+
+      <a-entity position="5 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 600"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+
+      <a-entity position="6 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 650"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+
+      <a-entity position="7 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 700"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+
+      <a-entity position="8 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 750"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+
+      <a-entity position="9 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 800"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+
+      <a-entity position="10 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 850"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+
+      <a-entity position="11 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 900"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+
+      <a-entity position="12 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 950"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+
+      <a-entity position="13 0 0" scale="0.05 0.05 0.05">
+        <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8"
+          event-set__loaded="_delay: 1000"></a-plane>
+        <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
+      </a-entity>
+    </a-entity>
+
+    <a-entity text__lblbanner="align: center; value: Bienvenido a EFE World; width: 3" id="lblbanner" position="0 4 -12"
+      scale="5 5 1">
+    </a-entity>
+
+    <a-entity id="panelPrincipal" position="0 -0.5 -12" geometry="primitive: plane; height: 8; width: 12"
+      material="src:#city">
+      <a-entity id="conteinerbtn" position="0 0 0" visible="true" animation__visible="from: true; property: visible; startEvents: animationcomplete__back; pauseEvents:
+            ; resumeEvents: ; to: false" animation__back="dur: 1000; from: 0 0 0; property: position; startEvents: topic;
+            pauseEvents: ; resumeEvents: ; to: 0 0 -1; easing: easeInOutCubic">
+        <a-entity id="btnWorld" position="-2.11536 -2.97455 0.1" geometry="primitive: plane; width: 3"
+          material="color: blue" visible="" scale="1 1 1" animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
+              pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
+              easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
+              easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " animation__mouseenter="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
+              mouseleave; resumeEvents: ; to: 1.04 1.04 1.04"
+          proxy-event="event: click; to: a-scene, #conteinerbtn, #contentMenu; as: world">
+          <a-text value="Ir al mundo Virtual" position="0 0 0.1" scale="1.5 1.5 0.00001" text="align: center">
+          </a-text>
+        </a-entity>
+
+        <a-entity id="btnTopic" position="2.11536 -2.97455 0.1" geometry="primitive: plane; width: 3"
+          material="color: blue" animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
+              pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
+              easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
+              easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " animation__mouseenter1="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
+              mouseleave; resumeEvents: ; to: 1.04 1.04 1.04"
+          proxy-event="event: click; to: a-scene, #contentMenu, #conteinerbtn; as: topic">
+          <a-text value="Elegir Edificio" position="0 0 0.01" scale="1.5 1.5 1.5" text="align: center">
+          </a-text>
         </a-entity>
       </a-entity>
 
-      <a-entity position="0 0 -3">
-        <a-gltf-model src="#engine" rotation="90 0 0" scale="18 18 18"></a-gltf-model>
-      </a-entity>
+      <a-entity id="contentMenu" position="0 0 -1" visible="false" 
+            animation__visible="dur: 100; from: false; property: visible; startEvents: topic; pauseEvents:
+            mouseleave; resumeEvents: ; to: true" 
+            animation__move="dur: 1000; from: 0 0 -1; property: position; startEvents: topic;
+            pauseEvents: ; resumeEvents: ; to: 0 0 0; easing: easeInOutCubic">
+        <a-text value="A donde quieres ir?" text="align: center" id="lblTitulo" scale="3 3 1" position="0 3.5 0.1">
+        </a-text>
+        <a-entity id="containerCardOption" position=" 0 0 0.01" layout="type: box; margin: 1.2" 
+              animation__aligLeft="dur: 2000;  property: position; startEvents: itemSelect;
+              pauseEvents: ; resumeEvents: ; to: -2.5 0 0.01; easing: easeInOutCubic">
+          <a-entity id="cardOption" geometry="primitive: plane; width: 3" material="src: #fondoCard" position="0 0 0.2"
+                animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
+                pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" 
+                animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
+                easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " 
+                animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
+                easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " 
+                animation__mouseenter="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
+                mouseleave; resumeEvents: ; to: 1.04 1.04 1.04"
+            proxy-event="event: click; to: a-scene, #containerCardOption, #containerDetails; as: itemSelect">
 
-      <a-entity id="wall-lights" position="-7.25 1.5 2.9" rotation="0 90 0" scale="1.25 1.25 1.25">
-        <a-entity position="0 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 350"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-
-        <a-entity position="1 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 400"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-
-        <a-entity position="2 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 450"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-
-        <a-entity position="3 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 500"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-
-        <a-entity position="4 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 550"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-
-        <a-entity position="5 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 600"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-
-        <a-entity position="6 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 650"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-
-        <a-entity position="7 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 700"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-
-        <a-entity position="8 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 750"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-
-        <a-entity position="9 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 800"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-
-        <a-entity position="10 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 850"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-
-        <a-entity position="11 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 900"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-
-        <a-entity position="12 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 950"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-
-        <a-entity position="13 0 0" scale="0.05 0.05 0.05">
-          <a-plane mixin="delayVisible" width="1" height="4" shader="flat" color="#B4E2F8" event-set__loaded="_delay: 1000"></a-plane>
-          <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
-        </a-entity>
-      </a-entity>
-
-        <a-entity text__lblbanner="align: center; value: Bienvenido a EFE World; width: 3" id="lblbanner"
-          position="0 4 -12" scale="5 5 1">
-        </a-entity>
-
-        <a-entity id="panelPrincipal" position="0 -0.5 -12" geometry="primitive: plane; height: 8; width: 12"
-          material="src:#city">
-          <a-entity id="conteinerbtn" position="0 0 0" visible="true">
-            <a-entity id="btnWorld" position="-2.11536 -2.97455 0.1" geometry="primitive: plane; width: 3"
-              material="color: blue" visible="">
-              <a-text value="Ir al mundo Virtual" position="0 0 0.1" scale="1.5 1.5 0.00001" text="align: center">
-              </a-text>
-            </a-entity>
-
-            <a-entity cursor-listener id="btnTopic" position="2.11536 -2.97455 0.1" geometry="primitive: plane; width: 3"
-              material="color: blue" visible="" animation__mouseenter="property: visible; from: false; to: true;
-              startEvents: mouseenter; dur:2000; easing: easeOutQuad;" ;>
-              <a-text value="Elegir Edificio" position="0 0 0.1" scale="1.5 1.5 0.00001" text="align: center">
-              </a-text>
-            </a-entity>
-          </a-entity>
-
-          <a-entity id="contentMenu" position="0 0 0" mixin=""
-            >
-            
-            <a-text value="A donde quieres ir?" text="align: center" id="lblTitulo" scale="3 3 1" position="0 3.5 0.1">
+            <a-text value="Museo de Historia" text="align: center" id="lblTitulo" scale="" position="0.37698 0.02339 0">
+              <a-image src="#iconoMuseo" material="" geometry="height: 0.75; width: 0.75" id="imgMuseo"
+                position="-1.359 0 0.01"></a-image>
             </a-text>
-
-            <a-entity id="cardOption" geometry="primitive: plane; width: 3" material="src: #fondoCard"
-              position="-3.65383 2 0.2">
-              <a-text value="Museo de Historia" text="align: center" id="lblTitulo" scale=""
-                position="0.37698 0.02339 0">
-                <a-image src="#iconoMuseo" material="" geometry="height: 0.75; width: 0.75" id="imgMuseo"
-                  position="-1.359 0 0.1"></a-image>
-              </a-text>
-            </a-entity>
-            <a-entity id="cardOption" geometry="primitive: plane; width: 3" material="src: #fondoCard"
-              position="-3.65383 0.9 0.2">
-              <a-text value="Google CardBoard" text="align: center" id="lblTitulo" scale=""
-                position="0.37698 0.02339 0">
-                <a-image src="#iconoVR" material="" geometry="height: 0.75; width: 0.75" id="imgMuseo"
-                  position="-1.359 0 0.1">
-                </a-image>
-              </a-text>
-            </a-entity>
-            <a-entity id="cardOption" geometry="primitive: plane; width: 3" material="src: #fondoCard"
-              position="-3.65383 -0.2 0.2">
-              <a-text value="Software y Hardware" text="align: center" id="lblTitulo" scale=""
-                position="0.37698 0.02339 0">
-                <a-image src="#iconoSoftware" material="" geometry="height: 0.75; width: 0.75" id="imgMuseo"
-                  position="-1.359 0 0.1">
-                </a-image>
-              </a-text>
-            </a-entity>
           </a-entity>
-          
+          <a-entity id="cardOption" geometry="primitive: plane; width: 3" material="src: #fondoCard" position="0 0 0.2"
+            animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
+                pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
+                easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
+                easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " animation__mouseenter="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
+                mouseleave; resumeEvents: ; to: 1.04 1.04 1.04">
+            <a-text value="Google CardBoard" text="align: center" id="lblTitulo" scale="" position="0.37698 0.02339 0">
+              <a-image src="#iconoVR" material="" geometry="height: 0.75; width: 0.75" id="imgMuseo"
+                position="-1.359 0 0.01">
+              </a-image>
+            </a-text>
+          </a-entity>
+          <a-entity id="cardOption" geometry="primitive: plane; width: 3" material="src: #fondoCard" position="0 0 0.2"
+                animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
+                pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" 
+                animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
+                easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " 
+                animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
+                easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " 
+                animation__mouseenter="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
+                mouseleave; resumeEvents: ; to: 1.04 1.04 1.04">
+            <a-text value="Software y Hardware" text="align: center" id="lblTitulo" scale=""
+              position="0.37698 0.02339 0">
+              <a-image src="#iconoSoftware" material="" geometry="height: 0.75; width: 0.75" id="imgMuseo"
+                position="-1.359 0 0.01">
+              </a-image>
+            </a-text>
+          </a-entity>
         </a-entity>
-        
-      <!-- Lights. -->
-      <a-light type="point" color="#94c6ff" distance="15" position="0 0 -12" intensity="0" animation="property: light.intensity; from: 0; to: 2; delay: 750; dur: 500"></a-light>
-      <a-light type="point" color="#94c6ff" distance="17" position="0 0 -6" intensity="0" animation="property: light.intensity; from: 0; to: 1; delay: 500; dur: 500"></a-light>
-      <a-light type="ambient" color="#4f6487" ></a-light>
 
-      <!-- Sounds. -->
-      <!--  <a-entity sound="autoplay: true; src: #bandaSonora; distanceModel: linear; volume: 0.75" id="snMusic">
+      </a-entity>
+      <a-entity id="containerDetails" position="2.90172 0 -1" visible="false"
+        animation__up="property: position; to: 2.90172 0 0.1; dur: 1000; autoplay: false; easing:
+        	easeInOutCubic; startEvents: itemSelect ; pauseEvents: ; resumeEvents: ; delay: 1000;"
+
+        animation__visible=" property: visible; startEvents: itemSelect; pauseEvents:
+        mouseleave; resumeEvents: ; to: true"
+      >
+        <a-image id="contentDetails" geometry="width: 2; height: 2" src="#texturaDetails"
+          scale="2.5 2.5 1">
+          <a-image src="#imgPreview" geometry="height: 0.75; width: 0.75" id="imgPreview" position="0.0178 0.55073 0.01"
+            material="">
+          </a-image>
+          <a-entity position="0 0 0.01">
+            <a-text value="Museo de la Informatica" text="align: center" id="lblTituloItem" scale="0.8 0.8 1"
+              position="-0.00713 0.02339 0.01">
+              <a-text value="Explora y conoce todo sobre los inicios de la informatica" text="align: center"
+                id="lblDescripcionItem" scale="0.5 0.5 1" position="-0.00713 -0.32106 0.1">
+              </a-text>
+            </a-text>
+          </a-entity>
+          <a-image id="btnItemGo" src="#button" scale="0.8 0.3 1" position="0 -0.52 0.01" material="" geometry="">
+          </a-image>
+        </a-image>
+      </a-entity>
+    </a-entity>
+
+    </a-entity>
+
+
+
+
+    <!-- Lights. -->
+    <a-light type="point" color="#94c6ff" distance="15" position="0 0 -12" intensity="0"
+      animation="property: light.intensity; from: 0; to: 2; delay: 750; dur: 500"></a-light>
+    <a-light type="point" color="#94c6ff" distance="17" position="0 0 -6" intensity="0"
+      animation="property: light.intensity; from: 0; to: 1; delay: 500; dur: 500"></a-light>
+    <a-light type="ambient" color="#4f6487"></a-light>
+
+    <!-- Sounds. -->
+    <!--  <a-entity sound="autoplay: true; src: #bandaSonora; distanceModel: linear; volume: 0.75" id="snMusic">
       </a-entity>-->
-      
-    </a-scene>
-  </body>
+
+  </a-scene>
+</body>
+
 </html>

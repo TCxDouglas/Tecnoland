@@ -337,11 +337,12 @@ function validarIgualdad() {
 function obtenerDatosMYSQL(usuario) {
     let datos = {
         uid: usuario,
+        accion: ''
     }
     fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(datos)}`).then(resp => resp.json()).then(resp => {
         sessionStorage.setItem('tipoCuenta', resp[0].tipocuenta)
         sessionStorage.setItem('nacimiento', resp[0].fechanacimiento)
-
+      
         if (resp[0].tipocuenta == 'normal') {
             buscandoSala(usuario)
         } else {
@@ -350,7 +351,12 @@ function obtenerDatosMYSQL(usuario) {
     })
 }
 
+<<<<<<< HEAD
+function buscandoSala(uid){
+    console.log('Estooy buscando sala')
+=======
 function buscandoSala(uid) {
+>>>>>>> 306d40adce1fdc23e9ea553c5e8f7ce9cde3c034
     firebase.database().ref('Tecnoland').child('usuarios').child(uid).child('unionSala').once('value').then(function (snapshot) {
         if (snapshot.val()) {
             sessionStorage.setItem('uidCreador', snapshot.val().creadorSala)

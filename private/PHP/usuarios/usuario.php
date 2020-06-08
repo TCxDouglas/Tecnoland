@@ -17,7 +17,12 @@
         }
         public function obtener_datos($usuario){
             $this->datos = json_decode($usuario, true);
-            $this->almacenar_usuario();
+            if ($this->datos['accion']=='update'){
+                $this->updateUser();
+            } else {
+                $this->almacenar_usuario();
+            }
+           
         }
     
        
@@ -38,6 +43,17 @@
                 return $this->respuesta =['sinCambios'];
             }
             
+        }
+
+        private function updateUser(){
+            $this->db->consultas('
+            UPDATE usuarios SET 
+            displayname= "'. $this->datos['displayname'].'",
+            fechanacimiento= "'.$this->datos['fechanacimiento'].'"
+            WHERE uid="'. $this->datos['uid'].'"
+            ');
+            return $this->respuesta =['Update listo'];
+
         }
         
     }

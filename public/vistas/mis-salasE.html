@@ -1,0 +1,44 @@
+<div class="content-vistaPerfil ">
+    <h1>Salas a las que perteneces</h1>
+    <main class="" style="  height: 35vh;   margin-left: 2%;  overflow-y: scroll !important;">
+        <table class=" table-content ">
+            <thead>
+                <tr>
+                    <th> Codigo </th>
+                    <th> Nombre </th>
+                    <th> Descripcion </th>
+                    <th>Ver</th>
+                    <th>Salir</th>
+
+                </tr>
+            </thead>
+            <tbody v-for='filaSala in sala'>
+                <tr>
+                    <td>{{filaSala.codigoSala}} </td>
+                    <td>{{filaSala.nombreSala}} </td>
+                    <td>{{filaSala.descripcion}} </td>
+                    <div >
+                        <td style="cursor: pointer;" class="btns-icons" v-on:click="mandarDatos(filaSala)"><i class="fa fa-eye" aria-hidden="true"></i>
+                        </td>
+                    </div>
+
+                    <div >
+                        <td style="cursor: pointer;" class="btns-icons" v-on:click=""><i class="fa fa-sign-out" aria-hidden="true"></i>
+                        </td>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <div class="inputSearch">
+        <input type="text" placeholder="Buscar sala..." v-on:keyup="obtenerSalas" v-model="campo">
+        <i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i>
+    </div>
+
+    <div class="buttons" style="margin-top: 4%;">
+        <button onclick="alertaNewSala()" class="button-hover"><span><i class="fa fa-plus" aria-hidden="true"></i> add
+                Sala </span></button>
+    </div>
+</div>
+
+<script src="../JS/vista-estudiante/perfilEstudiante.js"></script>

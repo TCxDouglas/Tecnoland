@@ -8,132 +8,178 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
-        <!-- Default theme -->
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
-        <!-- Semantic UI theme -->
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
-        <!-- Bootstrap theme -->
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
     <link rel="stylesheet" href="../css/prueba.css">
 </head>
 
 <body>
-    <div id="vista-estudiante">
-        <div>
+    <div class=" col-md-12 toppiProfileEst">
+        <header>
             <div>
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <a class="navbar-brand align-middle" href="#">HIPER EFE</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                        </ul>
-
-                        <div class="form-inline my-1 my-lg-0">
-                            <button type="button" class="btn btn-outline-primary form-control mr-sm-2 text-light"
-                                data-toggle="modal" data-target="#staticBackdrop" type="button">UNIRME A UNA
-                                SALA</button>
-                            <button type="button" class="btn btn-outline-success form-control mr-sm-2 text-light"
-                                type="button">IR A LA CIUDAD</button>
-                            <button class="btn btn-outline-danger text-light my-2 my-sm-0" type="button"
-                                v-on:click="cerrarSesion">Cerrar
-                                Sesion</button>
-                        </div>
-                    </div>
-                </nav>
+                <a href="#" class="logo-principal"><span>HIPER</span>EFE</a>
             </div>
-        </div>
 
-        <div>
-            <div class="container row">
-                <div class="col-sm">
-                    <div class="card bg-dark text-light" style="width: 18rem; align-items: center;">
-                        <img v-bind:src="usuario.photoURL" class="card-img-top rounded-circle"
-                            style="width: 200px; height: 200px;">
-                        <div class="card-body">
-                            <h5 class="card-title">{{usuario.displayName}} </h5>
-                            <p class="card-text">Estudiante de HIPER EFE </p>
-                            <a href="#" class="btn btn-primary">Editar tu perfil</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-8">
-                    <div id="contenedor">
-                        <div>
-                            <p class="h1 text-center text-light">INFORMACION DE TU PERFIL</p>
-                        </div>
-                        <div>
-                            <p class="h2 text-center text-light">Tus Salas</p>
-                            <div class="container">
-                                <table class="table table-dark">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Codigo de sala</th>
-                                            <th scope="col">Nombre de Sala</th>
-                                            <th scope="col">Descripcion</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody v-for='filaSala in sala'>
-                                        <tr>
-                                            <th scope="row">{{filaSala.codigoSala}} </th>
-                                            <td>{{filaSala.nombreSala}} </td>
-                                            <td>{{filaSala.descripcion}} </td>
-                                            <div style="align-items: center;">
-                                                <td v-on:click="mandarDatos(filaSala)"> <img src="../imagenes/conf.png"
-                                                        style="width: 40px; height: 40px;" data-toggle="modal"
-                                                        data-target="">
-                                                </td>
-                                            </div>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            <nav class="activarMenu">
+                <ul>
+                    <li><a href="#" class="traerPerfilE"><i class="fa fa-user" aria-hidden="true"> Perfil</i> </a></li>
+                    <li><a href="#" class="salas"><i class="fa fa-heart" aria-hidden="true"> Mis Salas</i>
+                    <li><a href="#"><i class="fa fa-globe" aria-hidden="true"> Mundo Virtual </i></a></li>
+                    <li><a href="#" onclick="cerrarSesion()"><i class="fa fa-sign-out" aria-hidden="true"> Salir</i></a>
+                    </li>
 
-    <!-- Modal -->
-    <div id="contenedorModal">
-        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-            role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">UNIRSE A SALA</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="bodyModal" style="align-items: center;">
-                           <p class="h3 text-center">Ingrese el codigo de la sala</p>
-                           <input class="text-center" style="width: 100%; margin-top: 5px;" type="text" placeholder="XXXX0000"
-                               v-model="codigoSala">
-                            <div id="cargando">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            v-on:click="cancelar">Cancelar</button>
-                        <button type="button" class="btn btn-primary" v-on:click="verificarSala">Unirse</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </ul>
+            </nav>
+
+            <div class="toggle"> <i class="fa fa-bars" aria-hidden="true"></i></div>
+
+        </header>
     </div>
 
 
+    <div id="vista-estudiante" class=" estudianteGen" style="z-index: 1; width: 100%;">
+
+        <div class=" row">
+
+            <div class="col-md-4 targetEst">
+                <div class="center">
+                    <div class="bio-card">
+                        <div class="izq">
+                            <div class="traerPerfilE botonis " data-modulo="configPerfil">
+                                <i class="fa fa-pencil " aria-hidden="true"></i>
+                            </div>
+                            <img src="../imagenes/ciudad2.png" class="cover">
+                            <div class="profilee">
+                                <img v-bind:src="usuario.photoURL" class="pdp" id="imgPhotoEst">
+                            </div>
+                            <h1 id="userName">{{usuario.displayName}}</h1>
+                            <p id="userEmail">{{usuario.email}}</p>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6  perfilEst"
+                style="border: 4px solid rgba(0, 0, 255, 0.29);   border-radius: 25px 0 0 25px; z-index: 1;"
+                id="vista-configPerfil">
+                <div class="content-vistaPerfil ">
+                    <h1>Salas a las que perteneces</h1>
+                    <main class="" style="  height: 35vh;   margin-left: 2%;  overflow-y: scroll !important;">
+                        <table class=" table-content ">
+                            <thead>
+                                <tr>
+                                    <th> Codigo </th>
+                                    <th> Nombre </th>
+                                    <th> Descripcion </th>
+                                    <th>Ver</th>
+                                    <th>Salir</th>
+
+                                </tr>
+                            </thead>
+                            <tbody v-for='filaSala in sala'>
+                                <tr>
+                                    <td>{{filaSala.codigoSala}} </td>
+                                    <td>{{filaSala.nombreSala}} </td>
+                                    <td>{{filaSala.descripcion}} </td>
+                                    <div>
+                                        <td class="btns-icons" style="cursor: pointer;"
+                                            v-on:click="mandarDatos(filaSala)"><i class="fa fa-eye"
+                                                aria-hidden="true"></i>
+                                        </td>
+                                    </div>
+
+                                    <div>
+                                        <td class="btns-icons" style="cursor: pointer;" v-on:click=""><i
+                                                class="fa fa-sign-out" aria-hidden="true"></i>
+                                        </td>
+                                    </div>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </main>
+                    <div class="inputSearch">
+                        <input type="text" placeholder="Buscar sala..." v-on:keyup="" v-model="campo">
+                        <i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i>
+                    </div>
+
+                    <div class="buttons" style="margin-top: 4%;">
+                        <button onclick="alertaNewSala()" class="button-hover"><span><i class="fa fa-plus"
+                                    aria-hidden="true"></i> add Sala </span></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- Modal de avatares -->
+<div class="modal fade" id="modalAvatar" data-backdrop="static" tabindex="-1" role="dialog"
+aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Escoge tu avatar</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div id="contenedorAvatares" class="row">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="guardarAvatar()">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="modal fade" id="modalNewPass" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-ms">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Cambiando contraseña...</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input class="inputsEPI" type="password" placeholder="Nueva contraseña" id="newPassuser"></input>
+          <input class="inputsEPI" type="password" placeholder="Repetir contraseña" id="newPassuser2"></input>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary"  onclick="updateUserPassword()">Verificar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script src="https://kit.fontawesome.com/2f2a4cd560.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+    <script src="../JS/jquery-ui.min.js"></script>
+
+
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">

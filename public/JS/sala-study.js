@@ -1,9 +1,4 @@
 
-
-
-
-
-
 let auxiliar="";
 function init() {
     $("[class*='mostrar']").click(function (e) {

@@ -10,8 +10,7 @@
   <script src="https://unpkg.com/aframe-proxy-event-component/dist/aframe-proxy-event-component.min.js"> </script>
   <script script src="https://unpkg.com/aframe-layout-component@5.3.0/dist/aframe-layout-component.min.js"> </script>
   <script src="https://unpkg.com/aframe-state-component@6.7.0/dist/aframe-state-component.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="JS/controlData.js"></script>
+  
   
 </head>
 
@@ -28,9 +27,9 @@
     <audio id="blip2" src="audio/lobby.wav"></audio>
     <img id="city" src="img/city.jpg">
     <img id="fondoCard" src="img/fondoCard.jpg">
-    <img id="iconoMuseo" src="img/iconoMuseo.svg">
-    <img id="iconoVR" src="img/VR.svg">
-    <img id="iconoSoftware" src="img/software.svg">
+    <img id="1" src="img/1.svg">
+    <img id="2" src="img/2.svg">
+    <img id="3" src="img/3.svg">
     <img id="texturaDetails" src="img/texturDetails.png">
     <img id="imgPreview" src="img/imgPreview.jpg">
     <img id="button" src="img/button.png">
@@ -181,21 +180,6 @@
               animation__aligLeft="dur: 2000;  property: position; startEvents: itemSelect;
               pauseEvents: ; resumeEvents: ; to: -2.5 0 0.01; easing: easeInOutCubic" >
               
-                <a-entity id="cardOption" geometry="primitive: plane; width: 3" material="src: #fondoCard"
-                  position="0 0 0.2" animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
-                  pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
-                  easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
-                  easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " animation__mouseenter="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
-                  mouseleave; resumeEvents: ; to: 1.04 1.04 1.04"
-                  proxy-event="event: click; to: a-scene, #containerCardOption, #containerDetails; as: itemSelect">
-
-                  <a-text value="Museo de historia" text="align: center" id="lblTitulo" scale=""
-                    position="0.37698 0.02339 0">
-                    <a-image src="#iconoMuseo" material="" geometry="height: 0.75; width: 0.75" id="imgMuseo"
-                      position="-1.359 0 0.01"></a-image>
-                  </a-text>
-                </a-entity>
-              
         </a-entity>
       </a-entity>
       <a-entity id="containerDetails" position="2.90172 0 -1" visible="false"
@@ -239,6 +223,8 @@
 
   </a-scene>
   
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="JS/controlData.js"></script>
 </body>
 
 </html>

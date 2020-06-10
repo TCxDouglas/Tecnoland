@@ -79,12 +79,14 @@ var perfil = new Vue({
                     snapshot.forEach(salaSnapshot => {
                         //let key = salaSnapshot.key;
                         let numactual = salaSnapshot.child('integrantes').numChildren();
-                        console.log(salaSnapshot.child('integrantes').numChildren());
+                       let temas = getTopicsSnapshot(salaSnapshot.child('temas'));
+                        console.log(temas);
                         let array = {
                             codigoSala: salaSnapshot.key,
                             nombreSala: salaSnapshot.val().nombreSala,
                             descripcion: salaSnapshot.val().descripcion,
-                            numParticipantes: numactual + '/' + salaSnapshot.val().maxParticipantes
+                            numParticipantes: numactual + '/' + salaSnapshot.val().maxParticipantes,
+                            listaTemas: JSON.stringify(temas)
                         }
                         listaSalas.push(array);
                     });
@@ -100,6 +102,7 @@ var perfil = new Vue({
             sessionStorage.setItem('codigoSala', filaSala.codigoSala)
             sessionStorage.setItem('nombreSala', filaSala.nombreSala)
             sessionStorage.setItem('uidCreador', this.usuario.uid)
+            sessionStorage.setItem('temas', filaSala.listaTemas)
             window.location = 'sala-study.html'
         }
     },
@@ -118,6 +121,18 @@ var perfil = new Vue({
     }
 })
 
+function getTopicsSnapshot(snapshot){
+    let topics=[]
+    for (let i = 0; i < snapshot.numChildren(); i++) {
+        let items={
+            descripcion: snapshot.child(i).val().descripcion,
+            idTema: snapshot.child(i).val().idTema,
+            tema: snapshot.child(i).val().tema
+        }
+        topics.push(items)
+    }
+    return topics;
+}
 
 function crearSala() {
     window.location = 'crear-salas.html'

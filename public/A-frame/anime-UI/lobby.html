@@ -5,11 +5,14 @@
   <meta charset="utf-8">
   <title>LOBBI HIPPER EFE</title>
   <meta name="description" content="Anime UI — A-Frame">
-  <script src="../dist/aframe-master.js"></script>
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-event-set-component@4.2.1/dist/aframe-event-set-component.min.js"></script>
   <script src="https://unpkg.com/aframe-proxy-event-component/dist/aframe-proxy-event-component.min.js"> </script>
   <script script src="https://unpkg.com/aframe-layout-component@5.3.0/dist/aframe-layout-component.min.js"> </script>
-  <script src="JS/shaders.js"></script>
+  <script src="https://unpkg.com/aframe-state-component@6.7.0/dist/aframe-state-component.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="JS/controlData.js"></script>
+  
 </head>
 
 <body>
@@ -176,53 +179,24 @@
         </a-text>
         <a-entity id="containerCardOption" position=" 0 0 0.01" layout="type: box; margin: 1.2" 
               animation__aligLeft="dur: 2000;  property: position; startEvents: itemSelect;
-              pauseEvents: ; resumeEvents: ; to: -2.5 0 0.01; easing: easeInOutCubic">
-          <a-entity id="cardOption" geometry="primitive: plane; width: 3" material="src: #fondoCard" position="0 0 0.2"
-                animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
-                pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" 
-                animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
-                easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " 
-                animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
-                easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " 
-                animation__mouseenter="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
-                mouseleave; resumeEvents: ; to: 1.04 1.04 1.04"
-            proxy-event="event: click; to: a-scene, #containerCardOption, #containerDetails; as: itemSelect">
+              pauseEvents: ; resumeEvents: ; to: -2.5 0 0.01; easing: easeInOutCubic" >
+              
+                <a-entity id="cardOption" geometry="primitive: plane; width: 3" material="src: #fondoCard"
+                  position="0 0 0.2" animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
+                  pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
+                  easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
+                  easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " animation__mouseenter="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
+                  mouseleave; resumeEvents: ; to: 1.04 1.04 1.04"
+                  proxy-event="event: click; to: a-scene, #containerCardOption, #containerDetails; as: itemSelect">
 
-            <a-text value="Museo de Historia" text="align: center" id="lblTitulo" scale="" position="0.37698 0.02339 0">
-              <a-image src="#iconoMuseo" material="" geometry="height: 0.75; width: 0.75" id="imgMuseo"
-                position="-1.359 0 0.01"></a-image>
-            </a-text>
-          </a-entity>
-          <a-entity id="cardOption" geometry="primitive: plane; width: 3" material="src: #fondoCard" position="0 0 0.2"
-            animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
-                pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
-                easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
-                easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " animation__mouseenter="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
-                mouseleave; resumeEvents: ; to: 1.04 1.04 1.04">
-            <a-text value="Google CardBoard" text="align: center" id="lblTitulo" scale="" position="0.37698 0.02339 0">
-              <a-image src="#iconoVR" material="" geometry="height: 0.75; width: 0.75" id="imgMuseo"
-                position="-1.359 0 0.01">
-              </a-image>
-            </a-text>
-          </a-entity>
-          <a-entity id="cardOption" geometry="primitive: plane; width: 3" material="src: #fondoCard" position="0 0 0.2"
-                animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
-                pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" 
-                animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
-                easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " 
-                animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
-                easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " 
-                animation__mouseenter="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
-                mouseleave; resumeEvents: ; to: 1.04 1.04 1.04">
-            <a-text value="Software y Hardware" text="align: center" id="lblTitulo" scale=""
-              position="0.37698 0.02339 0">
-              <a-image src="#iconoSoftware" material="" geometry="height: 0.75; width: 0.75" id="imgMuseo"
-                position="-1.359 0 0.01">
-              </a-image>
-            </a-text>
-          </a-entity>
+                  <a-text value="Museo de historia" text="align: center" id="lblTitulo" scale=""
+                    position="0.37698 0.02339 0">
+                    <a-image src="#iconoMuseo" material="" geometry="height: 0.75; width: 0.75" id="imgMuseo"
+                      position="-1.359 0 0.01"></a-image>
+                  </a-text>
+                </a-entity>
+              
         </a-entity>
-
       </a-entity>
       <a-entity id="containerDetails" position="2.90172 0 -1" visible="false"
         animation__up="property: position; to: 2.90172 0 0.1; dur: 1000; autoplay: false; easing:
@@ -252,9 +226,6 @@
 
     </a-entity>
 
-
-
-
     <!-- Lights. -->
     <a-light type="point" color="#94c6ff" distance="15" position="0 0 -12" intensity="0"
       animation="property: light.intensity; from: 0; to: 2; delay: 750; dur: 500"></a-light>
@@ -267,8 +238,7 @@
       </a-entity>-->
 
   </a-scene>
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="JS/controlData.js"></script>
+  
 </body>
 
 </html>

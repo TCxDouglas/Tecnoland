@@ -109,7 +109,7 @@ var autentificacion = new Vue({
                 errorAlert(msg);
 
             }
-
+document.getElementById
         },
         iniciarSesion: function () {
             let cargando = document.getElementById('Verificando');

@@ -352,8 +352,8 @@ function obtenerDatosMYSQL(usuario) {
 }
 
 
-function buscandoSala(uid){
-    console.log('Estooy buscando sala')
+
+function buscandoSala(uid) {
     firebase.database().ref('Tecnoland').child('usuarios').child(uid).child('unionSala').once('value').then(function (snapshot) {
         if (snapshot.val()) {
             sessionStorage.setItem('uidCreador', snapshot.val().creadorSala)

@@ -2,6 +2,8 @@ var photoRespaldo = '';
 var avatar = '';
 var avatares = [];
 var contPhoto = 0;
+var listaSalas = []
+
 
 $(document).ready(function () {
     $('.toggle').click(function () {
@@ -43,7 +45,6 @@ var perfilEstudiante = new Vue({
     },
     methods: {
         obtenerSalas: function () {
-            let listaSalas = []
             firebase.database().ref('Tecnoland').child('usuarios').child(this.usuario.uid).child('unionSala').once('value').then(function (snapshot) {
                 if (snapshot.val()) {
                     snapshot.forEach(salaSnapshot => {
@@ -61,23 +62,37 @@ var perfilEstudiante = new Vue({
                 }
             })
 
-            if (!this.campo == '') {
-                listaSalas = listaSalas.filter(function (a) {
-                    return a.nombreSala == this.campo;
-                })
-                this.sala = listaSalas;
-
-            } else {
-                this.sala = listaSalas;
-            }
+            this.sala = listaSalas
         },
 
-        filtro: function (array, key, value) {
-            return array.filter(function (el) {
-                return el[key] == value;
-                //return el.toLowerCase().indexOf(query.toLowerCase()) > -1;
+        filtrarSalas: function () {
+           this.sala = []
+           // console.log(this.campo.toLowerCase())
+            let newSalas =[]
+            let cont = 0;
+            let sinResultados = document.querySelector('#sinResultados')
+            for (let arrayNew of listaSalas){
+                let nombre = arrayNew.nombreSala.toLowerCase()
+                if(nombre.indexOf(this.campo.toLowerCase().trim()) !== -1){
+                    newSalas[cont] =  {
+                        codigoSala: arrayNew.codigoSala,
+                        nombreSala: arrayNew.nombreSala,
+                        descripcion: arrayNew.descripcion,
+                        uidCreador: arrayNew.uidCreador
+                    }
+                    cont++;
+                    //console.log(arrayNew.nombreSala.toLowerCase())
+                    sinResultados.innerHTML = ''
+                }else if (newSalas ==''){
+                   // this.sala = listaSalas
+                    sinResultados.innerHTML = `
+                    <h1 style="color: #fff;">Sin resultados de búsqueda</h1>
+                    `
+                   console.log('Sin resultados de busqueda')
+                }
+                this.sala = newSalas 
 
-            })
+            }
         },
         mandarDatos: function (filasala) {
             sessionStorage.setItem('codigoSala', filasala.codigoSala)

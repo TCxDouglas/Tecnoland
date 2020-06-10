@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <a-scene inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
+  <a-scene id="sceneVR" inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
     renderer="colorManagement: true;">
     <a-asset-item id="engine" src="models/engine.glb"></a-asset-item>
     <a-mixin id="image" geometry="height: 2; width: 2"></a-mixin>
@@ -35,8 +35,7 @@
     </a-assets>
 
     <a-entity camera look-controls wasd-controls="acceleration:50">
-      <a-entity id="mouseCursor" bind__raycaster="[object Object]" cursor="rayOrigin: mouse"
-        raycaster="origin: 0 1.6 2; useWorldCoordinates: true">
+      <a-entity id="mouseCursor" cursor="rayOrigin: mouse">
       </a-entity>
     </a-entity>
 
@@ -136,8 +135,10 @@
 
     <a-entity id="panelPrincipal" position="0 -0.5 -12" geometry="primitive: plane; height: 8; width: 12"
       material="src:#city">
-      <a-entity id="conteinerbtn" position="0 0 0" visible="true" animation__visible="from: true; property: visible; startEvents: animationcomplete__back; pauseEvents:
-            ; resumeEvents: ; to: false" animation__back="dur: 1000; from: 0 0 0; property: position; startEvents: topic;
+      <a-entity id="conteinerbtn" position="0 0 0" visible="true" 
+      animation__visible="from: true; property: visible; startEvents: animationcomplete__back; pauseEvents:
+            ; resumeEvents: ; to: false" 
+            animation__back="dur: 1000; from: 0 0 0; property: position; startEvents: topic;
             pauseEvents: ; resumeEvents: ; to: 0 0 -1; easing: easeInOutCubic">
         <a-entity id="btnWorld" position="-2.11536 -2.97455 0.1" geometry="primitive: plane; width: 3"
           material="color: blue" visible="" scale="1 1 1" animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
@@ -151,10 +152,14 @@
         </a-entity>
 
         <a-entity id="btnTopic" position="2.11536 -2.97455 0.1" geometry="primitive: plane; width: 3"
-          material="color: blue" animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
-              pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
-              easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
-              easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " animation__mouseenter1="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
+          material="color: blue" 
+          animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
+              pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" 
+              animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
+              easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " 
+              animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
+              easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " 
+              animation__mouseenter1="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
               mouseleave; resumeEvents: ; to: 1.04 1.04 1.04"
           proxy-event="event: click; to: a-scene, #contentMenu, #conteinerbtn; as: topic">
           <a-text value="Elegir Edificio" position="0 0 0.01" scale="1.5 1.5 1.5" text="align: center">
@@ -221,7 +226,7 @@
       </a-entity>
       <a-entity id="containerDetails" position="2.90172 0 -1" visible="false"
         animation__up="property: position; to: 2.90172 0 0.1; dur: 1000; autoplay: false; easing:
-        	easeInOutCubic; startEvents: itemSelect ; pauseEvents: ; resumeEvents: ; delay: 1000;"
+        	easeInOutCubic; startEvents: animationcomplete__visible ; pauseEvents: ; resumeEvents: ; delay: 1000;"
 
         animation__visible=" property: visible; startEvents: itemSelect; pauseEvents:
         mouseleave; resumeEvents: ; to: true"
@@ -262,6 +267,8 @@
       </a-entity>-->
 
   </a-scene>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="JS/controlData.js"></script>
 </body>
 
 </html>

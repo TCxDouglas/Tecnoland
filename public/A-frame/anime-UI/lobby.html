@@ -21,18 +21,25 @@
     <a-mixin id="image" geometry="height: 2; width: 2"></a-mixin>
     <a-mixin id="delayVisible" event-set__loaded="visible: true" visible="false"></a-mixin>
 
-    
-
     <audio id="bandaSonora" src="audio/bandaSonora.mp3"></audio>
     <audio id="blip2" src="audio/lobby.wav"></audio>
     <img id="city" src="img/city.jpg">
     <img id="fondoCard" src="img/fondoCard.jpg">
+    <img id="chooseCity" src="img/chooseCity.svg">
+    <img id="world" src="img/world.svg">
     <img id="1" src="img/1.svg">
     <img id="2" src="img/2.svg">
     <img id="3" src="img/3.svg">
+    <img id="4" src="img/4.svg">
+    <img id="5" src="img/5.svg">
+    <img id="6" src="img/6.svg">
+    <img id="7" src="img/7.svg">
+    <img id="8" src="img/8.svg">
     <img id="texturaDetails" src="img/texturDetails.png">
     <img id="imgPreview" src="img/imgPreview.jpg">
     <img id="button" src="img/button.png">
+    <img id="next" src="img/next2.svg">
+    <img id="up" src="img/up.svg">
 
     </a-assets>
 
@@ -137,24 +144,32 @@
 
     <a-entity id="panelPrincipal" position="0 -0.5 -12" geometry="primitive: plane; height: 8; width: 12"
       material="src:#city">
-      <a-entity id="conteinerbtn" position="0 0 0" visible="true" 
+      <a-entity id="conteinerbtn" position="0 0 0.01" visible="true" layout="type:  box;  margin:  1.5;  align:  center"
       animation__visible="from: true; property: visible; startEvents: animationcomplete__back; pauseEvents:
             ; resumeEvents: ; to: false" 
             animation__back="dur: 1000; from: 0 0 0; property: position; startEvents: topic;
             pauseEvents: ; resumeEvents: ; to: 0 0 -1; easing: easeInOutCubic">
-        <a-entity id="btnWorld" position="-2.11536 -2.97455 0.1" geometry="primitive: plane; width: 3"
-          material="color: blue" visible="" scale="1 1 1" animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
-              pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
-              easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
-              easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " animation__mouseenter="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
+        <a-entity id="btnWorld" position="0 0 0.1" geometry="primitive: plane; width: 3; height: 1.3"
+          layout="type:  box;  margin:  0.5;  align:  center"
+          material="color: blue" visible="" scale="1 1 1" 
+          animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
+              pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" 
+              animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
+              easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: " 
+              animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
+              easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: " 
+              animation__mouseenter="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
               mouseleave; resumeEvents: ; to: 1.04 1.04 1.04"
-          proxy-event="event: click; to: a-scene, #conteinerbtn, #contentMenu; as: world">
+          proxy-event="event: click; to: a-scene, #conteinerbtn, #contentMenu; as: world"
+          >
+          <a-image src="#world" position="0 0 0" scale="0.5 0.5 1"></a-image>
           <a-text value="Ir al mundo Virtual" position="0 0 0.1" scale="1.5 1.5 0.00001" text="align: center">
           </a-text>
         </a-entity>
 
-        <a-entity id="btnTopic" position="2.11536 -2.97455 0.1" geometry="primitive: plane; width: 3"
-          material="color: blue" 
+        <a-entity id="btnTopic" position="0 0 0.1" geometry="primitive: plane; width: 3; height: 1.3;" scale="1 1 1"
+          layout="type:  box;  margin:  0.5;  align:  center"
+          material="color: blue" v-on:Click="validateNumTopics"
           animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
               pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1" 
               animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
@@ -164,6 +179,7 @@
               animation__mouseenter1="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
               mouseleave; resumeEvents: ; to: 1.04 1.04 1.04"
           proxy-event="event: click; to: a-scene, #contentMenu, #conteinerbtn; as: topic">
+          <a-image src="#chooseCity" position="0 0 0" scale="0.6 0.6 1"></a-image>
           <a-text value="Elegir Edificio" position="0 0 0.01" scale="1.5 1.5 1.5" text="align: center">
           </a-text>
         </a-entity>
@@ -172,22 +188,40 @@
       <a-entity id="contentMenu" position="0 0 -1" visible="false" 
             animation__visible="dur: 100; from: false; property: visible; startEvents: topic; pauseEvents:
             mouseleave; resumeEvents: ; to: true" 
-            animation__move="dur: 1000; from: 0 0 -1; property: position; startEvents: topic;
+            animation__move="dur: 1000; property: position; startEvents: topic;
             pauseEvents: ; resumeEvents: ; to: 0 0 0; easing: easeInOutCubic">
-        <a-text value="A donde quieres ir?" text="align: center" id="lblTitulo" scale="3 3 1" position="0 3.5 0.1">
+        <a-text value="A donde quieres ir?" text="align: center" id="lblTitulo" scale="2 2 1" position="0 3.5 0.1">
         </a-text>
-        <a-entity id="containerCardOption" position=" 0 0 0.01" layout="type: box; margin: 1.2" 
+        <a-entity id="containerCardOption" position=" 0 -0.2 0.01" layout="type:  box;  margin:  1.2;  align:  center"
               animation__aligLeft="dur: 2000;  property: position; startEvents: itemSelect;
-              pauseEvents: ; resumeEvents: ; to: -2.5 0 0.01; easing: easeInOutCubic" >
-              
+              pauseEvents: ; resumeEvents: ; to: -2.5 0 0.01; easing: easeInOutCubic">
         </a-entity>
-      </a-entity>
-      <a-entity id="containerDetails" position="2.90172 0 -1" visible="false"
-        animation__up="property: position; to: 2.90172 0 0.1; dur: 1000; autoplay: false; easing:
-        	easeInOutCubic; startEvents: animationcomplete__visible ; pauseEvents: ; resumeEvents: ; delay: 1000;"
+        <a-image id="imgNext" src="#next" scale="" position="0 -3 0.01" material="" geometry="" 
+        animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
+        pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1"
+        animation__scaledown="property: scale; from: 2 2 2; to: 1 1 1; dur: 100; autoplay: false; easing:
+        easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: "
+        animation__scaleup="property: scale; from: 1 1 1; to: 2 2 2; dur: 800; autoplay: false; easing:
+        easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: "
+        animation__mouseenter="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
+        mouseleave; resumeEvents: ; to: 1.04 1.04 1.04" v-on:Click="nextTopics"></a-image>
 
-        animation__visible=" property: visible; startEvents: itemSelect; pauseEvents:
-        mouseleave; resumeEvents: ; to: true"
+        <a-image id="imgPrev" src="#up" scale="" position="0 2.7 0.01" material="" geometry="" 
+        animation__mouseleave="dur: 80; from: 1.04 1.04 1.04; property: scale; startEvents: mouseleave;
+        pauseEvents: mouseenter; resumeEvents: ; to: 1 1 1"
+        animation__scaledown="property: scale; from: 1.2 1.2 1.2; to: 1 1 1; dur: 100; autoplay: false; easing:
+        easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: "
+        animation__scaleup="property: scale; from: 1 1 1; to: 1.2 1.2 1.2; dur: 800; autoplay: false; easing:
+        easeInOutElastic; startEvents: ; pauseEvents: ; resumeEvents: "
+        animation__mouseenter="dur: 80; from: 1 1 1; property: scale; startEvents: mouseenter; pauseEvents:
+        mouseleave; resumeEvents: ; to: 1.04 1.04 1.04" v-on:Click="prevTopics"></a-image>
+      </a-entity>
+      <a-entity id="containerDetails" position="2.90172 0 -1" 
+        animation__up="property: position; to: 2.90172 0 0.1; dur: 1000; autoplay: false; easing:
+        	easeInOutCubic; startEvents: itemSelect ; pauseEvents: ; resumeEvents:;"
+
+        animation__down="property: position;  to: 2.90172 0 -1; dur: 1000; autoplay: false; easing:
+          easeInOutCubic; startEvents: ; pauseEvents: ; resumeEvents: ;" 
       >
         <a-image id="contentDetails" geometry="width: 2; height: 2" src="#texturaDetails"
           scale="2.5 2.5 1">
@@ -195,7 +229,7 @@
             material="">
           </a-image>
           <a-entity position="0 0 0.01">
-            <a-text value="Museo de la Informatica" text="align: center" id="lblTituloItem" scale="0.8 0.8 1"
+            <a-text value="F" text="align: center" id="lblTituloItem" scale="0.8 0.8 1"
               position="-0.00713 0.02339 0.01">
               <a-text value="Explora y conoce todo sobre los inicios de la informatica" text="align: center"
                 id="lblDescripcionItem" scale="0.5 0.5 1" position="-0.00713 -0.32106 0.1">
@@ -224,6 +258,8 @@
   </a-scene>
   
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
   <script src="JS/controlData.js"></script>
 </body>
 

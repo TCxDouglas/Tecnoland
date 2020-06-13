@@ -53,7 +53,7 @@ var sceneVR = new Vue({
             let listCardOptions = document.querySelectorAll('#cardOption')
             let lblTitulosCard = document.querySelectorAll('#lblTituloCard');
             let imgCard = document.querySelectorAll('#imgIconCard');
-            console.log(listCardOptions)
+            //console.log(listCardOptions)
             let contListCard = 0; //Variable que recorre los array de las CARDS
             let pos=contTopic-4; //Variable que determina la posicion del array listTopicRoom
             
@@ -87,6 +87,13 @@ var sceneVR = new Vue({
                 arrow.setAttribute('visible', 'false')
             }
             
+        },
+        backTopics(){
+            positionSelect = -1;
+            changeColorSelect()
+        },
+        exitVR(){
+            window.location='../../vistas/sala-study.html'
         }
     },
     created: function (){
@@ -147,10 +154,10 @@ function getViewCard(listTopicsRoom, inicio, final){
                   data-position=${i} v-on:Click="dataContainerDetails">
 
                   <a-text value="${listTopicsRoom[i].tema}" text="align: center" id="lblTituloCard" scale=""
-                    position="0.37698 0.02339 0" data-position=${i}
+                    position="0.37698 0.02339 0" data-position=${i} v-on:Click="dataContainerDetails"
                     proxy-event="event: click; to: a-scene, #containerCardOption, #containerDetails;  as: itemSelect">
                     <a-image id="imgIconCard" src="#${listTopicsRoom[i].idTema}" material="" geometry="height: 0.75; width: 0.75" id="imgMuseo"
-                      position="-1.7 0 0.01" data-position=${i}
+                      position="-1.7 0 0.01" data-position=${i} v-on:Click="dataContainerDetails"
                       proxy-event="event: click; to: a-scene, #containerCardOption, #containerDetails;  as: itemSelect"></a-image>
                   </a-text>
                 </a-entity>`;

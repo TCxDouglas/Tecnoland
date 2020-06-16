@@ -97,19 +97,25 @@ var sceneVR = new Vue({
         }
     },
     created: function (){
-        listTopicsRoom=JSON.parse(sessionStorage.getItem('temas'));
-        console.log(listTopicsRoom);
-        let inicio=0, final=0;
-        if(listTopicsRoom.length>4){
-            final=4
-        }else{
-            
-            final=listTopicsRoom.length
-        }
-        getViewCard(listTopicsRoom, inicio, final)
+        getListTopics();
+        getListTrophy();
     }
 })
 
+
+function getListTopics() {
+    listTopicsRoom = JSON.parse(sessionStorage.getItem('temas'));
+    console.log(listTopicsRoom);
+    let inicio = 0, final = 0;
+    if (listTopicsRoom.length > 4) {
+        final = 4;
+    }
+    else {
+
+        final = listTopicsRoom.length;
+    }
+    getViewCard(listTopicsRoom, inicio, final);
+}
 
 function changeColorSelect() {
     let lblTitulos = document.querySelectorAll('#lblTituloCard');
@@ -166,3 +172,21 @@ function getViewCard(listTopicsRoom, inicio, final){
     contTopic=contTopic+ (final-1);
 }
 
+
+function getListTrophy() {
+    firebase.database().ref('/Tecnoland/logros').on('value', function (snapshot) {
+        if (snapshot.val()) {
+            let listTrophy = []
+            snapshot.forEach(element => {
+                let aux = {
+                    nombreLogro: element.val().nombreLogro,
+                    descripcion: element.val().descripcion,
+                    idTema: element.val().idTema,
+                    categoria: element.val().categoria
+                }
+                listTrophy.push(aux);
+            });
+            console.log(listTrophy)
+        }
+    })
+}

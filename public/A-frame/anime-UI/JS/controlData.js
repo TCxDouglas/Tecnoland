@@ -1,10 +1,13 @@
 let contTopic=0;
 let positionSelect=-1;
+let positionSelectTrophy=-1;
+let contTrophy=0;
 var sceneVR = new Vue({
     el: '#sceneVR',
     data:{
         listTopicsRoom: [],
-        dataItem:[]
+        dataItem:[],
+        listTrophyAll: []
     },
     methods:{
         dataContainerDetails: function(item){
@@ -94,11 +97,36 @@ var sceneVR = new Vue({
         },
         exitVR(){
             window.location='../../vistas/sala-study.html'
+        },
+        nextTrophy(){
+            nextTrophy(this.listTrophyAll);
+        },
+        prevTrophy(){
+            prevTrophy(this.listTrophyAll)
+        },
+        dataDetailsTrophy(item){
+            console.log(item)
+            positionSelectTrophy = item.srcElement.dataset.position;
+            dataItem = this.listTrophyAll[positionSelectTrophy]
+            console.log(positionSelectTrophy)
+
+            let iconTrophyCategory = document.querySelector('#trophyIconCategory')
+            let lblNameTrophy = document.querySelector('#lblNameTrophy')
+            let lblDescripcionTrophy = document.querySelector('#lblDescripcionTrophy')
+            let lblCategory = document.querySelector('#lblCategory')
+
+            iconTrophyCategory.setAttribute('src', '#trophy' + this.listTrophyAll[positionSelectTrophy].categoria)
+            lblNameTrophy.setAttribute('value', this.listTrophyAll[positionSelectTrophy].nombreLogro)
+            lblDescripcionTrophy.setAttribute('value', this.listTrophyAll[positionSelectTrophy].descripcion)
+            lblCategory.setAttribute('value', 'Categoria:' + this.listTrophyAll[positionSelectTrophy].categoria)
+
+            changeColorTrophy()
         }
     },
     created: function (){
         getListTopics();
         getListTrophy();
+        //console.log(this.listTrophyAll)
     }
 })
 
@@ -134,14 +162,6 @@ function getViewCard(listTopicsRoom, inicio, final){
     let viewContainerCard= document.querySelector('#containerCardOption');
     viewContainerCard.innerHTML="";
     console.log(listTopicsRoom.length)
-    //let cont=0
-    //let contContainer=1;
-    /*while (listTopicsRoom.length>cont) {
-        console.log(contContainer);
-        console.log(cont);
-        cont=cont+4;
-        contContainer++;
-    }*/
 
     for (let i = inicio; i < final; i++) {
         let viewCardOption = `
@@ -174,6 +194,7 @@ function getViewCard(listTopicsRoom, inicio, final){
 
 
 function getListTrophy() {
+    
     firebase.database().ref('/Tecnoland/logros').on('value', function (snapshot) {
         if (snapshot.val()) {
             let listTrophy = []
@@ -186,7 +207,93 @@ function getListTrophy() {
                 }
                 listTrophy.push(aux);
             });
-            console.log(listTrophy)
+            sceneVR.listTrophyAll=listTrophy
+            //console.log(sceneVR.listTrophyAll)
+            viewListTrophy(listTrophy)
         }
     })
+    
+}
+
+function viewListTrophy(listaTrofeos){
+    let cardsTrophy = document.querySelectorAll('#cardTrophy');
+    let cardsTitleTrophy = document.querySelectorAll('#cardTrophyTitle')
+    let cardsIconTrophy = document.querySelectorAll('#cardTrophyIcon')
+    let btnDetailsTrophy = document.querySelectorAll('#btnDetailsTrophy')
+    
+    for (let i = 0; i < 4; i++) {
+        
+        btnDetailsTrophy[i].dataset.position=i;
+        cardsTitleTrophy[i].dataset.position=i;
+
+        cardsTitleTrophy[i].setAttribute('value', listaTrofeos[i].nombreLogro)
+        
+        cardsIconTrophy[i].setAttribute('src', '#'+listaTrofeos[i].idTema)
+    }
+    console.log('paso por aqui')
+    contTrophy=3;
+    
+}
+
+function nextTrophy(listaTrofeos){
+    let cardsTrophy = document.querySelectorAll('#cardTrophy');
+    let cardsTitleTrophy = document.querySelectorAll('#cardTrophyTitle')
+    let cardsIconTrophy = document.querySelectorAll('#cardTrophyIcon')
+    let btnDetailsTrophy = document.querySelectorAll('#btnDetailsTrophy')
+    
+    let contListCard=0
+    while (contListCard < 4) {
+        if ((contTrophy + 1) >= listaTrofeos.length) {
+            contListCard = 4
+        } else {
+            contTrophy++;
+            cardsTitleTrophy[contListCard].setAttribute('value', listaTrofeos[contTrophy].nombreLogro)
+            cardsIconTrophy[contListCard].setAttribute('src', '#' + listaTrofeos[contTrophy].idTema)
+
+            btnDetailsTrophy[contListCard].dataset.position = contTrophy;
+            cardsTitleTrophy[contListCard].dataset.position = contTrophy;
+
+            contListCard++;
+        }
+    }
+    changeColorTrophy()
+}
+
+function prevTrophy(listaTrofeos){
+    let cardsTrophy = document.querySelectorAll('#cardTrophy');
+    let cardsTitleTrophy = document.querySelectorAll('#cardTrophyTitle')
+    let cardsIconTrophy = document.querySelectorAll('#cardTrophyIcon')
+    let btnDetailsTrophy = document.querySelectorAll('#btnDetailsTrophy')
+
+    let contListCard=4;
+    
+    let pos = contTrophy - 4;
+    while (contListCard > 0) {
+        if ((contTrophy - 1) < 3) { //Menor que 3 por que son los primeros 4 temas de la listTopicRoom
+            contListCard = 0
+        } else {
+            contListCard--;
+            cardsTitleTrophy[contListCard].setAttribute('value', listaTrofeos[pos].nombreLogro)
+            cardsIconTrophy[contListCard].setAttribute('src', '#' + listaTrofeos[pos].idTema)
+            
+
+            btnDetailsTrophy[contListCard].dataset.position = pos;
+            cardsTitleTrophy[contListCard].dataset.position = pos;
+            contTrophy--;
+            
+            pos--;
+        }
+    }
+    changeColorTrophy()
+}
+
+function changeColorTrophy(){
+    let lblTitulosTrophys = document.querySelectorAll('#cardTrophyTitle');
+    lblTitulosTrophys.forEach(element => {
+        if (element.dataset.position == positionSelectTrophy) {
+            element.setAttribute('color', '#21e828');
+        } else {
+            element.setAttribute('color', '#fff');
+        }
+    });
 }

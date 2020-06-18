@@ -3,7 +3,9 @@ var avatares = [];
 var listaSalas = [];
 var contPhoto = 0;
 var photoRespaldo = '';
-
+var temasEscogidos = [];
+var respaldoTemas = [];
+var temas = [];
 
 $(document).ready(function () {
 
@@ -19,16 +21,19 @@ $(document).ready(function () {
     $('.salas').click(function () {
         var newUsername = document.querySelector("#newUsername");
         var newDateuser = document.querySelector("#newDateuser");
-        if(!newDateuser.value.trim() == '' && !newUsername.value.trim() == '' && sessionStorage.getItem('newAvatar') == 'si'){
+        console.log(newDateuser.value.trim(), newUsername.value.trim(), sessionStorage.getItem('newAvatar'))
+        if (!newDateuser.value.trim() == '' || !newUsername.value.trim() == '' || sessionStorage.getItem('newAvatar') == 'si') {
             alertify.confirm('Alerta', 'Hay cambios sin confirmar, ¿desea descartarlos?', function () {
-                sessionStorage.setItem('photoUrl', sessionStorage.getItem('photoRespaldo'));
-                $(`#vista-configPerfil`).load(`mis-salasD.html`, function () { });
+                if (sessionStorage.getItem('newAvatar') == 'si') {
+                    sessionStorage.setItem('photoUrl', sessionStorage.getItem('photoRespaldo'));
+                }
+                $(`#vista-configPerfil`).load(`mis-salasD.html`, function () {});
             }, function () {
                 alertify.warning('Confirme los cambios');
-        
+
             });
         } else {
-            $(`#vista-configPerfil`).load(`mis-salasD.html`, function () { });
+            $(`#vista-configPerfil`).load(`mis-salasD.html`, function () {});
         }
     })
 })
@@ -74,59 +79,62 @@ var perfil = new Vue({
 
         },
         obtenerSalas: function () {
+            this.salas = []
+            listaSalas = []
             firebase.database().ref('Tecnoland').child('usuarios').child(perfil.usuario.uid).child('salas').once('value').then(function (snapshot) {
                 if (snapshot.val()) {
 
                     snapshot.forEach(salaSnapshot => {
                         //let key = salaSnapshot.key;
                         let numactual = salaSnapshot.child('integrantes').numChildren();
-                       let temas = getTopicsSnapshot(salaSnapshot.child('temas'));
-                        console.log(temas);
+                        //  let temas = getTopicsSnapshot(salaSnapshot.child('temas'));
+                        //  console.log(temas);
                         let array = {
                             codigoSala: salaSnapshot.key,
                             nombreSala: salaSnapshot.val().nombreSala,
                             descripcion: salaSnapshot.val().descripcion,
                             numParticipantes: numactual + '/' + salaSnapshot.val().maxParticipantes,
-                            listaTemas: JSON.stringify(temas)
+                            //listaTemas: JSON.stringify(temas)
                         }
                         listaSalas.push(array);
                     });
                 }
             });
             this.salas = listaSalas;
-            console.log(this.salas);
 
         },
         filtrarSalas: function () {
             this.salas = []
             // console.log(this.campo.toLowerCase())
-             let newSalas =[]
-             let cont = 0;
-             let sinResultados = document.querySelector('#sinResultados')
-             for (let arrayNew of listaSalas){
-                 let nombre = arrayNew.nombreSala.toLowerCase()
-                 if(nombre.indexOf(this.campo.toLowerCase().trim()) !== -1){
-                     newSalas[cont] =  {
-                         codigoSala: arrayNew.codigoSala,
-                         nombreSala: arrayNew.nombreSala,
-                         descripcion: arrayNew.descripcion,
-                         uidCreador: arrayNew.uidCreador
-                     }
-                     cont++;
-                     //console.log(arrayNew.nombreSala.toLowerCase())
-                     sinResultados.innerHTML = ''
+            let newSalas = []
+            let cont = 0;
+            let sinResultados = document.querySelector('#sinResultados')
+            for (let arrayNew of listaSalas) {
+                let nombre = arrayNew.nombreSala.toLowerCase()
+                if (nombre.indexOf(this.campo.toLowerCase().trim()) !== -1) {
+                    newSalas[cont] = {
+                        codigoSala: arrayNew.codigoSala,
+                        nombreSala: arrayNew.nombreSala,
+                        descripcion: arrayNew.descripcion,
+                        uidCreador: arrayNew.uidCreador,
+                        numParticipantes: arrayNew.numParticipantes
+                    }
+                    cont++;
+                    //console.log(arrayNew.nombreSala.toLowerCase())
+                    sinResultados.innerHTML = ''
 
-                 }else if (newSalas == ''){
+                } else if (newSalas == '') {
                     // this.sala = listaSalas
                     sinResultados.innerHTML = `
-                    <h1 style="color: #fff;">Sin resultados de búsqueda</h1>
+                    <h1 style="color: #fff; font-size: 15px;">Sin resultados de búsqueda <i class="fa fa-search-minus" aria-hidden="true"></i></h1>
+                    <h1 style="text-align: center; align-items:center; font-size: 15px;"><i class="fa fa-search-minus" aria-hidden="true"></i></h1>
+
                     `
-                   console.log('Sin resultados de busqueda')
-                 }
-                 this.salas = newSalas 
- 
-             }
-         },
+                }
+                this.salas = newSalas
+
+            }
+        },
 
         mandarDatos: function (filaSala) {
             //console.log(modalPerfil.infoSala)
@@ -135,6 +143,10 @@ var perfil = new Vue({
             sessionStorage.setItem('uidCreador', this.usuario.uid)
             sessionStorage.setItem('temas', filaSala.listaTemas)
             window.location = 'sala-study.html'
+        },
+        traerTemas: function(){
+            obtenerTemas();
+
         }
     },
     created: function () {
@@ -143,7 +155,7 @@ var perfil = new Vue({
                 perfil.datosUsuario();
                 perfil.obtenerSalas();
                 perfil.obtenerAvatares();
-
+                perfil.traerTemas()
             } else {
                 window.location = '../../index.html'
             }
@@ -152,6 +164,7 @@ var perfil = new Vue({
     }
 })
 
+/*
 function getTopicsSnapshot(snapshot){
     let topics=[]
     for (let i = 0; i < snapshot.numChildren(); i++) {
@@ -164,10 +177,8 @@ function getTopicsSnapshot(snapshot){
     }
     return topics;
 }
+*/
 
-function crearSala() {
-    window.location = 'crear-salas.html'
-}
 
 function cerrarSesion() {
 
@@ -248,8 +259,7 @@ function seleccionarAvatar() {
 function guardarAvatar() {
     //perfilEstudiante.usuario.photoURL = avatar;
     //perfilEstudiante.actualizarAvatar();
-    if (contPhoto === 0)
-    {
+    if (contPhoto == 0) {
         sessionStorage.setItem('photoRespaldo', sessionStorage.getItem('photoUrl')); //respaldo por si decide no guardar los cambios
     }
     contPhoto++;
@@ -285,11 +295,9 @@ function updateGeneralChanges() {
             newUsername.value = '';
             newDateuser.value = '';
         }
-    } else if (sessionStorage.getItem('newAvatar') == 'si'){
+    } else if (sessionStorage.getItem('newAvatar') == 'si') {
         updateFirebase()
-    }
-    
-    else if (newDateuser.value.trim() == '' && newUsername.value.trim() == '' && sessionStorage.getItem('newAvatar') == 'no') {
+    } else if (newDateuser.value.trim() == '' && newUsername.value.trim() == '' && sessionStorage.getItem('newAvatar') == 'no') {
         alertify.set('notifier', 'position', 'top-center');
         alertify.error('No hay nada por actualizar');
     }
@@ -396,7 +404,7 @@ function updateUserPassword() {
 
 }
 
-function verificarusuario(){
+function verificarusuario() {
     var credential;
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -482,3 +490,152 @@ function updateUserSQL(newDateuser, newUsername) {
     return "Nop"
 
 }
+
+
+
+//Creando nuevas salas..
+
+
+var sala = new Vue({
+    el: '#vista-nueva-sala',
+    data: {
+        temas: [],
+        valor: '',
+        nombreSala: '',
+        descripcionSala: '',
+        numeroParticipantes: '',
+        codigoSala: '',
+        datosUsuario: {
+            uid: '',
+            displayName: '',
+            photoURL: ''
+        }
+    },
+    methods: {
+        Obtemas:function(){
+            obtenerTemas();
+
+        }
+    },
+    created: function () {
+    }
+});
+
+
+function clearModalNewSala() {
+    $("[name='checkLista']").prop('checked', false);
+    var nomSala = document.querySelector('#nomSala')
+    var descSala = document.querySelector('#descSala')
+    nomSala.value = ''
+    descSala.value = ''
+}
+
+function guardarSala() {
+    let uid = ''
+    let codigoSala = ''
+    let identificador = 'kk';
+    let nomUsuario = ''
+    var nomSala = document.querySelector('#nomSala').value.trim()
+    var descSala = document.querySelector('#descSala').value.trim()
+    firebase.auth().onAuthStateChanged(function (user) {
+
+        if (user) {
+            uid = user.uid;
+            nomUsuario = user.displayName
+
+            codigoSala = nomUsuario.substring(0, 2).toLowerCase() + uid.substring(0, 2).toLowerCase() + generarNumero(1000, 9999);
+            let salaPHP = {
+                uid,
+                codigoSala,
+                identificador
+            };
+            fetch(`../../private/PHP/salas/salas.php?proceso=recibirDatos&sala=${JSON.stringify(salaPHP)}`).then(resp => resp.text()).then(resp => {
+                console.log(resp);
+            });
+
+            let maxParticipantes = document.getElementById('selMax').value;
+            console.log(maxParticipantes);
+            firebase.database().ref('Tecnoland').child('usuarios').child(uid).child('salas').child(codigoSala).set({
+                nombreSala: nomSala,
+                descripcion: descSala,
+                maxParticipantes: maxParticipantes,
+                temas: temasEscogidos
+            }).then(function () {
+                listaSalas = [];
+                perfil.obtenerSalas();
+                alertify.success('Se creó la sala');
+                clearModalNewSala();
+                $('#newSalaModal').modal('hide');
+        
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+
+            //console.log(sala.datosUsuario);
+        } else {
+            window.location = '../../index.html'
+        }
+    });
+
+
+
+}
+
+function eslegirTemas( ) {
+    temasEscogidos = [];
+    var nomSala = document.querySelector('#nomSala').value.trim()
+    var descSala = document.querySelector('#descSala').value.trim()
+    var listaCheckbox = document.getElementsByName('checkLista');
+    var contCheck = 0;
+    for (let i = 0; i < sala.temas.length; i++) {
+        if (listaCheckbox[i].checked) {
+            contCheck++;
+            temasEscogidos.push(sala.temas[i]);
+
+        }
+    }
+    if (nomSala == '' || descSala == '') {
+        alertify.set('notifier', 'position', 'top-center');
+        alertify.error('Complete los campos solicitados');
+
+    }
+    else if (contCheck == 0) {
+        alertify.set('notifier', 'position', 'top-center');
+        alertify.error('Sin temas agregados');
+    }
+    else {
+        alertify.confirm('Alerta', '¿Está seguro de crear la sala con los temas seleccionados?', function () {
+            guardarSala();
+
+        }, function () {
+            // alertify.error('Cancelado');
+        });
+
+    }
+}
+
+function generarNumero(minimo, maximo) {
+    return Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
+}
+
+
+
+ function obtenerTemas(){
+    var valor = document.querySelector('#txtBuscarSala').value.trim()
+    respaldoTemas = []
+    var sinResultadosTemas = document.querySelector('#sinResultadosTemas')
+    fetch(`../../private/PHP/Temas/temas.php?proceso=buscarTemas&valor=${valor}`).then(resp => resp.json()).then(resp => {
+        respaldoTemas = resp;
+        sala.temas = respaldoTemas;
+        if (sala.temas == '') {
+
+            sinResultadosTemas.innerHTML = `
+            <h1 style="font-size: 15px;   text-align: center;">Sin resultados de búsqueda</h1>
+            <h1 style="text-align: center; align-items:center; font-size: 15px;"><i class="fa fa-search-minus" aria-hidden="true"></i></h1>
+            `
+        } else{
+            sinResultadosTemas.innerHTML = ''
+        }
+    });
+
+ }

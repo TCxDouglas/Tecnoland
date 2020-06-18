@@ -19,8 +19,11 @@ $(document).ready(function () {
         var newUsername = document.querySelector("#newUsername");
         var newDateuser = document.querySelector("#newDateuser");
         if(!newDateuser.value.trim() == '' || !newUsername.value.trim() == '' || sessionStorage.getItem('newAvatar') == 'si'){
+
             alertify.confirm('Alerta', 'Hay cambios sin confirmar, ¿desea descartarlos?', function () {
-                sessionStorage.setItem('photoUrl', sessionStorage.getItem('photoRespaldo'));
+                if(sessionStorage.getItem('newAvatar') == 'si'){
+                    sessionStorage.setItem('photoUrl', sessionStorage.getItem('photoRespaldo'));
+                }
                 $(`#vista-configPerfil`).load(`mis-salasE.html`, function () { });
             }, function () {
                 alertify.warning('Confirme los cambios');
@@ -86,9 +89,9 @@ var perfilEstudiante = new Vue({
                 }else if (newSalas ==''){
                    // this.sala = listaSalas
                     sinResultados.innerHTML = `
-                    <h1 style="color: #fff;">Sin resultados de búsqueda</h1>
+                    <h1 style="color: #fff; font-size: 15px;">Sin resultados de búsqueda <i class="fa fa-search-minus" aria-hidden="true"></i></h1>
+                    <h1 style="text-align: center; align-items:center; font-size: 15px;"><i class="fa fa-search-minus" aria-hidden="true"></i></h1>
                     `
-                   console.log('Sin resultados de busqueda')
                 }
                 this.sala = newSalas 
 

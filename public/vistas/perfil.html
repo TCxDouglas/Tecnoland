@@ -106,7 +106,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div id="sinResultados" style="font-size: 15px; align-items: center;">
+                        <div id="sinResultados" style="align-items: center;">
                         </div>
                     </main>
                     <div class="inputSearch">
@@ -115,18 +115,97 @@
                     </div>
 
                     <div class="buttons" style="margin-top: 4%;">
-                        <button onclick="crearSala()" class="button-hover"><span><i class="fa fa-plus"
+                        <button  class="button-hover" data-toggle="modal" data-target="#newSalaModal"><span><i class="fa fa-plus" 
                                     aria-hidden="true"></i> add Sala </span></button>
                     </div>
                 </div>
             </div>
 
         </div>
-
-
     </div>
 
 
+    <div id="vista-nueva-sala">
+        <div class="modal fade modal-newSala" id="newSalaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Nueva Sala</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <div class=" col-lg-12 d-flex">
+                        <div class="container align-self-center p-6">
+
+                      
+                                <div class="form-row mb-4">
+                                    <div class="form-group col-md-4">
+                                        <label class="font-weight-bold">Nombre de la sala </label>
+                                        <input type="text" class="form-control" required placeholder="Nombre..." id="nomSala"
+                                            v-model="nombreSala">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="font-weight-bold">Breve Descripcion </label>
+                                        <input type="text" class="form-control" required
+                                            placeholder="Descripcion..." v-model="descripcionSala" id="descSala">
+                                    </div>
+                                    <div class="form-group col-mb-2 " >
+                                        <label class="font-weight-bold">Max Participantes </label>
+                                       
+                                            <select id="selMax">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="20">20</option>
+                                            </select>
+                                   
+
+                                    </div>
+                                </div>
+    
+
+
+                        </div>
+                    </div>
+
+ 
+                    
+                    <div class="inputSearchTema">
+                        <input type="text" placeholder="Buscar Tema..." v-on:keyup="obtenerTemas" v-model="valor" id="txtBuscarSala">
+                        <i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i>
+                    </div>
+                    <main style="  height: 35vh;    overflow-y: scroll !important;">
+                    <table class="table-content-sala">
+                        <thead>
+                            <tr>
+                                <th >Temas</th>
+                                <th >Descripcion</th>
+                                <th> Agregar</th>
+                            </tr>
+                        </thead>
+                        <tbody v-for='linea in temas'>
+                            <tr>
+                                <td>{{linea.tema}}</td>
+                                <td>{{linea.descripcion}}</td>
+                                <td><input type="checkbox" name="checkLista"></td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div id="sinResultadosTemas" style=" align-items: center;">
+                        
+                    </div>
+                </main>
+                  </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" onclick="clearModalNewSala()" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-primary"  onclick="eslegirTemas()">Crear</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
     <!-- Modal de avatares -->
 <div class="modal fade" id="modalAvatar" data-backdrop="static" tabindex="-1" role="dialog"
 aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -175,7 +254,7 @@ aria-labelledby="staticBackdropLabel" aria-hidden="true">
   </div>
 
 
-
+  
   <script src="https://kit.fontawesome.com/2f2a4cd560.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">

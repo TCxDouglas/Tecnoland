@@ -507,7 +507,8 @@ header nav ul li a.activo {
 
 input[type=text],
 input[type=password],
-input[type=date] {
+input[type=date]
+ {
   width: 90%;
   border: 2px solid #aaa;
   border-radius: 4px;
@@ -521,7 +522,9 @@ input[type=date] {
 
 input[type=text]:focus,
 input[type=password]:focus,
-input[type=date]:focus {
+input[type=date]:focus,
+select
+{
   border-color: dodgerblue;
   box-shadow: 0 0 8px 0 dodgerblue;
   animation: hue 3s linear infinite;
@@ -532,6 +535,17 @@ input[type=date]:focus {
   padding-left: 40px;
 }
 
+select{
+  width: 90%;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 5px 5;
+  outline: none;
+  padding: 5px;
+  box-sizing: border-box;
+  transition: .3s;
+  margin-left: 2%;
+}
 .inputSearch {
   margin-top: 4%;
   position: relative;
@@ -551,6 +565,29 @@ input[type=date]:focus {
 .inputSearch input[type=text]:focus+i {
   color: dodgerblue;
 
+}
+.inputSearchTema {
+  margin-top: 2%;
+  position: relative;
+}
+
+.inputSearchTema i {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  padding: 9px 8px;
+  color: #aaa;
+  transition: .3s;
+  margin-left: 2%;
+
+}
+
+.inputSearchTema input[type=text]:focus+i {
+  color: dodgerblue;
+
+}
+.inputSearchTema input[type=text] {
+  padding-left: 40px;
 }
 
 .table-content {
@@ -587,6 +624,42 @@ input[type=date]:focus {
 
 .table-content tbody tr {
   border-bottom: 1px solid #dddddd;
+}
+
+.table-content-sala {
+  width: 95%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  min-width: 400px;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.15);
+  font-family: 'Quicksand', sans-serif;
+}
+
+.table-content-sala thead {
+  background-color: #22079E;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+
+}
+
+.table-content-sala th {
+  padding: 12px 15px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.table-content-sala td {
+  color: black;
+  font-size: 14px;
+  padding: 12px 15px;
+}
+
+.table-content-sala tbody tr {
+  border-bottom: 1px solid #1f232b;
 }
 
 .btns-icons:hover {
@@ -716,3 +789,4 @@ input[type=date]:focus {
 .sssiconpass:hover {
   color: dodgerblue;
 }
+

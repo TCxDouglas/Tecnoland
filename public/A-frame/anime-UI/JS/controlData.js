@@ -121,6 +121,9 @@ var sceneVR = new Vue({
             lblCategory.setAttribute('value', 'Categoria:' + this.listTrophyAll[positionSelectTrophy].categoria)
 
             changeColorTrophy()
+        },
+        welcomeEfe(){
+            $.notification("LOGRO OBTENIDO", 'Sea usted Bienvenido a EFE WORLD', 'img/medalLogro.png');
         }
     },
     created: function (){

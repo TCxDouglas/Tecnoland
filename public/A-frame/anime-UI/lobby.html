@@ -245,7 +245,8 @@
               </a-text>
             </a-text>
           </a-entity>
-          <a-image id="btnItemGo" src="#button" scale="0.8 0.3 1" position="0 -0.52 0.01" material="" geometry="">
+          <a-image id="btnItemGo" src="#button" scale="0.8 0.3 1" position="0 -0.52 0.1" material="" geometry=""
+            v-on:Click="welcomeEfe">
           </a-image>
         </a-image>
       </a-entity>
@@ -343,6 +344,7 @@
   <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
     
   <script src="JS/controlData.js"></script>
+  <script src="JS/apiNotificaciones.js"></script>
 </body>
 
 </html>

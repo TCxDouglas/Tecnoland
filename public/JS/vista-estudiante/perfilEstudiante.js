@@ -197,6 +197,7 @@ function validateNumMenbersRoom(uidCreador, codigoSala) {
             if(menbersActive<maxMenbers){
                 agregarIntegrante(uidCreador, codigoSala)
             } else {
+                 alertify.set('notifier', 'position', 'top-center');
                 alertify.error('Sala completa, consulte con su docente el maximo de participantes de la sala')
             }
         }

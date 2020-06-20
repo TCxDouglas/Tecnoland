@@ -87,14 +87,14 @@ var perfil = new Vue({
                     snapshot.forEach(salaSnapshot => {
                         //let key = salaSnapshot.key;
                         let numactual = salaSnapshot.child('integrantes').numChildren();
-                        //  let temas = getTopicsSnapshot(salaSnapshot.child('temas'));
+                        let temas = getTopicsSnapshot(salaSnapshot.child('temas'));
                         //  console.log(temas);
                         let array = {
                             codigoSala: salaSnapshot.key,
                             nombreSala: salaSnapshot.val().nombreSala,
                             descripcion: salaSnapshot.val().descripcion,
                             numParticipantes: numactual + '/' + salaSnapshot.val().maxParticipantes,
-                            //listaTemas: JSON.stringify(temas)
+                            listaTemas: JSON.stringify(temas)
                         }
                         listaSalas.push(array);
                     });
@@ -164,7 +164,7 @@ var perfil = new Vue({
     }
 })
 
-/*
+
 function getTopicsSnapshot(snapshot){
     let topics=[]
     for (let i = 0; i < snapshot.numChildren(); i++) {
@@ -177,7 +177,7 @@ function getTopicsSnapshot(snapshot){
     }
     return topics;
 }
-*/
+
 
 
 function cerrarSesion() {

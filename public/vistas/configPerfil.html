@@ -1,11 +1,11 @@
-<div id="frm-configPerfil" class="contentProfileE" style="margin-top: 1%;">
+<form v-on:submit.prevent="changeData" id="frm-configPerfil" class="contentProfileE" style="margin-top: 1%;">
 
   <div class="imgProfile" data-toggle="modal" data-target="#modalAvatar" onclick="colocarAvatares()">
     <img v-bind:src="usuario.photoURL" class="imgCP" id="imgPhotoEst2">
   </div>
   <div class="inputsEP">
     <input class="inputsEPI" type="text" placeholder="Nuevo nombre de usuario" id="newUsername">
-    <input class="inputsEPI inputsEPI-date" type="date" required min="1960-12-31" max="2013-12-31" step="1"
+    <input class="inputsEPI inputsEPI-date" type="date" min="1960-12-31" max="2013-12-31" step="1"
       id="newDateuser">
 
     <div class="sssiconpass" onclick="verificarusuario()" >
@@ -16,11 +16,11 @@
 
 
   <div class="buttons" style="margin-top: 1%;">
-    <button onclick="AlertaNuevosDatos()" class="button-hover"><span><i class="fa fa-floppy-o" aria-hidden="true"></i>
+    <button class="button-hover"><span><i class="fa fa-floppy-o" aria-hidden="true"></i>
         Guardar</span></button>
 
   </div>
-</div>
+</form>
 
 
 

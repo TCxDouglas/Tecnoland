@@ -118,7 +118,11 @@ var perfilEstudiante = new Vue({
 
                 console.log(this.avatares);
             })
+        },
+        changeData(){
+            AlertaNuevosDatos()
         }
+
     },
     created: function () {
 
@@ -257,6 +261,7 @@ function cerrarSesion() {
 
 
 function AlertaNuevosDatos() {
+    
     var usuario, credential;
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {

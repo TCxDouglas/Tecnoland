@@ -135,7 +135,6 @@ var perfil = new Vue({
 
             }
         },
-
         mandarDatos: function (filaSala) {
             //console.log(modalPerfil.infoSala)
             sessionStorage.setItem('codigoSala', filaSala.codigoSala)
@@ -147,6 +146,9 @@ var perfil = new Vue({
         traerTemas: function(){
             obtenerTemas();
 
+        },
+        changeData(){
+            AlertaNuevosDatos()
         }
     },
     created: function () {

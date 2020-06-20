@@ -54,11 +54,15 @@ var perfilEstudiante = new Vue({
                 if (snapshot.val()) {
                     snapshot.forEach(salaSnapshot => {
                         //let key = salaSnapshot.key;
+                        let numactual = salaSnapshot.child('integrantes').numChildren();
+                        
                         let arrayD = {
                             codigoSala: salaSnapshot.key,
                             nombreSala: salaSnapshot.val().nombreSala,
                             descripcion: salaSnapshot.val().descripcion,
-                            uidCreador: salaSnapshot.val().creadorSala
+                            uidCreador: salaSnapshot.val().creadorSala,
+                            numParticipantes: numactual + '/' + salaSnapshot.val().maxParticipantes,
+                            
                         }
                         perfilEstudiante.sala.push(arrayD);
                     });
@@ -96,10 +100,11 @@ var perfilEstudiante = new Vue({
             }
         },
         mandarDatos: function (filasala) {
+            getTopics(filasala.uidCreador, filasala.codigoSala)
             sessionStorage.setItem('codigoSala', filasala.codigoSala)
             sessionStorage.setItem('nombreSala', filasala.nombreSala)
             sessionStorage.setItem('uidCreador', filasala.uidCreador)
-            window.location = 'sala-study.html'
+            
         },
         actualizarAvatar: function () {
             console.log('actualizar avatar function')
@@ -152,6 +157,34 @@ var perfilEstudiante = new Vue({
     }
 })
 
+
+
+function getTopicsSnapshot(snapshot) {
+    let topics = []
+    
+    for (let i = 0; i < snapshot.numChildren(); i++) {
+        let items = {
+            descripcion: snapshot.child(i).val().descripcion,
+            idTema: snapshot.child(i).val().idTema,
+            tema: snapshot.child(i).val().tema
+        }
+        //console.log(items)
+        topics.push(items)
+    }
+    sessionStorage.setItem('temas', JSON.stringify(topics))
+    window.location = 'sala-study.html'
+}
+
+function getTopics(uidCreador,codigoSala){
+    firebase.database().ref('Tecnoland').child('usuarios').child(uidCreador).child('salas').child(codigoSala).child('temas').once('value').then(function (snapshot) {
+        if (snapshot.val()) {
+            let topics= getTopicsSnapshot(snapshot)
+            return topics;
+        }else{
+            return ;
+        }
+    });
+}
 
 function alertaNewSala() {
     alertify.prompt('Uniendose a una nueva sala...', 'Ingrese el codigo de la sala', 'Escriba aquí el codigo...', function (evt, value) {

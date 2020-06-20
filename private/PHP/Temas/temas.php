@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Douglas Alexander Hernandez Flores douglasalexander683@gmail.com
+ */
+
 include('../config/config.php');
 $tema= new tema($conexion);
 
@@ -19,7 +23,9 @@ class tema{
     public function __construct($bd){
         $this->bd=$bd;
     }
-
+    /**
+     * @method buscarTemas obtiene el listado de temas disponibles en nuestra plataforma y a su vez se encarga de filtrarlos
+     */
     public function buscarTemas($valor=''){
         $this->bd->consultas('
         SELECT temas.idTema, temas.tema, temas.descripcion

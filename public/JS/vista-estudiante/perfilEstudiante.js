@@ -48,6 +48,8 @@ var perfilEstudiante = new Vue({
     },
     methods: {
         obtenerSalas: function () {
+            this.sala=[]
+            listaSalas=[]
             firebase.database().ref('Tecnoland').child('usuarios').child(this.usuario.uid).child('unionSala').once('value').then(function (snapshot) {
                 if (snapshot.val()) {
                     snapshot.forEach(salaSnapshot => {
@@ -58,16 +60,12 @@ var perfilEstudiante = new Vue({
                             descripcion: salaSnapshot.val().descripcion,
                             uidCreador: salaSnapshot.val().creadorSala
                         }
-
-
-                        listaSalas.push(arrayD);
+                        perfilEstudiante.sala.push(arrayD);
                     });
                 }
             })
-
             this.sala = listaSalas
         },
-
         filtrarSalas: function () {
            this.sala = []
            // console.log(this.campo.toLowerCase())
@@ -160,7 +158,7 @@ function alertaNewSala() {
                 if (resp != "") {
                     array = resp;
                     //let id = modalEstudiante.datos.uidCreador;
-                    agregarIntegrante(array[0].uidCreador, value.trim())
+                    validateNumMenbersRoom(array[0].uidCreador, value.trim())
                 } else {
                     console.log('La sala no existe')
                     alertify.error('La sala no existe');
@@ -187,6 +185,22 @@ function cambioVista(validar) {
     } else {
         bodyModal.innerHTML = "";
     }
+}
+
+
+function validateNumMenbersRoom(uidCreador, codigoSala) {
+    firebase.database().ref('Tecnoland').child('usuarios').child(uidCreador).child('salas').child(codigoSala).once('value').then(function (snapshot) {
+        if (snapshot.val()) {
+            let maxMenbers=snapshot.val().maxParticipantes
+            let menbersActive = snapshot.child('integrantes').numChildren()
+
+            if(menbersActive<maxMenbers){
+                agregarIntegrante(uidCreador, codigoSala)
+            } else {
+                alertify.error('Sala completa, consulte con su docente el maximo de participantes de la sala')
+            }
+        }
+    })
 }
 
 function agregarIntegrante(uidCreador, codigoSala) {
@@ -270,9 +284,6 @@ function AlertaNuevosDatos() {
         }
     });
 }
-
-
-
 
 function colocarAvatares() {
     console.log('hola me llamaron')

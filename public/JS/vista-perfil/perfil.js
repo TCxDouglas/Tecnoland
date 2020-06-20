@@ -164,7 +164,6 @@ var perfil = new Vue({
     }
 })
 
-
 function getTopicsSnapshot(snapshot){
     let topics=[]
     for (let i = 0; i < snapshot.numChildren(); i++) {
@@ -178,8 +177,6 @@ function getTopicsSnapshot(snapshot){
     return topics;
 }
 
-
-
 function cerrarSesion() {
 
     alertify.confirm('Alerta', '¿Está seguro de cerrar esta sesión?', function () {
@@ -191,7 +188,6 @@ function cerrarSesion() {
     });
 
 }
-
 
 function AlertaNuevosDatos() {
     var usuario, credential;
@@ -222,9 +218,6 @@ function AlertaNuevosDatos() {
         }
     });
 }
-
-
-
 
 function colocarAvatares() {
     console.log('hola me llamaron')
@@ -278,8 +271,6 @@ function quitarBorder() {
         element.style.border = "none"
     });
 }
-
-
 
 function updateGeneralChanges() {
 
@@ -491,10 +482,7 @@ function updateUserSQL(newDateuser, newUsername) {
 
 }
 
-
-
 //Creando nuevas salas..
-
 
 var sala = new Vue({
     el: '#vista-nueva-sala',
@@ -516,11 +504,8 @@ var sala = new Vue({
             obtenerTemas();
 
         }
-    },
-    created: function () {
     }
 });
-
 
 function clearModalNewSala() {
     $("[name='checkLista']").prop('checked', false);
@@ -618,9 +603,7 @@ function generarNumero(minimo, maximo) {
     return Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
 }
 
-
-
- function obtenerTemas(){
+function obtenerTemas(){
     var valor = document.querySelector('#txtBuscarSala').value.trim()
     respaldoTemas = []
     var sinResultadosTemas = document.querySelector('#sinResultadosTemas')

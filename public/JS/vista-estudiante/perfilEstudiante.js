@@ -48,26 +48,28 @@ var perfilEstudiante = new Vue({
     },
     methods: {
         obtenerSalas: function () {
+            this.sala=[]
+            listaSalas=[]
             firebase.database().ref('Tecnoland').child('usuarios').child(this.usuario.uid).child('unionSala').once('value').then(function (snapshot) {
                 if (snapshot.val()) {
                     snapshot.forEach(salaSnapshot => {
                         //let key = salaSnapshot.key;
+                        let numactual = salaSnapshot.child('integrantes').numChildren();
+                        
                         let arrayD = {
                             codigoSala: salaSnapshot.key,
                             nombreSala: salaSnapshot.val().nombreSala,
                             descripcion: salaSnapshot.val().descripcion,
-                            uidCreador: salaSnapshot.val().creadorSala
+                            uidCreador: salaSnapshot.val().creadorSala,
+                            numParticipantes: numactual + '/' + salaSnapshot.val().maxParticipantes,
+                            
                         }
-
-
-                        listaSalas.push(arrayD);
+                        perfilEstudiante.sala.push(arrayD);
                     });
                 }
             })
-
             this.sala = listaSalas
         },
-
         filtrarSalas: function () {
            this.sala = []
            // console.log(this.campo.toLowerCase())
@@ -98,10 +100,11 @@ var perfilEstudiante = new Vue({
             }
         },
         mandarDatos: function (filasala) {
+            getTopics(filasala.uidCreador, filasala.codigoSala)
             sessionStorage.setItem('codigoSala', filasala.codigoSala)
             sessionStorage.setItem('nombreSala', filasala.nombreSala)
             sessionStorage.setItem('uidCreador', filasala.uidCreador)
-            window.location = 'sala-study.html'
+            
         },
         actualizarAvatar: function () {
             console.log('actualizar avatar function')
@@ -120,7 +123,11 @@ var perfilEstudiante = new Vue({
 
                 console.log(this.avatares);
             })
+        },
+        changeData(){
+            AlertaNuevosDatos()
         }
+
     },
     created: function () {
 
@@ -151,6 +158,34 @@ var perfilEstudiante = new Vue({
 })
 
 
+
+function getTopicsSnapshot(snapshot) {
+    let topics = []
+    
+    for (let i = 0; i < snapshot.numChildren(); i++) {
+        let items = {
+            descripcion: snapshot.child(i).val().descripcion,
+            idTema: snapshot.child(i).val().idTema,
+            tema: snapshot.child(i).val().tema
+        }
+        //console.log(items)
+        topics.push(items)
+    }
+    sessionStorage.setItem('temas', JSON.stringify(topics))
+    window.location = 'sala-study.html'
+}
+
+function getTopics(uidCreador,codigoSala){
+    firebase.database().ref('Tecnoland').child('usuarios').child(uidCreador).child('salas').child(codigoSala).child('temas').once('value').then(function (snapshot) {
+        if (snapshot.val()) {
+            let topics= getTopicsSnapshot(snapshot)
+            return topics;
+        }else{
+            return ;
+        }
+    });
+}
+
 function alertaNewSala() {
     alertify.prompt('Uniendose a una nueva sala...', 'Ingrese el codigo de la sala', 'Escriba aquí el codigo...', function (evt, value) {
         if (value.trim() != "") {
@@ -160,7 +195,7 @@ function alertaNewSala() {
                 if (resp != "") {
                     array = resp;
                     //let id = modalEstudiante.datos.uidCreador;
-                    agregarIntegrante(array[0].uidCreador, value.trim())
+                    validateNumMenbersRoom(array[0].uidCreador, value.trim())
                 } else {
                     console.log('La sala no existe')
                     alertify.error('La sala no existe');
@@ -187,6 +222,23 @@ function cambioVista(validar) {
     } else {
         bodyModal.innerHTML = "";
     }
+}
+
+
+function validateNumMenbersRoom(uidCreador, codigoSala) {
+    firebase.database().ref('Tecnoland').child('usuarios').child(uidCreador).child('salas').child(codigoSala).once('value').then(function (snapshot) {
+        if (snapshot.val()) {
+            let maxMenbers=snapshot.val().maxParticipantes
+            let menbersActive = snapshot.child('integrantes').numChildren()
+
+            if(menbersActive<maxMenbers){
+                agregarIntegrante(uidCreador, codigoSala)
+            } else {
+                 alertify.set('notifier', 'position', 'top-center');
+                alertify.error('Sala completa, consulte con su docente')
+            }
+        }
+    })
 }
 
 function agregarIntegrante(uidCreador, codigoSala) {
@@ -242,6 +294,7 @@ function cerrarSesion() {
 
 
 function AlertaNuevosDatos() {
+    
     var usuario, credential;
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -270,9 +323,6 @@ function AlertaNuevosDatos() {
         }
     });
 }
-
-
-
 
 function colocarAvatares() {
     console.log('hola me llamaron')

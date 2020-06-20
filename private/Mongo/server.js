@@ -17,8 +17,7 @@ io.on('connection', socket => {
                 'uid': datos.uid,
                 'sala': datos.sala
             });
-            io.emit('recibirMensaje', datos.msg);
-
+            io.emit('recibirMensaje', datos);
         });
     });
     socket.on('historial', (sala) => {

@@ -1,8 +1,8 @@
 var referencia = firebase.database().ref('Tecnoland'),
-names = [],
-emails =[],
-creador = '',
-sala = '';
+    names = [],
+    emails = [],
+    creador = '',
+    sala = '';
 
 var listadoEs = new Vue({
     el: '#divCabezera',
@@ -10,25 +10,24 @@ var listadoEs = new Vue({
         datosSala: {
             nombreSala: '',
             descripcion: '',
-            codigoSala : '',
+            codigoSala: '',
             uidCreador: '',
             participantes: '',
-            emailUser : ''
+            emailUser: ''
         },
-        listadoEstudiante:[]
+        listadoEstudiante: []
     },
-    methods : {
+    methods: {
 
-        escribirData:function(){
+        escribirData: function () {
             this.datosSala.nombreSala = sessionStorage.getItem('nombreSala')
             this.datosSala.codigoSala = sessionStorage.getItem('codigoSala')
             this.datosSala.uidCreador = sessionStorage.getItem('uidCreador')
             this.datosSala.emailUser = sessionStorage.getItem('email')
             datosFirebase(this.datosSala.uidCreador, this.datosSala.codigoSala)
         }
-
     },
-    created: function(){
+    created: function () {
 
         this.escribirData();
 
@@ -37,42 +36,41 @@ var listadoEs = new Vue({
         this.datosSala.uidCreador = sessionStorage.getItem('uidCreador')
         this.datosSala.emailUser = sessionStorage.getItem('email')
         datosFirebase(this.datosSala.uidCreador, this.datosSala.codigoSala)
-        
-        
+
+
 
     }
 })
 
-
-function datosFirebase(uid, codigoSala){
+function datosFirebase(uid, codigoSala) {
     referencia.child('usuarios').child(uid).child('salas').child(codigoSala).child('integrantes').on('value', function (snapshot) {
         if (snapshot.val()) {
-            dataFirebase=snapshot;
+            dataFirebase = snapshot;
             console.log('Pasa por aca')
             colocarDatos(snapshot, uid, codigoSala)
         }
     })
 }
 
-function colocarDatos(snapshot, uidCreador, codigoSala){
-    referencia.child('usuarios').child(uidCreador).child('salas').child(codigoSala).on('value', function (snapshot){
-        if(snapshot.val()){
-          let numactual = snapshot.child('integrantes').numChildren();
-           listadoEs.datosSala.participantes = numactual+'/'+snapshot.val().maxParticipantes;
+function colocarDatos(snapshot, uidCreador, codigoSala) {
+    referencia.child('usuarios').child(uidCreador).child('salas').child(codigoSala).on('value', function (snapshot) {
+        if (snapshot.val()) {
+            let numactual = snapshot.child('integrantes').numChildren();
+            listadoEs.datosSala.participantes = numactual + '/' + snapshot.val().maxParticipantes;
         }
     })
     //console.log(snapshot)
     let tbody = document.getElementById('tbodyLista');
-    tbody.innerHTML="";
+    tbody.innerHTML = "";
     let cont = 0;
     snapshot.forEach(salaSnapshot => {
 
-        names [cont] = salaSnapshot.key;
-        emails [cont] = salaSnapshot.val().email;
+        names[cont] = salaSnapshot.key;
+        emails[cont] = salaSnapshot.val().email;
         creador = uidCreador
         sala = codigoSala;
-        
-                 let item1 = `
+
+        let item1 = `
                     <tr >
                          <td>
                                 <img src="${salaSnapshot.val().photoURL} " 
@@ -86,7 +84,7 @@ function colocarDatos(snapshot, uidCreador, codigoSala){
                         </td>
                     </tr>`
 
-                    let item2 = `
+        let item2 = `
                          <tr >
                             <td>
                                 <img src="${salaSnapshot.val().photoURL} " 
@@ -96,17 +94,16 @@ function colocarDatos(snapshot, uidCreador, codigoSala){
                             <td> ${salaSnapshot.val().email} </td>
                         </tr>`
 
-    if (sessionStorage.getItem('tipoCuenta')== 'normal'){
-        tbody.innerHTML += item2;
-    }
-    else{
-        tbody.innerHTML += item1;
+        if (sessionStorage.getItem('tipoCuenta') == 'normal') {
+            tbody.innerHTML += item2;
+        } else {
+            tbody.innerHTML += item1;
 
-    }
-        
+        }
+
         cont++;
 
-        
+
         /*let array = {
             uidEstudiante: salaSnapshot.key,
             photoURL: salaSnapshot.val().photoURL,
@@ -120,73 +117,76 @@ function colocarDatos(snapshot, uidCreador, codigoSala){
     recogerData();
 }
 
-function recogerData(){
+function recogerData() {
 
     let botones = document.getElementsByName('eliminaciones');
     console.log(botones)
     let cont = 0;
-    botones.forEach(Element =>{
+    botones.forEach(Element => {
         Element.addEventListener('click', e => {
             e.preventDefault();
             //console.log(cont);
             console.log(Element.dataset.modulo);
             alerta(Element.dataset.modulo);
             cont++;
-        
+
         })
         console.log(names[cont]);
 
     });
 }
 
-function alerta(cont){
-    alertify.prompt( 'Eliminando Usuario...', 'Motivo de su eliminación', 'Escriba aquí un motivo...'
-               , function(evt, value) {
-                   console.log(emails[cont]);
-                    eliminardeFB(names[cont],  sala, value.trim(), emails[cont]) }
-               , function() { alertify.error('Eliminación cancelada') }
-               );
+function alerta(cont) {
+    alertify.prompt('Eliminando Usuario...', 'Motivo de su eliminación', 'Escriba aquí un motivo...', function (evt, value) {
+        //console.log(emails[cont]);
+        
+        if (value.trim() != null && value.trim().length > 5 ) {
+            eliminardeFB(names[cont], sala, value.trim(), emails[cont])
+        }else{
+            alertify.error('Asegurese de proporcionar un motivo de expulsion valido')
+        }
+    }, function () {
+        alertify.error('Eliminación cancelada')
+    });
 }
 
-function eliminardeFB(uidEst,  codSala, motivo, email){
-           enviarCorreo( uidEst,  codSala, motivo, email);
+function eliminardeFB(uidEst, codSala, motivo, email) {
+    enviarCorreo(uidEst, codSala, motivo, email);
 }
 
-function enviarCorreo( uidEst,  codSala, motivo, email){
-let sala = sessionStorage.getItem('nombreSala');
-let identificador = 'correo';
+function enviarCorreo(uidEst, codSala, motivo, email) {
+    let sala = sessionStorage.getItem('nombreSala');
+    let identificador = 'correo';
     let datos = {
-            uidEst,
-            sala, 
-            codSala,
-            motivo,
-            email,
-            identificador
+        uidEst,
+        sala,
+        codSala,
+        motivo,
+        email,
+        identificador
 
     }
     console.log(datos);
-        firebase.database().ref('Tecnoland').child('usuarios').child(creador).child('salas').child(codSala).child('integrantes').child(uidEst).remove().then(function(){
+    firebase.database().ref('Tecnoland').child('usuarios').child(creador).child('salas').child(codSala).child('integrantes').child(uidEst).remove().then(function () {
 
-            firebase.database().ref('Tecnoland') .child('usuarios').child(uidEst).child('unionSala').child(codSala).remove().then (function(){
-                alertify.success('El usuario se removió de la sala');
+        firebase.database().ref('Tecnoland').child('usuarios').child(uidEst).child('unionSala').child(codSala).remove().then(function () {
+            alertify.success('El usuario se removió de la sala');
 
-                fetch(`../../private/PHP/salas/salas.php?proceso=recibirDatos&sala=${JSON.stringify(datos)}`).then(resp => resp.json()).then(resp => {
-                    console.log(resp)
-                    if(resp=='error')
-                    {
-                        alertify.error('Error al notificar al usuario');
+            fetch(`../../private/PHP/salas/salas.php?proceso=recibirDatos&sala=${JSON.stringify(datos)}`).then(resp => resp.json()).then(resp => {
+                console.log(resp)
+                if (resp == 'error') {
+                    alertify.error('Error al notificar al usuario');
 
-                    }else{
-                        alertify.success('Se ha notificado al usuario');
-                    }
+                } else {
+                    alertify.success('Se ha notificado al usuario');
+                }
 
-                });
             });
-
-
         });
-   
+
+
+    });
+
 
 
 }
-

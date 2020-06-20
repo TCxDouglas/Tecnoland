@@ -87,14 +87,14 @@ var perfil = new Vue({
                     snapshot.forEach(salaSnapshot => {
                         //let key = salaSnapshot.key;
                         let numactual = salaSnapshot.child('integrantes').numChildren();
-                        //  let temas = getTopicsSnapshot(salaSnapshot.child('temas'));
+                        let temas = getTopicsSnapshot(salaSnapshot.child('temas'));
                         //  console.log(temas);
                         let array = {
                             codigoSala: salaSnapshot.key,
                             nombreSala: salaSnapshot.val().nombreSala,
                             descripcion: salaSnapshot.val().descripcion,
                             numParticipantes: numactual + '/' + salaSnapshot.val().maxParticipantes,
-                            //listaTemas: JSON.stringify(temas)
+                            listaTemas: JSON.stringify(temas)
                         }
                         listaSalas.push(array);
                     });
@@ -135,7 +135,6 @@ var perfil = new Vue({
 
             }
         },
-
         mandarDatos: function (filaSala) {
             //console.log(modalPerfil.infoSala)
             sessionStorage.setItem('codigoSala', filaSala.codigoSala)
@@ -147,6 +146,9 @@ var perfil = new Vue({
         traerTemas: function(){
             obtenerTemas();
 
+        },
+        changeData(){
+            AlertaNuevosDatos()
         }
     },
     created: function () {
@@ -164,7 +166,6 @@ var perfil = new Vue({
     }
 })
 
-/*
 function getTopicsSnapshot(snapshot){
     let topics=[]
     for (let i = 0; i < snapshot.numChildren(); i++) {
@@ -177,8 +178,6 @@ function getTopicsSnapshot(snapshot){
     }
     return topics;
 }
-*/
-
 
 function cerrarSesion() {
 
@@ -191,7 +190,6 @@ function cerrarSesion() {
     });
 
 }
-
 
 function AlertaNuevosDatos() {
     var usuario, credential;
@@ -222,9 +220,6 @@ function AlertaNuevosDatos() {
         }
     });
 }
-
-
-
 
 function colocarAvatares() {
     console.log('hola me llamaron')
@@ -278,8 +273,6 @@ function quitarBorder() {
         element.style.border = "none"
     });
 }
-
-
 
 function updateGeneralChanges() {
 
@@ -491,10 +484,7 @@ function updateUserSQL(newDateuser, newUsername) {
 
 }
 
-
-
 //Creando nuevas salas..
-
 
 var sala = new Vue({
     el: '#vista-nueva-sala',
@@ -516,11 +506,8 @@ var sala = new Vue({
             obtenerTemas();
 
         }
-    },
-    created: function () {
     }
 });
-
 
 function clearModalNewSala() {
     $("[name='checkLista']").prop('checked', false);
@@ -618,9 +605,7 @@ function generarNumero(minimo, maximo) {
     return Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
 }
 
-
-
- function obtenerTemas(){
+function obtenerTemas(){
     var valor = document.querySelector('#txtBuscarSala').value.trim()
     respaldoTemas = []
     var sinResultadosTemas = document.querySelector('#sinResultadosTemas')

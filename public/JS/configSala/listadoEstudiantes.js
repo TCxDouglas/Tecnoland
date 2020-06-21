@@ -26,7 +26,7 @@ var listadoEs = new Vue({
             this.datosSala.codigoSala = sessionStorage.getItem('codigoSala')
             this.datosSala.uidCreador = sessionStorage.getItem('uidCreador')
             this.datosSala.emailUser = sessionStorage.getItem('email')
-            colocarDatos(this.datosSala.uidCreador, this.datosSala.codigoSala)
+            getDataRoom(this.datosSala.uidCreador, this.datosSala.codigoSala)
         }
     },
     created: function () {
@@ -34,26 +34,18 @@ var listadoEs = new Vue({
     }
 })
 
+
 /**
- * @function colocarDatos {Funcion que va a la BD de Firebase a traer los datos de la sala}
- * @param {Parametro que se usa para encontrar los datos de un usuario} uidCreador 
- * @param {Parametro que se usa para identificar la informacion de una sala} codigoSala 
+ * @function colocarDatos {Funcion que pinta la lista de los estudiantes pertenecientes a la sala}
+ * @param {Contiene la lista de integrantes de la sala} snapshot 
  */
-function colocarDatos(uidCreador, codigoSala) {
-    let dataFirebase = []
-    referencia.child('/usuarios/' + uidCreador + '/salas/' + codigoSala).on('value', function (snapshot) {
-        if (snapshot.val()) {
-            let numactual = snapshot.child('integrantes').numChildren();
-            listadoEs.datosSala.participantes = numactual + '/' + snapshot.val().maxParticipantes;
-            dataFirebase = snapshot;
-        }
-    })
+function colocarDatos(snapshot, uidCreador, codigoSala) {
     let tbody = document.getElementById('tbodyLista');
     tbody.innerHTML = "";
     let cont = 0;
     creador = uidCreador
     sala = codigoSala;
-    dataFirebase.child('integrantes').forEach(salaSnapshot => {
+    snapshot.forEach(salaSnapshot => {
         names[cont] = salaSnapshot.key;
         emails[cont] = salaSnapshot.val().email;
 
@@ -91,6 +83,21 @@ function colocarDatos(uidCreador, codigoSala) {
         cont++;
     });
     recogerData();
+}
+
+/**
+ * @function getDataRoom {Funcion que va a la BD de Firebase a traer los datos de la sala}
+ * @param {Parametro que se usa para encontrar los datos de un usuario} uidCreador 
+ * @param {Parametro que se usa para identificar la informacion de una sala} codigoSala 
+ */
+function getDataRoom(uidCreador, codigoSala) {
+    referencia.child('/usuarios/' + uidCreador + '/salas/' + codigoSala).on('value', function (snapshot) {
+        if (snapshot.val()) {
+            let numactual = snapshot.child('integrantes').numChildren();
+            listadoEs.datosSala.participantes = numactual + '/' + snapshot.val().maxParticipantes;
+             colocarDatos(snapshot.child('integrantes'), uidCreador, codigoSala)
+        }
+    });
 }
 
 /**@function recogerData {Esta funcion detecta el evento Click a la hora de eliminar un estudiante de la sala, lo identifica por medio de 

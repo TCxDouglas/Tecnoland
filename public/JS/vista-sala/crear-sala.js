@@ -1,4 +1,9 @@
+/**@author Douglas Alexander Hernandez Flores */
+
+/**@description Este archivo JS no esta siendo usado debido a que se refactorizo las vistas y nos ahorramos un poco de codigo */
+
 let temasEscogidos = [];
+
 
 var sala = new Vue({
     el: '#vista-sala',

@@ -16,5 +16,12 @@ var controlMenu = new Vue({
                 window.location = 'perfilEstudiante.html'
             }
         }
+    },
+    created: function(){
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (!user) {
+                window.location = '../../index.html'
+            }
+        })
     }
 })

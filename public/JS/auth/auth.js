@@ -58,10 +58,10 @@ var autentificacion = new Vue({
         crearCuenta: function () {
             let msg = "Parece que su contraseña no es del todo segura! <br/><br/>" +
                 "Pruebe agregando 8 o más caracteres entre mayusculas, minusculas y números";
-
             let estado = validar_clave(this.pass, this.passRepit);
             
             if (estado === 'todo-naiz') {
+                alertify.success('Espere un momento')
                 createdUserFirebase(this.email, this.pass);
             } else if (estado === 'contra-invalida') {
                 errorAlert(msg);

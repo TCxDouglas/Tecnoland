@@ -44,7 +44,11 @@ var configPerfil =new Vue({
         }
     },
     created: function () {
-        verificarLogin()
+        firebase.auth().onAuthStateChanged(function (user){
+            if(!user){
+                window.location = '../../index.html'
+            }
+        })
         this.obtenerAvatares();
     }
 })
@@ -59,6 +63,7 @@ function loadViewConfigCuenta() {
     }).then(function (respuesta) {
         contenedorVista.innerHTML = respuesta;
         configPerfil.actualizarAvatar();
+        loadDataUser()
     });
 }
 
@@ -175,18 +180,17 @@ function avanzado(){
     guardaDatos()
 }
 
-/**@function verificarLogin {Funcion que verifica que haya un usuario logeado, sino lo devulve a la pantalla de inicio} */
-function verificarLogin(){
+/**@function loadDataUser {Funcion que verifica que haya un usuario logeado, sino lo devulve a la pantalla de inicio} */
+function loadDataUser(){
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            console.log(user);
             configPerfil.perfil.uid = sessionStorage.getItem('uid');
             configPerfil.perfil.displayName = sessionStorage.getItem('displayName');
             configPerfil.perfil.email = sessionStorage.getItem('email');
             configPerfil.perfil.photoURL = sessionStorage.getItem('photoUrl');
 
-            console.log(configPerfil.perfil);
             let lblNombre = document.getElementById('lblNombre');
+            
             lblNombre.innerText = configPerfil.perfil.displayName;
 
             let imgPerfil = document.getElementById('perfilImg');

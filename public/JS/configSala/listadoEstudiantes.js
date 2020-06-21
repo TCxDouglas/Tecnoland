@@ -1,3 +1,5 @@
+/**@author Josue Isaac Aparicio Diaz */
+
 var referencia = firebase.database().ref('Tecnoland'),
     names = [],
     emails = [],
@@ -18,57 +20,42 @@ var listadoEs = new Vue({
         listadoEstudiante: []
     },
     methods: {
-
+        /**@function escribirData {Funcion que guarda en variables de Vue Js los datos de la sala a la que se accedio} */
         escribirData: function () {
             this.datosSala.nombreSala = sessionStorage.getItem('nombreSala')
             this.datosSala.codigoSala = sessionStorage.getItem('codigoSala')
             this.datosSala.uidCreador = sessionStorage.getItem('uidCreador')
             this.datosSala.emailUser = sessionStorage.getItem('email')
-            datosFirebase(this.datosSala.uidCreador, this.datosSala.codigoSala)
+            colocarDatos(this.datosSala.uidCreador, this.datosSala.codigoSala)
         }
     },
     created: function () {
-
         this.escribirData();
-
-        this.datosSala.nombreSala = sessionStorage.getItem('nombreSala')
-        this.datosSala.codigoSala = sessionStorage.getItem('codigoSala')
-        this.datosSala.uidCreador = sessionStorage.getItem('uidCreador')
-        this.datosSala.emailUser = sessionStorage.getItem('email')
-        datosFirebase(this.datosSala.uidCreador, this.datosSala.codigoSala)
-
-
-
     }
 })
 
-function datosFirebase(uid, codigoSala) {
-    referencia.child('usuarios').child(uid).child('salas').child(codigoSala).child('integrantes').on('value', function (snapshot) {
-        if (snapshot.val()) {
-            dataFirebase = snapshot;
-            console.log('Pasa por aca')
-            colocarDatos(snapshot, uid, codigoSala)
-        }
-    })
-}
-
-function colocarDatos(snapshot, uidCreador, codigoSala) {
-    referencia.child('usuarios').child(uidCreador).child('salas').child(codigoSala).on('value', function (snapshot) {
+/**
+ * @function colocarDatos {Funcion que va a la BD de Firebase a traer los datos de la sala}
+ * @param {Parametro que se usa para encontrar los datos de un usuario} uidCreador 
+ * @param {Parametro que se usa para identificar la informacion de una sala} codigoSala 
+ */
+function colocarDatos(uidCreador, codigoSala) {
+    let dataFirebase = []
+    referencia.child('/usuarios/' + uidCreador + '/salas/' + codigoSala).on('value', function (snapshot) {
         if (snapshot.val()) {
             let numactual = snapshot.child('integrantes').numChildren();
             listadoEs.datosSala.participantes = numactual + '/' + snapshot.val().maxParticipantes;
+            dataFirebase = snapshot;
         }
     })
-    //console.log(snapshot)
     let tbody = document.getElementById('tbodyLista');
     tbody.innerHTML = "";
     let cont = 0;
-    snapshot.forEach(salaSnapshot => {
-
+    creador = uidCreador
+    sala = codigoSala;
+    dataFirebase.child('integrantes').forEach(salaSnapshot => {
         names[cont] = salaSnapshot.key;
         emails[cont] = salaSnapshot.val().email;
-        creador = uidCreador
-        sala = codigoSala;
 
         let item1 = `
                     <tr >
@@ -102,44 +89,27 @@ function colocarDatos(snapshot, uidCreador, codigoSala) {
         }
 
         cont++;
-
-
-        /*let array = {
-            uidEstudiante: salaSnapshot.key,
-            photoURL: salaSnapshot.val().photoURL,
-            displayName: salaSnapshot.val().displayName,
-            email: salaSnapshot.val().email,
-        }*/
-        //listadoEs.listadoEstudiante.push(array);
     });
-    console.log(names);
-    console.log(emails);
     recogerData();
 }
 
+/**@function recogerData {Esta funcion detecta el evento Click a la hora de eliminar un estudiante de la sala, lo identifica por medio de 
+ * un modulo de dato} */
 function recogerData() {
-
     let botones = document.getElementsByName('eliminaciones');
-    console.log(botones)
     let cont = 0;
     botones.forEach(Element => {
         Element.addEventListener('click', e => {
             e.preventDefault();
-            //console.log(cont);
-            console.log(Element.dataset.modulo);
             alerta(Element.dataset.modulo);
             cont++;
-
         })
-        console.log(names[cont]);
-
     });
 }
 
+/**@function alerta {Alertify que se lanza cuando se quiere eliminar un estudiante, se solicita el motivo de su expulsion} */
 function alerta(cont) {
     alertify.prompt('Eliminando Usuario...', 'Motivo de su eliminación', 'Escriba aquí un motivo...', function (evt, value) {
-        //console.log(emails[cont]);
-        
         if (value.trim() != null && value.trim().length > 5 ) {
             eliminardeFB(names[cont], sala, value.trim(), emails[cont])
         }else{
@@ -150,10 +120,20 @@ function alerta(cont) {
     });
 }
 
+/**
+ * @function eliminardeFB {Funcion de ByPass para llevar acabo la expulsion}
+ * @param {Uid que identifica al estudiante} uidEst 
+ * @param {Codigo de la sala al cual pertenece} codSala 
+ * @param {Motivo por el cual es expulsado} motivo 
+ * @param {Email del estudiante expulsado} email 
+ */
 function eliminardeFB(uidEst, codSala, motivo, email) {
     enviarCorreo(uidEst, codSala, motivo, email);
 }
 
+/**@function enviarCorreo {Funcion que recolecta los datos anteriores, y elimina el registro del estudiante de la sala}
+ * luego de la eliminacion, este envia un correo informando el motivo de su expulsion
+ */
 function enviarCorreo(uidEst, codSala, motivo, email) {
     let sala = sessionStorage.getItem('nombreSala');
     let identificador = 'correo';
@@ -164,29 +144,20 @@ function enviarCorreo(uidEst, codSala, motivo, email) {
         motivo,
         email,
         identificador
-
     }
-    console.log(datos);
-    firebase.database().ref('Tecnoland').child('usuarios').child(creador).child('salas').child(codSala).child('integrantes').child(uidEst).remove().then(function () {
 
+    firebase.database().ref('Tecnoland').child('usuarios').child(creador).child('salas').child(codSala).child('integrantes').child(uidEst).remove().then(function () {
         firebase.database().ref('Tecnoland').child('usuarios').child(uidEst).child('unionSala').child(codSala).remove().then(function () {
             alertify.success('El usuario se removió de la sala');
 
-            fetch(`../../private/PHP/salas/salas.php?proceso=recibirDatos&sala=${JSON.stringify(datos)}`).then(resp => resp.json()).then(resp => {
-                console.log(resp)
+            fetch(`../../private/PHP/salas/salas.php?proceso=recibirDatos&sala=${JSON.stringify(datos)}`).then(resp => resp.json()).then(resp => { 
                 if (resp == 'error') {
                     alertify.error('Error al notificar al usuario');
 
                 } else {
                     alertify.success('Se ha notificado al usuario');
                 }
-
             });
         });
-
-
     });
-
-
-
 }

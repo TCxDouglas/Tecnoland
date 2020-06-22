@@ -1,3 +1,5 @@
+/**@author Josue Isaac Aparicio Diaz */
+
 var avatar = "";
 var avatares = [];
 var listaSalas = [];
@@ -38,7 +40,9 @@ $(document).ready(function () {
     })
 })
 
-
+/**@VueJS Perfil {Es similar a los metodos de Perfil Estudiante}
+ * Tenemos planes de reducir todo este codigo a un solo archivo JS
+ */
 var perfil = new Vue({
     el: '#vista-perfil',
     data: {
@@ -57,9 +61,8 @@ var perfil = new Vue({
             perfil.usuario.displayName = sessionStorage.getItem('displayName');
             perfil.usuario.photoURL = sessionStorage.getItem('photoUrl');
             perfil.usuario.email = sessionStorage.getItem('email');
-
-
         },
+        /**@function obtenerAvatares {Obtiene todos los avatares que proporcionamos} */
         obtenerAvatares: function () {
             fetch(`../../private/PHP/avatares/avatares.php?proceso=buscarAvatares&valor=0`).then(resp => resp.json()).then(resp => {
                 avatares = resp;
@@ -67,6 +70,7 @@ var perfil = new Vue({
                 console.log(this.avatares);
             })
         },
+        /**@function actualizarAvatar {Funcion que actualiza la foto de perfil pero todavia no lo manda a Firebase} */
         actualizarAvatar: function () {
             console.log('actualizar avatar function')
             let imgPerfil = document.getElementById('imgPhotoEst');
@@ -78,6 +82,7 @@ var perfil = new Vue({
 
 
         },
+        /**@function obtenerSalas {Obtiene todo los datos de las salas a las que estamos unidos} */
         obtenerSalas: function () {
             this.salas = []
             listaSalas = []
@@ -103,6 +108,7 @@ var perfil = new Vue({
             this.salas = listaSalas;
 
         },
+        /**@function filtrarSalas  {Este es un buscador de salas} */
         filtrarSalas: function () {
             this.salas = []
             // console.log(this.campo.toLowerCase())
@@ -135,6 +141,7 @@ var perfil = new Vue({
 
             }
         },
+        /**@function mandarDatos {Esta funcion obtiene los datos especificos de la sala que seleccionamos} */
         mandarDatos: function (filaSala) {
             //console.log(modalPerfil.infoSala)
             sessionStorage.setItem('codigoSala', filaSala.codigoSala)
@@ -145,7 +152,6 @@ var perfil = new Vue({
         },
         traerTemas: function(){
             obtenerTemas();
-
         },
         changeData(){
             AlertaNuevosDatos()
@@ -166,6 +172,7 @@ var perfil = new Vue({
     }
 })
 
+/**@function getTopicsSnapshot {Esta funcion obtiene el listado de salas y los ordena en un array} */
 function getTopicsSnapshot(snapshot){
     let topics=[]
     for (let i = 0; i < snapshot.numChildren(); i++) {
@@ -191,6 +198,7 @@ function cerrarSesion() {
 
 }
 
+/**@function AlertaNuevosDatos {Alerta que solicita reautentificarse antes de hacer modificaciones del perfil} */
 function AlertaNuevosDatos() {
     var usuario, credential;
     firebase.auth().onAuthStateChanged(function (user) {
@@ -221,6 +229,7 @@ function AlertaNuevosDatos() {
     });
 }
 
+/**@function colocarAvatares {Coloca los avatares para poderlos seleccionar} */
 function colocarAvatares() {
     console.log('hola me llamaron')
     let contenedor = document.getElementById('contenedorAvatares');
@@ -274,6 +283,7 @@ function quitarBorder() {
     });
 }
 
+/**@function updateGeneralChanges {Funcion que actualiza los datos del perfil} */
 function updateGeneralChanges() {
 
     var newUsername = document.querySelector("#newUsername");
@@ -297,6 +307,7 @@ function updateGeneralChanges() {
 
 }
 
+/**@function updateFirebase {Funcion que actualiza los datos de perfil en Firebase} */
 function updateFirebase() {
     userGG = document.querySelector('#userName');
     firebase.auth().onAuthStateChanged(function (user) {
@@ -351,7 +362,10 @@ function validar_clave(contraseña, contraseña2) {
     return "contras-no-coinciden";
 }
 
-//TODO: hola este es un comentario
+
+
+
+/**@function updatePassword {Cambia la password de tu cuenta} */
 
 function updateUserPassword() {
 
@@ -426,6 +440,7 @@ function verificarusuario() {
     });
 }
 
+/**@function updateUserSQLSQL {Funcion que actualiza los datos del usuario en la BD de MYSQL} */
 function updateUserSQL(newDateuser, newUsername) {
     console.log('entre a update sql datos')
 
@@ -511,6 +526,7 @@ var sala = new Vue({
     }
 });
 
+/**@function clearModalNewSala {Limpia los datos del modal de crear salas} */
 function clearModalNewSala() {
     $("[name='checkLista']").prop('checked', false);
     var nomSala = document.querySelector('#nomSala')
@@ -519,6 +535,7 @@ function clearModalNewSala() {
     descSala.value = ''
 }
 
+/**@function guardarSala {Funcion que guarda las sala en la BD de MYSQL} */
 function guardarSala() {
     let uid = ''
     let codigoSala = ''
@@ -539,11 +556,11 @@ function guardarSala() {
                 identificador
             };
             fetch(`../../private/PHP/salas/salas.php?proceso=recibirDatos&sala=${JSON.stringify(salaPHP)}`).then(resp => resp.text()).then(resp => {
-                console.log(resp);
+                
             });
 
             let maxParticipantes = document.getElementById('selMax').value;
-            console.log(maxParticipantes);
+            
             firebase.database().ref('Tecnoland').child('usuarios').child(uid).child('salas').child(codigoSala).set({
                 nombreSala: nomSala,
                 descripcion: descSala,
@@ -560,7 +577,6 @@ function guardarSala() {
                 console.log(error.message);
             });
 
-            //console.log(sala.datosUsuario);
         } else {
             window.location = '../../index.html'
         }
@@ -570,6 +586,7 @@ function guardarSala() {
 
 }
 
+/**@function eslegirTemas {Esta funcion crea un array con los temas que selecciono para la sala el docente} */
 function eslegirTemas( ) {
     temasEscogidos = [];
     var nomSala = document.querySelector('#nomSala').value.trim()
@@ -603,9 +620,11 @@ function eslegirTemas( ) {
     }
 }
 
+/**@function generarNumero {Funcion que genera un numero aleatorio pasando dos parametros} */
 function generarNumero(minimo, maximo) {
     return Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
 }
+
 
 function obtenerTemas(kk){
     //var valor = document.querySelector('#txtBuscarSala').value.trim()
@@ -615,6 +634,9 @@ function obtenerTemas(kk){
     if (valor ==undefined){
         valor = ''
     }
+
+    respaldoTemas = []
+
     var sinResultadosTemas = document.querySelector('#sinResultadosTemas')
     fetch(`../../private/PHP/Temas/temas.php?proceso=buscarTemas&valor=${valor.trim()}`).then(resp => resp.json()).then(resp => {
         sala.temas = []

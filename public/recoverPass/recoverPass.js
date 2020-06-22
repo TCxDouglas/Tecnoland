@@ -1,4 +1,35 @@
+/**@author Douglas Alexander Hernandez Flores */
 
+var vistaPass=new Vue({
+    el: '#contenedor',
+    data:{
+        pass:'',
+        passRepit:''
+    },
+    methods:{
+        recoverPass: function(){
+            let estado = validar_clave(this.pass, this.passRepit);
+            if (estado == 'correcto'){
+                obteniendoParametros()
+            }else{
+                
+            }
+            
+        },
+        validatePassEquals: function () {
+            validarIgualdad()
+        },
+        validatePassSecurity: function() {
+            validarSeguridad()
+        }
+    },
+    created: function(){
+        
+    }
+})
+
+
+/**@function validarSeguridad {Valida que la contraseña cumpla con las reglas de seguridad} */
 function validarSeguridad() {
     var contra = document.getElementById('pass1').value;
     var msg = document.getElementById('msgPass1');
@@ -43,6 +74,8 @@ function validarSeguridad() {
     }
     return "contra-invalida";
 }
+
+/**@function validarIgualdad {Valida que la contraseña de confirmacion sea igual} */
 function validarIgualdad() {
     var contra = document.getElementById('pass1').value;
     var contra2 = document.getElementById('pass2').value;
@@ -67,34 +100,7 @@ function validarIgualdad() {
     }
 }
 
-var vistaPass=new Vue({
-    el: '#contenedor',
-    data:{
-        pass:'',
-        passRepit:''
-    },
-    methods:{
-        recoverPass: function(){
-            let estado = validar_clave(this.pass, this.passRepit);
-            if (estado == 'correcto'){
-                obteniendoParametros()
-            }else{
-                
-            }
-            
-        },
-        validatePassEquals: function () {
-            validarIgualdad()
-        },
-        validatePassSecurity: function() {
-            validarSeguridad()
-        }
-    },
-    created: function(){
-        
-    }
-})
-
+/**@function obteniendoParametros {Obtiene los parametros que nos envia la API de Firebase para restablecer contraseña} */
 function obteniendoParametros(){
     
     var mode = getParameterByName('mode');
@@ -106,6 +112,9 @@ function obteniendoParametros(){
     verificandoTarea(mode,actionCode)
 }
 
+/**@function verificandoTarea {Esta funcion verifica la accion que hay que realizar}
+ * Esto lo hacemos por si mas adelante añadimos la funcionalidad de cambiar de correo
+ */
 function verificandoTarea(mode, actionCode){
     var auth = firebase.auth();
 
@@ -124,6 +133,7 @@ function verificandoTarea(mode, actionCode){
     }
 }
 
+/**@function cambiandoContraseña {Funcion que resetea la password} */
 function cambiandoContraseña(auth, actionCode){
     var accountEmail;
     
@@ -141,6 +151,9 @@ function cambiandoContraseña(auth, actionCode){
     });
 }
 
+/**@function getParameterByName {Funcion la cual retorna informacion que viene puesta en la URL}
+ * @param name {Parametro que recibe la URL de donde extreeremos los datos}
+ */
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regexS = "[\\?&]" + name + "=([^&#]*)";
@@ -153,6 +166,7 @@ function getParameterByName(name) {
     }  
 }
 
+/**@function validar_clave {Funcion que verifica la contraseña este dentro de los parametros de seguridad} */
 function validar_clave(contraseña, contraseña2) {
 
     if (contraseña == contraseña2) {

@@ -1,9 +1,13 @@
+/**@author Douglas Alexander Hernandez Flores */
+
 var controlMenu = new Vue({
     el: '#menuStudyRoom',
     data: {
 
     },
     methods: {
+        /**@function changeView {Funcion que cambia de pagina, lo devuelve al listado de sala
+         * depediendo del tipo de cuenta que tenga} */
         changeView: function () {
             let accountType = sessionStorage.getItem('tipoCuenta');
             if (accountType == 'docente') {

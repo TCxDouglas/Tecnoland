@@ -1,20 +1,18 @@
+/**@author Josue Isaac Aparicio Diaz */
+
 var photoRespaldo = '';
 var avatar = '';
 var avatares = [];
 var contPhoto = 0;
 var listaSalas = []
 
-
 $(document).ready(function () {
     $('.toggle').click(function () {
         $('nav').toggleClass('activarMenu')
     })
-
     $('.traerPerfilE').click(function () {
-
         $(`#vista-configPerfil`).load(`configPerfil.html`, function () { });
     })
-
     $('.salas').click(function () {
         var newUsername = document.querySelector("#newUsername");
         var newDateuser = document.querySelector("#newDateuser");
@@ -47,13 +45,13 @@ var perfilEstudiante = new Vue({
         sala: []
     },
     methods: {
+        /**@function obtenerSalas {Obtiene todo los datos de las salas a las que estamos unidos} */
         obtenerSalas: function () {
             this.sala=[]
             listaSalas=[]
             firebase.database().ref('Tecnoland').child('usuarios').child(this.usuario.uid).child('unionSala').once('value').then(function (snapshot) {
                 if (snapshot.val()) {
                     snapshot.forEach(salaSnapshot => {
-                        //let key = salaSnapshot.key;
                         let numactual = salaSnapshot.child('integrantes').numChildren();
                         
                         let arrayD = {
@@ -70,9 +68,9 @@ var perfilEstudiante = new Vue({
             })
             this.sala = listaSalas
         },
+        /**@function filtrarSalas  {Este es un buscador de salas} */
         filtrarSalas: function () {
            this.sala = []
-           // console.log(this.campo.toLowerCase())
             let newSalas =[]
             let cont = 0;
             let sinResultados = document.querySelector('#sinResultados')
@@ -86,10 +84,8 @@ var perfilEstudiante = new Vue({
                         uidCreador: arrayNew.uidCreador
                     }
                     cont++;
-                    //console.log(arrayNew.nombreSala.toLowerCase())
                     sinResultados.innerHTML = ''
                 }else if (newSalas ==''){
-                   // this.sala = listaSalas
                     sinResultados.innerHTML = `
                     <h1 style="color: #fff; font-size: 15px;">Sin resultados de búsqueda <i class="fa fa-search-minus" aria-hidden="true"></i></h1>
                     <h1 style="text-align: center; align-items:center; font-size: 15px;"><i class="fa fa-search-minus" aria-hidden="true"></i></h1>
@@ -99,6 +95,7 @@ var perfilEstudiante = new Vue({
 
             }
         },
+        /**@function mandarDatos {Esta funcion obtiene los datos especificos de la sala que seleccionamos} */
         mandarDatos: function (filasala) {
             getTopics(filasala.uidCreador, filasala.codigoSala)
             sessionStorage.setItem('codigoSala', filasala.codigoSala)
@@ -106,22 +103,18 @@ var perfilEstudiante = new Vue({
             sessionStorage.setItem('uidCreador', filasala.uidCreador)
             
         },
+        /**@function actualizarAvatar {Funcion que actualiza la foto de perfil pero todavia no lo manda a Firebase} */
         actualizarAvatar: function () {
-            console.log('actualizar avatar function')
             let imgPerfil = document.getElementById('imgPhotoEst');
             let imgPerfil2 = document.getElementById('imgPhotoEst2');
             imgPerfil.setAttribute("src", sessionStorage.getItem('photoUrl'));
             imgPerfil2.setAttribute("src", sessionStorage.getItem('photoUrl'));
             this.usuario.displayName = sessionStorage.getItem('displayName');
-            //alertify.success('Foto cambiada exitosamente')
-
-
         },
+        /**@function obtenerAvatares {Obtiene todos los avatares que proporcionamos} */
         obtenerAvatares: function () {
             fetch(`../../private/PHP/avatares/avatares.php?proceso=buscarAvatares&valor=0`).then(resp => resp.json()).then(resp => {
                 avatares = resp;
-
-                console.log(this.avatares);
             })
         },
         changeData(){
@@ -158,7 +151,7 @@ var perfilEstudiante = new Vue({
 })
 
 
-
+/**@function getTopicsSnapshot {Esta funcion obtiene el listado de salas y los ordena en un array} */
 function getTopicsSnapshot(snapshot) {
     let topics = []
     
@@ -175,6 +168,7 @@ function getTopicsSnapshot(snapshot) {
     window.location = 'sala-study.html'
 }
 
+/**@function getTopics {Funcion que va a Firebase y trae los temas disponibles de la sala} */
 function getTopics(uidCreador,codigoSala){
     firebase.database().ref('Tecnoland').child('usuarios').child(uidCreador).child('salas').child(codigoSala).child('temas').once('value').then(function (snapshot) {
         if (snapshot.val()) {
@@ -186,18 +180,18 @@ function getTopics(uidCreador,codigoSala){
     });
 }
 
+/**@function alertaNewSala {Funcion que levanta un alertify y solicita el codigo de la sala para unirse} */
 function alertaNewSala() {
     alertify.prompt('Uniendose a una nueva sala...', 'Ingrese el codigo de la sala', 'Escriba aquí el codigo...', function (evt, value) {
         if (value.trim() != "") {
             //cambioVista(true)
             fetch(`../../private/PHP/salas/salas.php?proceso=buscarSala&sala=${value.trim()}`).then(resp => resp.json()).then(resp => {
-                console.log(resp)
+                
                 if (resp != "") {
                     array = resp;
-                    //let id = modalEstudiante.datos.uidCreador;
                     validateNumMenbersRoom(array[0].uidCreador, value.trim())
                 } else {
-                    console.log('La sala no existe')
+                    
                     alertify.error('La sala no existe');
                 }
             });
@@ -211,20 +205,7 @@ function alertaNewSala() {
     }).set('type', 'text');
 }
 
-function cambioVista(validar) {
-    let bodyModal = document.querySelector('#cargando');
-    if (validar) {
-        fetch(`../modulos/verificandoSala.html`).then(function (respuesta) {
-            return respuesta.text();
-        }).then(function (respuesta) {
-            bodyModal.innerHTML = respuesta;
-        })
-    } else {
-        bodyModal.innerHTML = "";
-    }
-}
-
-
+/**@function validateNumMenbersRoom {Esta funcion valida que la sala no este a su maxima capacidad} */
 function validateNumMenbersRoom(uidCreador, codigoSala) {
     firebase.database().ref('Tecnoland').child('usuarios').child(uidCreador).child('salas').child(codigoSala).once('value').then(function (snapshot) {
         if (snapshot.val()) {
@@ -233,6 +214,8 @@ function validateNumMenbersRoom(uidCreador, codigoSala) {
 
             if(menbersActive<maxMenbers){
                 agregarIntegrante(uidCreador, codigoSala)
+                alertify.set('notifier', 'position', 'top-center');
+                alertify.success('Se ha unido a la sala exitosamente')
             } else {
                  alertify.set('notifier', 'position', 'top-center');
                 alertify.error('Sala completa, consulte con su docente')
@@ -241,6 +224,7 @@ function validateNumMenbersRoom(uidCreador, codigoSala) {
     })
 }
 
+/**@function agregarIntegrante {Agrega el estudiante a listado de integrantes de la sala} */
 function agregarIntegrante(uidCreador, codigoSala) {
     firebase.database().ref('Tecnoland').child('usuarios').child(uidCreador).child('salas').child(codigoSala).child('integrantes').child(perfilEstudiante.usuario.uid).set({
         displayName: perfilEstudiante.usuario.displayName,
@@ -254,6 +238,7 @@ function agregarIntegrante(uidCreador, codigoSala) {
     })
 }
 
+/**@function agregarRegistro {Agrega en el registro de estudiante la sala a la que se unio} */
 function agregarRegistro(uidCreador, codigoSala, nombreSala, descripcion) {
     firebase.database().ref('Tecnoland').child('usuarios').child(sessionStorage.getItem('uid')).child('unionSala').child(codigoSala).set({
         creadorSala: uidCreador,
@@ -270,6 +255,7 @@ function agregarRegistro(uidCreador, codigoSala, nombreSala, descripcion) {
     })
 }
 
+/**@function obtenerDatosSala {Obtiene los datos de la sala a la que nos estamos uniendo} */
 function obtenerDatosSala(uidCreador, codigoSala) {
     firebase.database().ref('Tecnoland').child('usuarios').child(uidCreador).child('salas').child(codigoSala).once('value').then(function (snapshot) {
         if (snapshot.val()) {
@@ -279,7 +265,8 @@ function obtenerDatosSala(uidCreador, codigoSala) {
         }
     });
 }
-//TODO: la tasca tiene que arreglar sus parches de este js
+
+/**@function cerrarSesion {Cierra la sesion y lo devuelve a la pagina principal} */
 function cerrarSesion() {
 
     alertify.confirm('Alerta', '¿Está seguro de cerrar esta sesión?', function () {
@@ -293,13 +280,12 @@ function cerrarSesion() {
 }
 
 
-function AlertaNuevosDatos() {
-    
+/**@function AlertaNuevosDatos {Alerta que solicita reautentificarse antes de hacer modificaciones del perfil} */
+function AlertaNuevosDatos() { 
     var usuario, credential;
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             // User is signed in.
-            console.log(user)
             usuario = user;
 
             alertify.prompt('Confirmar Cambios', 'Ingrese su contraseña actual para su respectiva verificación', '', function (evt, value) {
@@ -308,11 +294,10 @@ function AlertaNuevosDatos() {
                 usuario.reauthenticateWithCredential(credential).then(function () {
                     // User re-authenticated.
                     updateGeneralChanges()
-                    console.log('reautenticado...')
                 }).catch(function (error) {
                     // An error happened.
                     alertify.error('Contraseña incorrecta')
-                    console.log(error)
+                    
                 });
             }, function () {
                 alertify.error('Edición cancelada')
@@ -324,10 +309,9 @@ function AlertaNuevosDatos() {
     });
 }
 
+/**@function colocarAvatares {Coloca los avatares para poderlos seleccionar} */
 function colocarAvatares() {
-    console.log('hola me llamaron')
     let contenedor = document.getElementById('contenedorAvatares');
-    console.log(contenedor)
     contenedor.innerHTML = "";
     avatares.forEach(element => {
         let item = `<div class="col">
@@ -335,28 +319,21 @@ function colocarAvatares() {
                     </div>`;
         contenedor.innerHTML += item;
     });
-    console.log(contenedor)
     seleccionarAvatar();
 }
 
 function seleccionarAvatar() {
     let imgAvatares = document.getElementsByName('avatar');
-    //console.log(imgAvatares);
     imgAvatares.forEach(element => {
         element.addEventListener('click', e => {
-            //console.log(element);
             quitarBorder();
             element.style.border = "solid #0000FF"
             avatar = element.src;
-
-            //console.log(src);
         })
     });
 }
 
 function guardarAvatar() {
-    //perfilEstudiante.usuario.photoURL = avatar;
-    //perfilEstudiante.actualizarAvatar();
     if (contPhoto === 0)
     {
         sessionStorage.setItem('photoRespaldo', sessionStorage.getItem('photoUrl')); //respaldo por si decide no guardar los cambios
@@ -368,8 +345,6 @@ function guardarAvatar() {
     sessionStorage.setItem('newAvatar', 'si');
     alertify.set('notifier', 'position', 'top-center');
     alertify.warning('Foto de perfil almacenada teporalmente');
-    
-
 }
 
 function quitarBorder() {
@@ -379,18 +354,14 @@ function quitarBorder() {
     });
 }
 
-
-
+/**@function updateGeneralChanges {Funcion que actualiza los datos del perfil} */
 function updateGeneralChanges() {
-
     var newUsername = document.querySelector("#newUsername");
     var newDateuser = document.querySelector("#newDateuser");
 
     if (!newDateuser.value.trim() == '' || !newUsername.value.trim() == '') {
         var updateSQL = updateUserSQL(newDateuser.value.trim(), newUsername.value.trim());
-        console.log(updateSQL)
         if (updateSQL == 'exito') {
-            console.log(updateSQL)
             updateFirebase()
             newUsername.value = '';
             newDateuser.value = '';
@@ -406,6 +377,7 @@ function updateGeneralChanges() {
 
 }
 
+/**@function updateFirebase {Funcion que actualiza los datos de perfil en Firebase} */
 function updateFirebase() {
     userGG = document.querySelector('#userName');
     firebase.auth().onAuthStateChanged(function (user) {
@@ -432,7 +404,6 @@ function updateFirebase() {
 }
 
 function validar_clave(contraseña, contraseña2) {
-
     if (contraseña == contraseña2) {
 
         if (contraseña.length >= 8) {
@@ -460,8 +431,8 @@ function validar_clave(contraseña, contraseña2) {
     return "contras-no-coinciden";
 }
 
+/**@function updatePassword {Cambia la password de tu cuenta} */
 function updateUserPassword() {
-
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             // User is signed in.
@@ -470,9 +441,7 @@ function updateUserPassword() {
             var secure = validar_clave(pass1.trim(), pass2.trim());
 
             if (secure == 'todo-naiz') {
-
                 // User is signed in.
-                console.log(user)
                 usuario = user;
                 user.updatePassword(pass1).then(function () {
                     // Update successful.
@@ -482,7 +451,6 @@ function updateUserPassword() {
                     $('#modalNewPass').modal('hide')
                 }).catch(function (error) {
                     // An error happened.
-                    console.log('firebase dice: contra NO cambiada');
                     alertify.set('notifier', 'position', 'top-center');
                     alertify.error('Ha ocurrido un error inesperado, intentalo de nuevo');
 
@@ -517,11 +485,10 @@ function verificarusuario(){
                     // User re-authenticated.
                     $('#modalNewPass').modal('show')
                     alertify.success('Verificado')
-                    console.log('reautenticado...')
                 }).catch(function (error) {
                     // An error happened.
                     alertify.error('Contraseña incorrecta')
-                    console.log(error)
+                    
                 });
             }, function () {
                 alertify.set('notifier', 'position', 'top-center');
@@ -533,14 +500,12 @@ function verificarusuario(){
     });
 }
 
+/**@function updateUserSQLSQL {Funcion que actualiza los datos del usuario en la BD de MYSQL} */
 function updateUserSQL(newDateuser, newUsername) {
-    console.log('entre a update sql datos')
 
     if (!newDateuser == '' || !newUsername == '') {
-        console.log('entre a la primer capa')
         var NewDataUser = [];
         if (newUsername == '' && !newDateuser == '') {
-            console.log('entre a la primer capa f')
             NewDataUser = {
                 uid: sessionStorage.getItem('uid'),
                 displayname: sessionStorage.getItem('displayName'),
@@ -548,13 +513,12 @@ function updateUserSQL(newDateuser, newUsername) {
                 accion: 'update'
             };
             fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(NewDataUser)}`).then(resp => resp.json()).then(resp => {
-                console.log(resp)
+                
                 sessionStorage.setItem('nacimiento', newDateuser);
             });
             return "exito"
 
         } else if (!newUsername == '' && newDateuser == '') {
-            console.log('entre a la primer capa g')
             NewDataUser = {
                 uid: sessionStorage.getItem('uid'),
                 displayname: newUsername,
@@ -563,14 +527,13 @@ function updateUserSQL(newDateuser, newUsername) {
             };
 
             fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(NewDataUser)}`).then(resp => resp.json()).then(resp => {
-                console.log(resp)
+              
                 sessionStorage.setItem('displayName', newUsername);
 
             });
             return "exito"
 
         } else if (!newUsername == '' && !newDateuser == '') {
-            console.log('entre a la primer capa h')
             NewDataUser = {
                 uid: sessionStorage.getItem('uid'),
                 displayname: newUsername,
@@ -579,7 +542,6 @@ function updateUserSQL(newDateuser, newUsername) {
             };
 
             fetch(`../../private/PHP/usuarios/usuario.php?proceso=obtener_datos&usuario=${JSON.stringify(NewDataUser)}`).then(resp => resp.json()).then(resp => {
-                console.log(resp)
                 sessionStorage.setItem('displayName', newUsername);
                 sessionStorage.setItem('nacimiento', newDateuser);
             });

@@ -1,4 +1,4 @@
-
+/**@author Josue Isaac Aparicio Diaz */
 var socket = io.connect("http://localhost:3001", {
         'forceNew': true
     }),
@@ -21,7 +21,8 @@ var socket = io.connect("http://localhost:3001", {
                         fecha: Date.now(),
                         photo: sessionStorage.getItem('photoUrl'),
                         uid: sessionStorage.getItem('uid'),
-                        sala: sessionStorage.getItem('codigoSala')
+                        sala: sessionStorage.getItem('codigoSala'),
+                        Nsala: sessionStorage.getItem('nombreSala')
                     };
                     socket.emit('enviarMensaje', envMesg);
                     envMesg.user = '';
@@ -30,6 +31,7 @@ var socket = io.connect("http://localhost:3001", {
                     envMesg.fecha = '';
                     envMesg.uid = '';
                     envMesg.sala = '';
+                    envMesg.Nsala = '';
                     document.querySelector('#inputMsg').value = '';
                 }
 
@@ -47,19 +49,24 @@ socket.on('recibirMensaje', msg => {
         if (sessionStorage.getItem('uid') === msg.uid) {
             getMsgSend(msg)
         }else{
-            
+            $.notification("HIPER EFE en " + sessionStorage.getItem('nombreSala'), msg.user + ': ' + msg.msg, '../imagenes/ficon.png');
             getMsgEntry(msg)
         }
     }
-    //console.log('Mensaje Recibido')
+    
 });
 
 socket.on('historial', msgs => {
-    if (msgs[0].sala == sessionStorage.getItem('codigoSala')) {
-        msgComplete=msgs;
-        getHistoryMsg(msgs);
-    } else {
-        //console.log('No perteneces aqui')
+    console.log(msgs[0].sala)
+
+    if (msgs[0].sala != '') {
+
+        if (msgs[0].sala == sessionStorage.getItem('codigoSala')) {
+            msgComplete = msgs;
+            getHistoryMsg(msgs);
+        } else {
+            //console.log('No perteneces aqui')
+        }
     }
 });
 

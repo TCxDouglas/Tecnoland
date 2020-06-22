@@ -25,7 +25,7 @@ switch (window.Notification.permission) {
 (($) => { 
     /**Si no tiene las notificaciones disponibles en el navegador, le solicitamos que actualize su navegador o use otro */
     if (!window.Notification) {
-        alert("Por favor actualizate o pasata a chrome, Notificaciones NO soportadas");
+        alert("Este navegador es incompatible con las notificaciones ");
         return;
     }
 

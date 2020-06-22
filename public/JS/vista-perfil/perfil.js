@@ -663,8 +663,7 @@ function saveChekedTopic(){
     let listado = []
     boxCheked.forEach(element => {
         if(element.checked){
-            listado.push(element.dataset.position)
+            sala.topicsChecked.push(element.dataset.position)
         }
     });
-    sala.topicsChecked = listado
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-05-2020 a las 07:05:08
+-- Tiempo de generación: 22-06-2020 a las 06:29:38
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.2
 
@@ -56,14 +56,6 @@ CREATE TABLE `salas` (
   `codigoSala` char(8) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
---
--- Volcado de datos para la tabla `salas`
---
-
-INSERT INTO `salas` (`uidCreador`, `codigoSala`) VALUES
-('4X6sLHbN3jcR22zM5KqjR9vGeQg2', 'do4x9479'),
-('GTPjJK40F7MTU70rlUWHaqpLBJY2', 'sogt1645');
-
 -- --------------------------------------------------------
 
 --
@@ -72,8 +64,8 @@ INSERT INTO `salas` (`uidCreador`, `codigoSala`) VALUES
 
 CREATE TABLE `temas` (
   `idTema` int(10) NOT NULL,
-  `tema` char(20) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `descripcion` varchar(30) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
+  `tema` char(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `descripcion` varchar(80) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -82,9 +74,13 @@ CREATE TABLE `temas` (
 
 INSERT INTO `temas` (`idTema`, `tema`, `descripcion`) VALUES
 (1, 'Google CardBoard', 'Aprende a construir tus propia'),
-(2, 'Historia de la Infor', 'Aprende los inicios de la comp'),
-(3, 'Programacion Facilit', 'Aprende a programar'),
-(4, 'Curso de OBS', 'Aprende a hacer Directos');
+(2, 'Museo de la informatica', 'Aprende los inicios de la computacion mediante un viaje por el museo de El Salva'),
+(3, 'Programacion Facilito', 'Aprende a programar'),
+(4, 'Curso de OBS', 'Aprende a hacer Directos'),
+(5, 'Software', 'Aprende que es el software y su importancia en el mundo informatico'),
+(6, 'La computadora', 'Conoce las partes de una computadora y sus funciones'),
+(7, 'Hardware', 'Aprende que es el Hardware y sus caracteristicas'),
+(8, 'Inteligencia Artificial (IA)', 'Aprende como funciona la inteligencia Artificial y sus grandes aportes al mundo');
 
 -- --------------------------------------------------------
 
@@ -100,17 +96,6 @@ CREATE TABLE `usuarios` (
   `tipocuenta` char(7) COLLATE utf8_spanish2_ci NOT NULL,
   `conocimiento` char(12) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'basico'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`uid`, `displayname`, `email`, `fechanacimiento`, `tipocuenta`, `conocimiento`) VALUES
-('GTPjJK40F7MTU70rlUWHaqpLBJY2', 'Soy un Docente', 'soyundocente@gmail.com', '2001-02-20', 'docente', ''),
-('HJ5x6NbEbpTcDdrGm4vris38Spv1', 'Soy un Estudiante', 'soyunestudiante@gmail.com', '2001-01-20', 'normal', ''),
-('Ztt0ncse34TkYRTVDLiiVB71r1K2', 'Douglas Hernandez', 'douglasalexander683@gmail', '2000-02-10', 'normal', ''),
-('WWQ0FKRBCUbM0ocAooM9gKbUcRE2', 'Soy una prueba de testeo', 'testeo@gmail.com', '2004-06-09', 'normal', ''),
-('fCo3Ww9UkwSkEnyA4ZleF6fzvoA3', 'Kathy', 'kathy@gmail.com', '2001-06-14', 'normal', 'intermedio');
 
 --
 -- Índices para tablas volcadas
@@ -142,7 +127,7 @@ ALTER TABLE `avatares`
 -- AUTO_INCREMENT de la tabla `temas`
 --
 ALTER TABLE `temas`
-  MODIFY `idTema` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idTema` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

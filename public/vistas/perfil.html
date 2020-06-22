@@ -184,16 +184,12 @@
                                 <th> Agregar</th>
                             </tr>
                         </thead>
-                        <tbody v-for='linea in temas'>
-                            <tr>
-                                <td>{{linea.tema}}</td>
-                                <td>{{linea.descripcion}}</td>
-                                <td><input type="checkbox" name="checkLista"></td>
-                            </tr>
+                        <tbody id="bodyTable">
+                        
                         </tbody>
                         
                     </table>
-                    <div id="sinResultadosTemas" style=" align-items: center;">
+                    <div id="sinResultadosTemas" style=" align-items: center;" onch>
                         
                     </div>
                 </main>

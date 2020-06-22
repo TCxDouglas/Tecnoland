@@ -512,12 +512,12 @@ var sala = new Vue({
             uid: '',
             displayName: '',
             photoURL: ''
-        }
+        },
+        topicsChecked: []
     },
     methods: {
         Obtemas:function(){
             obtenerTemas();
-
         }
     }
 });
@@ -625,19 +625,46 @@ function generarNumero(minimo, maximo) {
 function obtenerTemas(){
     var valor = document.querySelector('#txtBuscarSala').value.trim()
     respaldoTemas = []
+    
     var sinResultadosTemas = document.querySelector('#sinResultadosTemas')
     fetch(`../../private/PHP/Temas/temas.php?proceso=buscarTemas&valor=${valor}`).then(resp => resp.json()).then(resp => {
         respaldoTemas = resp;
         sala.temas = respaldoTemas;
-        if (sala.temas == '') {
+        let items = document.querySelector('#bodyTable')
+        items.innerHTML = ""
+        sinResultadosTemas.innerHTML= ""
+        if (respaldoTemas.length==0) {
 
             sinResultadosTemas.innerHTML = `
             <h1 style="font-size: 15px;   text-align: center;">Sin resultados de búsqueda</h1>
             <h1 style="text-align: center; align-items:center; font-size: 15px;"><i class="fa fa-search-minus" aria-hidden="true"></i></h1>
             `
         } else{
-            sinResultadosTemas.innerHTML = ''
+            respaldoTemas.forEach(element => {
+                let checkboxTopic = ''
+                if(sala.topicsChecked.includes(element.idTema)){
+                    checkboxTopic = `<td><input type="checkbox" name="checkLista" data-position= "${element.idTema}" checked onchange="saveChekedTopic()"></td>`
+                }else{
+                    checkboxTopic = `<td><input type="checkbox" name="checkLista" data-position= "${element.idTema}" onchange="saveChekedTopic()" ></td>`
+                }
+                let scructure = `<tr>
+                                <td>${element.tema}</td>
+                                <td>${element.descripcion}</td>
+                                ${checkboxTopic}
+                                </tr>`
+                items.innerHTML += scructure
+            });
         }
     });
+}
 
- }
+function saveChekedTopic(){
+    let boxCheked = document.getElementsByName('checkLista')
+    let listado = []
+    boxCheked.forEach(element => {
+        if(element.checked){
+            listado.push(element.dataset.position)
+        }
+    });
+    sala.topicsChecked = listado
+}

@@ -351,6 +351,8 @@ function validar_clave(contraseña, contraseña2) {
     return "contras-no-coinciden";
 }
 
+//TODO: hola este es un comentario
+
 function updateUserPassword() {
 
     firebase.auth().onAuthStateChanged(function (user) {
@@ -503,7 +505,7 @@ var sala = new Vue({
     },
     methods: {
         Obtemas:function(){
-            obtenerTemas();
+           // obtenerTemas();
 
         }
     }
@@ -605,11 +607,18 @@ function generarNumero(minimo, maximo) {
     return Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
 }
 
-function obtenerTemas(){
-    var valor = document.querySelector('#txtBuscarSala').value.trim()
-    respaldoTemas = []
+function obtenerTemas(kk){
+    //var valor = document.querySelector('#txtBuscarSala').value.trim()
+    //console.log(valor);
+    var valor = $(kk).val()
+    
+    if (valor ==undefined){
+        valor = ''
+    }
     var sinResultadosTemas = document.querySelector('#sinResultadosTemas')
-    fetch(`../../private/PHP/Temas/temas.php?proceso=buscarTemas&valor=${valor}`).then(resp => resp.json()).then(resp => {
+    fetch(`../../private/PHP/Temas/temas.php?proceso=buscarTemas&valor=${valor.trim()}`).then(resp => resp.json()).then(resp => {
+        sala.temas = []
+        respaldoTemas = []
         respaldoTemas = resp;
         sala.temas = respaldoTemas;
         if (sala.temas == '') {
@@ -618,7 +627,7 @@ function obtenerTemas(){
             <h1 style="font-size: 15px;   text-align: center;">Sin resultados de búsqueda</h1>
             <h1 style="text-align: center; align-items:center; font-size: 15px;"><i class="fa fa-search-minus" aria-hidden="true"></i></h1>
             `
-        } else{
+        } else if (sala.temas !==''){
             sinResultadosTemas.innerHTML = ''
         }
     });

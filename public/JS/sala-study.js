@@ -1,4 +1,4 @@
-
+var socket = io.connect("http://localhost:3001",{'forceNew':true});
 let auxiliar="";
 function init() {
     

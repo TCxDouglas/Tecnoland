@@ -12,6 +12,7 @@
   <script src="https://unpkg.com/aframe-state-component@6.7.0/dist/aframe-state-component.min.js"></script>
   <link rel="stylesheet" href="CSS/alertLobby.css">
 
+  <script src="JS/controlEvents.js"></script>
 </head>
 
 <body>
@@ -50,13 +51,22 @@
     <img id="trophyGold" src="img/trophyGold.svg">
     <img id="backgroundTrophy" src="img/backgroundTrophys.jpg">
     <img id="moreDetails" src="img/nextDetails.svg">
+    <img id="imgArrowgo" src="img/arrowUp.svg">
 
     </a-assets>
 
-    <a-entity camera look-controls wasd-controls="acceleration:50">
-      <a-entity id="mouseCursor" cursor="rayOrigin: mouse">
+    <a-entity id="cameraUser" camera look-controls wasd-controls="acceleration:50" position="0 0 0">
+      <a-entity id="mouseCursor" cursor="rayOrigin:mouse; fuse:true; fuseTimeout:2000;" position="0 0 -1"
+      geometry="primitive:ring; radiusInner:0.03; radiusOuter:0.04;" visible="false">
       </a-entity>
     </a-entity>
+
+    <a-image id="arrowMenu" cursor-listener src="#imgArrowgo"
+      position="0 -2 -4" rotation="-90 0 0" v-on:Click="goMenu"></a-image>
+
+    <a-image id="arrowLogro" cursor-listener src="#imgArrowgo" position="-4.5 -2 -4" rotation="-90 90 0"
+      v-on:Click="goTrophy">
+    </a-image>
 
     <a-entity position="0 0 -3">
       <a-gltf-model src="#engine" rotation="90 0 0" scale="18 18 18"></a-gltf-model>
@@ -147,6 +157,7 @@
         <a-plane width="6" height="4" color="#586266" opacity="0.6" position="0 0 -.01"></a-plane>
       </a-entity>
     </a-entity>
+    
 
     <a-entity text__lblbanner="align: center; value: Bienvenido a EFE World; width: 3" id="lblbanner" position="0 4 -12"
       scale="5 5 1">

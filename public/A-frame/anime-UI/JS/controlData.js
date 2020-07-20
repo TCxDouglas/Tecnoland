@@ -65,6 +65,9 @@ var sceneVR = new Vue({
             }
             changeColorSelect()
         },
+        testeo: function(){
+            console.log('ESTOY EN MENU')
+        },
         /**@function prevTopics {Function que hace retroceder los temas simulando un scroll, Avanza de 4 en 4} */
         prevTopics: function(){
             let listCardOptions = document.querySelectorAll('#cardOption')
@@ -139,6 +142,25 @@ var sceneVR = new Vue({
         /**@function welcomeEfe {Salta una notificacion de logro desbloqueado} */
         welcomeEfe(){
             $.notification("LOGRO DESBLOQUEADO", 'Sea usted Bienvenido a EFE WORLD', 'img/medalLogro.png');
+        },
+        goMenu(){
+            //console.log('Vamos al Menu')
+            let camera = document.querySelector('#cameraUser')
+            //console.log(camera.getAttribute('position'))
+            camera.setAttribute('position', {
+                x: 0,
+                y: 0,
+                z: -4
+            });
+        },
+        goTrophy(){
+            let camera = document.querySelector('#cameraUser')
+            //console.log('Vamos a los logros')
+            camera.setAttribute('position', {
+                x: -3.5,
+                y: 0,
+                z: -4
+            });
         }
     },
     created: function (){
@@ -310,4 +332,9 @@ function changeColorTrophy(){
             element.setAttribute('color', '#fff');
         }
     });
+}
+
+function fuseTeleport(){
+    console.log('FUSING FUNCIONA')
+    //
 }
